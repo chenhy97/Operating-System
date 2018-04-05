@@ -12,9 +12,9 @@ int terminal(){
     char const *quit = "quit";
     char const *lst = "ls";
     int Maxsize = 10;
-   
     print_next_line(HelpMsg1);
     
+            // _RunProgress(0xC000);
    prints(CMDHead);
     char recived[10] = {};
     recived[0] = 0;
@@ -23,6 +23,10 @@ int terminal(){
     int queue[Maxsize];
     int num_of_queue = 0;
     int number = 0;
+    int k = 0;
+    /*for(k = 0;k < Maxsize;i ++){
+        queue[k] = 0;
+    }*/
     while(i){
         char save = waitforinput();
         if(save == 32){//空格
@@ -65,19 +69,22 @@ int terminal(){
                     continue;
                 }
             
-                else if(number != 0){
-                    queue[num_of_queue] = number;
-                    num_of_queue++;
+                else if(number != 0||num_of_queue != 0){
+                    if(number != 0 ){
+                         printsint(number);
+                        queue[num_of_queue] = number;
+                        num_of_queue++;
+                    }
+                    run(queue,num_of_queue);
+                    num_of_queue = 0;
+                    number = 0;
+                    prints(CMDHead);
+                    while(index_of_str != 0){//clear the string
+                    recived[index_of_str] = 0;
+                    index_of_str --;
+                    }
+                    continue;
                 }
-                run(queue,num_of_queue);
-                num_of_queue = 0;
-                number = 0;
-                prints(CMDHead);
-                while(index_of_str != 0){//clear the string
-                  recived[index_of_str] = 0;
-                  index_of_str --;
-                }
-                continue;
             }
             else{
                  prints("\n\r");
@@ -95,6 +102,7 @@ int terminal(){
         else if(save >= '0' && save <='9'){
            printc(save);
             number = number * 10 + save -'0';
+           // printsint(number);
             continue;
         }
         else{
@@ -117,15 +125,19 @@ void run(int queue[],int size){
         //_delay();
         if(queue[j] == 1){
             _loadP(2,23,0xC000);
+             _RunProgress(0xC000);
         }
         if(queue[j] == 2){
             _loadP(2,25,0xC000);
+            _RunProgress(0xC000);
         }
         if(queue[j] == 3){
             _loadP(2,27,0xC000);
+            _RunProgress(0xC000);
         }
         if(queue[j] == 4){
             _loadP(2,29,0xC000);
+            _RunProgress(0xC000);
         }
     }
      clearscreen();

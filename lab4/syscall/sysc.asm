@@ -11,7 +11,7 @@ global _SetINT20h
 global _getch
 global _write
 global _initialInt
-
+global _RunProgress
 Pg_Segment dw 0x0000
 Pg_Offset dw 0xC000
 info_Segment dw 0x0000
@@ -112,7 +112,10 @@ _setPoint:;bug????
 _loadP:
     enter 0,0
     pusha
-    mov ax,word [Pg_Segment]
+    push es
+    push ds
+    mov ax,cs
+    mov ds,ax
     mov es,ax
     mov dl,0
     mov ax,[bp+10];起始扇区号
@@ -126,46 +129,58 @@ _loadP:
     mov dh,ah
     mov ch,al
     mov al,byte [bp+6];读多少个扇区
-    mov bx,word [bp+14]
+    mov bx,word [bp+14];内存地址
     mov ah,2
     int 13h
-    jmp bx;跳到用户程序。
-back4:
-    ;pop ebp
-    mov ah,00h
-    int 16h
+    pop ds
+    pop es
     popa
+    leave
+    newret
+_RunProgress:
+    enter 0,0
+    pusha
+    mov ax,cs
+    mov ds,ax
+    mov es,ax
+    mov bx,[bp+6]
+    call bx
+    popa
+ S:
+    mov ah,00H
+    int 16h
+    ;popa
     leave
     newret
 ;============================================================
 ;   写程序进磁盘[_write(number_shanqu,start_shanqu,address_memory)]**********未封装
 ;============================================================
-_write:
-    enter 0,0
-    push es
-    push ds
-    push cs
-    push ebx
-    push dx
-    mov ax,word [info_Segment]
-    mov es,ax
-    mov dl,0
-    mov ax,[bp+10];起始扇区号
-    mov bl,18
-    div bl
-    ;inc ah
-    mov cl,ah
-    xor ah,ah
-    mov bl,2
-    div bl
-    mov dh,ah
-    mov ch,al
-    mov al,byte [bp+6];读多少个扇区
-    mov bx,word [bp+14]
-    mov ah,3
-    int 13h
-    leave
-    newret
+;_write:
+ ;   enter 0,0
+ ;   push es
+ ;   push ds
+ ;   push cs
+   ; push ebx
+  ;  push dx
+  ;  mov ax,word [info_Segment]
+  ;  mov es,ax
+  ;  mov dl,0
+   ; mov ax,[bp+10];起始扇区号
+   ; mov bl,18
+   ; div bl
+   ; ;inc ah
+   ; mov cl,ah
+   ; xor ah,ah
+   ; mov bl,2
+   ; div bl
+   ; mov dh,ah
+   ; mov ch,al
+   ; mov al,byte [bp+6];读多少个扇区
+   ; mov bx,word [bp+14]
+   ; mov ah,3
+   ; int 13h
+   ; leave
+   ; newret
 ;========================================================
 ;                   中断向量程序区
 ;========================================================
@@ -176,7 +191,7 @@ _SetINT20h:
     mov ah,01h;检测键盘状态。
     int 16h
     ;popa
-    jnz back4
+    jnz S
     iret
     
 _SetINT08h:

@@ -4,6 +4,11 @@ void clearscreen(){
 	//__asm__("pop %ax");
 	return ;
 }
+void printcpos(char alpha,int row,int colume){
+	int pos = (80 * row + colume)*2;
+	int color = 3;
+	_printchar(alpha,pos,color);
+}
 void print(char const* Messeage,int row,int colume){//need the pos
 	int pos = (80 * row + colume)*2;
 	int color = 3;
@@ -104,7 +109,7 @@ void strcpy(char const *src,char *des){
         des[i+1] = 0;
 	}
 }
-void buildmap(){
+/*void buildmap(){
     struct info map;
     strcpy("1.img",map.name[0]);
 	map.size[0] = 512;
@@ -131,7 +136,7 @@ void showtable(){
 		printsint(map->sector[i]);
 		prints("\n\r");
 	}
-}
+}*/
 void Initial_Int(){
 	_initialInt();
 	return;

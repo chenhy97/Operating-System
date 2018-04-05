@@ -14,16 +14,13 @@ int main(){
    prints(Msg1);
    print("!",13,39);
     Initial_Int();
-
    char a = waitforinput();
    clearscreen();   // _clearscreen();
     
-     
-    /* _loadP(2,21);
     //buildmap();还有待解决debug
     //void *addr = (void*) 0xB100;
     //_loadP(2,21,addr);
-    /showtable();*/
+    //showtable();*/
     terminal();
     return 0;
 }
