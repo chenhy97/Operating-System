@@ -23,7 +23,6 @@ int strcmp(char *m1,char const *m2);
 void bulidmap();
 void showtable();
 void Initial_Int();
-void printcpos(char alpha,int row,int colume);
 struct info{
     char name[4][16];
     int size[4];

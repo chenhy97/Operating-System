@@ -1,7 +1,7 @@
 LD=/Users/chen/toolchain/bin/i386-elf-ld
 LDFLAGS=-melf_i386 -N
 CC=/Users/chen/toolchain/bin/i386-elf-gcc
-CCFLAGS=-march=i386 -m16 -mpreferred-stack-boundary=2 -ffreestanding -g
+CCFLAGS=-march=i386 -m16 -mpreferred-stack-boundary=2 -ffreestanding -g 
 OBJDUMP=/Users/chen/toolchain/bin/i386-elf-objdump
 OBJFLAGS=-melf_i386 -static -nostdlib --nmagic 
 AS=nasm
@@ -17,9 +17,9 @@ USER_OBJ=$(USER)/command.o
 #USER_PRO=$(UP)/user1.o $(UP)/user2.o $(UP)/user3.o $(UP)/user4.o
 all: kernel.bin kernel.elf kernel.txt
 
-kernel.bin: kernel.o $(SYSCALL)/use.o $(SYSCALL)/sysc.o $(USER_OBJ) #$(USER_PRO)
+kernel.bin: kernel.o $(SYSCALL)/use.o $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o $(USER_OBJ) #$(USER_PRO)
 	$(LD) $(LDFLAGS) -Ttext 0x7d00 --oformat binary -o $@ $^
-kernel.elf: kernel.o $(SYSCALL)/use.o $(SYSCALL)/sysc.o $(USER_OBJ)
+kernel.elf: kernel.o $(SYSCALL)/use.o $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o $(USER_OBJ)
 	$(LD) $(OBJFLAGS) -Ttext 0x7d00 -o $@ $^
 kernel.txt: kernel.elf
 	$(OBJDUMP) -S $^ > $@
@@ -30,6 +30,9 @@ $(SYSCALL)/sysc.o:
 	cd $(SYSCALL)/ && make
 	cd ../kernel
 $(SYSCALL)/use.o:
+	cd $(SYSCALL)/ && make
+	cd ../kernel
+$(SYSCALL)/interuptf.o:
 	cd $(SYSCALL)/ && make
 	cd ../kernel
 $(USER)/command.o:

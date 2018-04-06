@@ -4,11 +4,6 @@ void clearscreen(){
 	//__asm__("pop %ax");
 	return ;
 }
-void printcpos(char alpha,int row,int colume){
-	int pos = (80 * row + colume)*2;
-	int color = 3;
-	_printchar(alpha,pos,color);
-}
 void print(char const* Messeage,int row,int colume){//need the pos
 	int pos = (80 * row + colume)*2;
 	int color = 3;
@@ -18,6 +13,7 @@ void print(char const* Messeage,int row,int colume){//need the pos
 		index++;
 		pos = pos + 2;
 	}
+	return;
 }
 void prints(char const *Messeage){//can follow the position of your input
 	int index = 0;
@@ -29,16 +25,18 @@ void prints(char const *Messeage){//can follow the position of your input
 }
 void printc(char alpha){
 	_showchar(alpha);
+	return;
 }
 void printsint(int num){
 	 int save = num;
 	 int count = 0;
 	 char number[30];
+	 number[count] = 0;
 	if(num < 0){
 		printc('-');
 		num = -num;
 	}
-	if(num == 0){
+	else if(num == 0){
 		printc('0');
 	}
 	while(num > 0){
@@ -50,6 +48,7 @@ void printsint(int num){
 	for(i = count - 1;i >= 0;i --){
 		printc(number[i]);
 	}
+	return;
 }
  void print_next_line(char const* Messeage){
 	prints(Messeage);

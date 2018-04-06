@@ -46,25 +46,33 @@ int terminal(){
             int strcmp1 = strcmp(recived,quit);
             int strcmp2 = strcmp(recived,help);
             int strcmp3 = strcmp(recived,lst);
+            //printsint(strcmp2);
             if(num_of_queue != 0 || number != 0 ||strcmp1 == 1 ||strcmp2 == 1 || strcmp3 == 1){
-                if(strcmp1 == 1 || strcmp2 == 1 || strcmp3 == 1){//判断字符串   
+                if(strcmp1 == 1 || strcmp2 == 1 || strcmp3 == 1){//判断字符串  
+                    //printsint(strcmp2);
                     print_next_line("");//换行
                     //prints("");
                     //prints("");
                     //prints("");
                     //prints("");
                     //prints("");//important,I don't know why this need;
+                    //prints(recived);
                     if(strcmp1 == 1){
                         print_next_line(ByeByeMsg);
+                        index_of_str = 0;
+                        recived[index_of_str] = 0;
                     }                  
                    else if(strcmp2 == 1){
                          print_next_line(HelpMsg1);
+                        index_of_str = 0;
+                        recived[index_of_str] = 0;
                     }
                     else if(strcmp3 == 1){
                         print_next_line(filelist);
-                    }
-                      index_of_str = 0;
+                        index_of_str = 0;
                       recived[index_of_str] = 0;
+                    }
+                        //prints(recived);
                     prints(CMDHead);
                     continue;
                 }
@@ -79,21 +87,20 @@ int terminal(){
                     num_of_queue = 0;
                     number = 0;
                     prints(CMDHead);
-                    while(index_of_str != 0){//clear the string
+                    index_of_str = 0;
                     recived[index_of_str] = 0;
-                    index_of_str --;
-                    }
                     continue;
+                }
+                else{
+                    prints("fuck");
                 }
             }
             else{
                  prints("\n\r");
                 print_next_line(controlMsg2);
                 prints(CMDHead);
-                while(index_of_str != 0){//clear the string
-                  recived[index_of_str] = 0;
-                  index_of_str --;
-                }
+                index_of_str = 0;
+                recived[index_of_str] = 0;
                 continue;
             }
 
@@ -112,7 +119,10 @@ int terminal(){
                 recived[index_of_str] =  save;
                 index_of_str ++;
                 recived[index_of_str] = 0;
-            } 
+            }
+            else if(index_of_str >= 10){
+                prints("not added");
+            }
         }
     }
 }
@@ -124,19 +134,19 @@ void run(int queue[],int size){
         //_load_userProgram(queue[j]);
         //_delay();
         if(queue[j] == 1){
-            _loadP(2,23,0xC000);
+            _loadP(4,23,0xC000);
              _RunProgress(0xC000);
         }
         if(queue[j] == 2){
-            _loadP(2,25,0xC000);
+            _loadP(4,27,0xC000);
             _RunProgress(0xC000);
         }
         if(queue[j] == 3){
-            _loadP(2,27,0xC000);
+            _loadP(4,31,0xC000);
             _RunProgress(0xC000);
         }
         if(queue[j] == 4){
-            _loadP(2,29,0xC000);
+            _loadP(4,35,0xC000);
             _RunProgress(0xC000);
         }
     }

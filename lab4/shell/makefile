@@ -1,7 +1,7 @@
 LD=/Users/chen/toolchain/bin/i386-elf-ld
 LDFLAGS=-melf_i386 -N
 CC=/Users/chen/toolchain/bin/i386-elf-gcc
-CCFLAGS=-march=i386 -m16 -mpreferred-stack-boundary=2 -ffreestanding -g
+CCFLAGS=-march=i386 -m16 -mpreferred-stack-boundary=2 -ffreestanding -g 
 AS=nasm
 ASFLAGS=
 
