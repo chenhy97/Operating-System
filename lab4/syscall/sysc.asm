@@ -55,12 +55,9 @@ alpha dw '-'
     ; 清屏
 ;===============================
 _clearscreen:
-    enter 0,0
-    ;pusha
+    
     mov ax,0003;have to clean screen by this way,or I can not print the string with cursor
     int 10h
-    ;popa
-    leave
     newret
 ;==============================
 ;   _printchar(char,pos,color)
@@ -172,6 +169,9 @@ _RunProgress:
     mov ah,00H
     int 16h
     ;popa
+    mov ax,0x0400
+    push ax
+    int 21h
     pop es
     leave
     newret
@@ -248,6 +248,7 @@ end:
 
 _SetINT33h:
    ; CLI
+   ;enter 0,0
     pusha
     push ds
     push gs
@@ -257,9 +258,7 @@ _SetINT33h:
     pop ds
     popa
    ; STI
-    mov al,20h
-    out 20h,al
-    out 0A0H,al
+   ;leave
     iret
 _SetINT34h:
      pusha
@@ -271,6 +270,92 @@ _SetINT34h:
     pop ds
     popa
     iret
+
+_SetINT21h:
+   enter 0,0
+   pusha
+   mov ax,[bp+8];调用int 21h,压入了ebp,和一个ip（？？？），
+   cmp ah,0
+   jz showc
+   cmp ah,1
+   jz inputc
+   cmp ah,2
+   jz input_and_readc
+   cmp ah,3
+   jz clr
+   cmp ah,4
+   jz ouch
+   popa
+   leave
+   iret
+ showc:;显示一个字符
+    mov ax,[bp+10]; ASCII码
+    mov ah,0eh ; 功能号
+    mov bl,0 ; Bl设为0
+    int 10H ; 调用中断
+    popa
+    leave
+    iret
+inputc:;存入缓冲区
+    sub esp,4
+    mov ah,00h
+    int 16h
+    mov ah,0
+    mov [esp],eax
+    mov eax,[esp];save the output by this way
+    add esp,4
+    mov fs,ax
+    popa
+    leave
+    iret
+input_and_readc:;回显
+    sub esp,4
+    mov ah,00H
+    int 16h
+    mov ah,0
+    mov [esp],eax
+    mov eax,[esp]
+    mov ah,0eh
+    mov bl,0
+    int 10h
+    add esp,4
+    mov fs,ax
+    popa 
+    leave
+    iret
+clr:;清屏
+    mov ax,0003;have to clean screen by this way,or I can not print the string with cursor
+    int 10h
+    popa
+    leave
+    iret
+ouch:
+    push es
+    mov ax,0xb800
+    mov es,ax
+    mov di,40
+    push di
+	mov ecx,'o';char//ip = 2 bytes,esp = 4 bytes
+    mov ch,7
+	mov edi,40;pos
+	mov word[es:di],cx
+    mov ecx,'u';char//ip = 2 bytes,esp = 4 bytes
+    mov ch,7
+	mov edi,42;pos
+	mov word [es:di],cx
+    mov ecx,'c';char//ip = 2 bytes,esp = 4 bytes
+    mov ch,7
+	mov edi,44;pos
+	mov word [es:di],cx
+    mov ecx,'h';char//ip = 2 bytes,esp = 4 bytes
+    mov ch,7
+	mov edi,46;pos
+	mov [es:di],cx
+    pop di
+    pop es
+    popa
+    leave 
+    iret
 ;========================================================
 ;                   初始化中断向量程序区
 ;========================================================
@@ -281,6 +366,7 @@ _initialInt:
      SetInt 08h,_SetINT08h
      SetInt 33h,_SetINT33h
      SetInt 34h,_SetINT34h
+     SetInt 21h,_SetINT21h
      leave
     newret;不能加，否则找不到
 _test:

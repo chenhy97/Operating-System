@@ -4,8 +4,8 @@
 int main(){
      Initial_Int();
     clearscreen();
-    _loadP(4,23,0xC000);
-     //_loadP(4,23,0xC000);
+   // _loadP(4,23,0xC000);
+     _loadP(4,21,0xC000);
      _RunProgress(0xC000);
     char const *Messeage = "Built by Chen Hongyang on March 20, 2018";
     print("===================================================",9,12);
@@ -15,12 +15,12 @@ int main(){
    print("===================================================",12,12);
    
 
+   clearscreen(); 
     char const *Msg1 = "Press any key to get help\n\r";
    prints(Msg1);
    print("!",13,39);
    
-   char a = waitforinput();
-   clearscreen();   
+   char a = waitforinput();  
     
     /*buildmap();还有待解决debug
     void *addr = (void*) 0xB100;
