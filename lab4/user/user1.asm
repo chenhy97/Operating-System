@@ -43,9 +43,11 @@ start:
 	call showname
 
 	
-	int 33h
-	int 34h
+
+	;int 35h
 	int 20h
+	;int 33h//与变色时钟中断不兼容
+	int 34h
 	jmp start
 
 

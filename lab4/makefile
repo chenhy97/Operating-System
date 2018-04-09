@@ -45,11 +45,11 @@ $(USER)/test.bin:
 build: $(LOADER)/loader.bin $(KERNEL)/kernel.bin
 	dd if=$(LOADER)/loader.bin of=S.img conv=notrunc;sync
 	dd if=$(KERNEL)/kernel.bin of=S.img bs=512  conv=notrunc seek=1;sync
-	dd if=$(USER)/test.bin of=S.img bs=512 count=2 conv=notrunc seek=20;sync
-	dd if=$(USER)/user1.bin of=S.img bs=512 count=4 conv=notrunc seek=22;sync 
-	dd if=$(USER)/user2.bin of=S.img bs=512 count=4 conv=notrunc seek=26;sync
-	dd if=$(USER)/user3.bin of=S.img bs=512 count=4 conv=notrunc seek=30;sync
-	dd if=$(USER)/user4.bin of=S.img bs=512 count=4 conv=notrunc seek=34;sync
+	dd if=$(USER)/test.bin of=S.img bs=512 count=4 conv=notrunc seek=20;sync
+	dd if=$(USER)/user1.bin of=S.img bs=512 count=5 conv=notrunc seek=24;sync 
+	dd if=$(USER)/user2.bin of=S.img bs=512 count=5 conv=notrunc seek=29;sync
+	dd if=$(USER)/user3.bin of=S.img bs=512 count=5 conv=notrunc seek=34;sync
+	dd if=$(USER)/user4.bin of=S.img bs=512 count=5 conv=notrunc seek=39;sync
 	#dd if=$(USER)/test.bin of=S.img bs=512 count=4 conv=notrunc seek=38;sync
 clean:
 	find . -name "*.bin" -type f -delete

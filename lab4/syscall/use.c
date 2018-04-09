@@ -140,3 +140,6 @@ void Initial_Int(){
 	_initialInt();
 	return;
 }
+void Initial_Int_09h(){
+	_initialInt_09h();
+}

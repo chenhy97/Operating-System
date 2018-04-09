@@ -11,11 +11,13 @@ global _SetINT20h
 global _getch
 global _write
 global _initialInt
+global _initialInt_09h
 global _RunProgress
 global _test
 extern printcircle
 extern showline
 extern printname
+extern upper
 Pg_Segment dw 0x0000
 Pg_Offset dw 0xC000
 info_Segment dw 0x0000
@@ -26,7 +28,9 @@ x dw 0
 y dw 0
 xdul dw 1
 ydul dw 1
-alpha dw '-'
+alpha db '-'
+int_09_saved dd 0
+color db 1
 %macro newret 0;inorder to get back,have to match with enter-leave
     pop edx
     jmp dx
@@ -196,41 +200,46 @@ _SetINT20h:
     iret
     
 _SetINT08h:
-    ;pushf
-    ;CLI
     pusha
-    push dx
+   ; push dx
     push gs
     ;push ds
     ;push es
     dec byte [count]
     jnz end
 notc:
-    cmp word[alpha],'-'
+    cmp byte[alpha],'-'
     jnz changleft
-    mov word[alpha],'\'
+    mov byte[alpha],'\'
     jmp show
     changleft:
-    cmp word[alpha],'\'
+    cmp byte[alpha],'\'
     jnz changright
-    mov word[alpha],'|'
+    mov byte[alpha],'|'
     jmp show
     changright:
-    cmp word[alpha],'|'
+    cmp byte[alpha],'|'
     jnz changheng
-    mov word[alpha],'/'
+    mov byte[alpha],'/'
     jmp show
     changheng:
-    cmp word[alpha],'/'
+    cmp byte[alpha],'/'
     jnz notc
-    mov word[alpha],'-'
+    mov byte[alpha],'-'
     jmp show
 
 show:
-    push word [alpha]
-    push word 0
-    call printcircle;
-    pop ax
+    ;push word [alpha]
+    ;push word 0
+    ;call printcircle;
+    ;pop ax;平衡堆栈
+    mov cx, 0xB800
+    mov gs, cx
+    mov ah,0x9
+    mov ah, byte [color]
+    
+    mov al, byte[alpha]
+    mov word [gs:220],ax
     mov byte [count],delay
 
 end:
@@ -240,15 +249,62 @@ end:
    ; pop es
     ;pop ds
     pop gs
-    pop dx
+    ;pop dx
     popa
     ;STI
-    ;popf
     iret
+_SetINT09h:
+     pusha
+    mov cx, 0xB800
+    mov gs, cx
+    mov ah, byte [color]
+    
+    mov al, 'O'
+    mov word [gs:0],ax
+    mov al, 'U'
+    mov word [gs:2],ax
+    mov al, 'C'
+    mov word [gs:4],ax
+    mov al, 'H'
+    mov word [gs:6],ax
+    mov al, 'S'
+    mov word [gs:8],ax
+    mov al, '!'
+    mov word [gs:10],ax
+    mov al, 'O'
+    mov word [gs:12],ax
+    mov al, 'U'
+    mov word [gs:14],ax
+    mov al, 'C'
+    mov word [gs:16],ax
+    mov al, 'H'
+    mov word [gs:18],ax
+    mov al, '!'
+    mov word [gs:20],ax
+    popa
 
+    cmp ah,6
+    jnz cont
+    push ax
+    mov ah,1
+    mov byte [color],ah
+    pop ax
+cont:
+    inc byte [color]
+	push es
+	push ax
+	mov ax, cs
+	mov es, ax
+	sti
+	pushf
+	call far [es:int_09_saved]
+
+	pop ax
+	pop es
+	iret
 _SetINT33h:
    ; CLI
-   ;enter 0,0
+   enter 0,0
     pusha
     push ds
     push gs
@@ -258,7 +314,7 @@ _SetINT33h:
     pop ds
     popa
    ; STI
-   ;leave
+   leave
     iret
 _SetINT34h:
      pusha
@@ -269,6 +325,23 @@ _SetINT34h:
     pop gs
     pop ds
     popa
+    iret
+
+_SetINT35h:;need to debug
+    enter 4,0
+    pusha
+    push ds
+    push gs
+    mov ax, [bp+8]
+    push ax
+    push word 0
+    call upper
+    mov [esp],eax
+    mov eax,[esp];
+    pop gs
+    pop ds
+    popa
+    leave
     iret
 
 _SetINT21h:
@@ -361,14 +434,25 @@ ouch:
 ;========================================================
 _initialInt:
     enter 0,0
+     SetInt 35h,_SetINT35h
     ;push 0;
      SetInt 20h,_SetINT20h
      SetInt 08h,_SetINT08h
      SetInt 33h,_SetINT33h
      SetInt 34h,_SetINT34h
-     SetInt 21h,_SetINT21h
+     ;SetInt 21h,_SetINT21h
      leave
     newret;不能加，否则找不到
+
+_initialInt_09h:
+     enter 0,0
+    mov ax, [09h * 4]
+	mov word [int_09_saved], ax
+	mov ax, [09h * 4 + 2]
+	mov word [int_09_saved + 2], ax
+    SetInt 09h,_SetINT09h
+    leave
+    newret
 _test:
     pusha
     push ax

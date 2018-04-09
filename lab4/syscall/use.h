@@ -10,6 +10,7 @@ extern void _row_the_screen();
 extern void _getch();
 extern void  _write(int count,int start,void* addr);
 extern void _initialInt();
+extern void _initialInt_09h();
 //extern void _RunProgress(void* addr);
 void print(char const* Messeage,int row,int colume);
 void prints(char const *Messeage);
@@ -23,6 +24,7 @@ int strcmp(char *m1,char const *m2);
 void bulidmap();
 void showtable();
 void Initial_Int();
+void Initial_Int_09h();
 struct info{
     char name[4][16];
     int size[4];

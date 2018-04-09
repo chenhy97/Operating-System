@@ -134,19 +134,19 @@ void run(int queue[],int size){
         //_load_userProgram(queue[j]);
         //_delay();
         if(queue[j] == 1){
-            _loadP(4,23,0xC000);
+            _loadP(5,25,0xC000);
              _RunProgress(0xC000);
         }
         if(queue[j] == 2){
-            _loadP(4,27,0xC000);
+            _loadP(5,30,0xC000);
             _RunProgress(0xC000);
         }
         if(queue[j] == 3){
-            _loadP(4,31,0xC000);
+            _loadP(5,35,0xC000);
             _RunProgress(0xC000);
         }
         if(queue[j] == 4){
-            _loadP(4,35,0xC000);
+            _loadP(5,40,0xC000);
             _RunProgress(0xC000);
         }
     }

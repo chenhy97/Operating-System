@@ -34,6 +34,13 @@ void printpos(char const* Messeage,int row,int colume){//need the pos
 	return;
 }
 void printname(){
-    char const* Message = "chenhy";
-    printpos(Message,15,10);
+    char const* Messeage = "chenhy";
+    printpos(Messeage,15,10);
+}
+char* upper(char *Messeage){
+    int i = 0;
+    while(Messeage[i] >= 'a' && Messeage <= 'z'){
+        Messeage[i] = Messeage[i] + 'A' - 'a';
+    }
+    return Messeage;
 }
