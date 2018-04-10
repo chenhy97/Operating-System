@@ -1,9 +1,25 @@
 #include "use.h"
-void printcircle(char alpha){
-    int pos = (80 * 15 + 20)*2;
-    int color = 3;
-	_printchar(alpha,pos,color);
-    return;
+void printpos(char const* Messeage,int row,int colume){//Why need this???
+	int pos = (80 * row + colume)*2;
+	int color = 3;
+	int index = 0;
+	while(Messeage[index] != '\0'){
+		_printchar(Messeage[index],pos,color);
+		index++;
+		pos = pos + 2;
+	}
+	return;
+}
+void print_for_heart(char const* Messeage,int row,int colume){//need the pos
+	int pos = (80 * row + colume)*2;
+	int color = 3;
+	int index = 0;
+	while(Messeage[index] != '\0'){
+		_printchar(Messeage[index],pos,color);
+		index++;
+		pos = pos + 2;
+	}
+	return;
 }
 void showline(){
     char alpha = 'a';
@@ -22,25 +38,22 @@ void showline(){
         _printchar(name[i],pos,color);
     }
 }
-void printpos(char const* Messeage,int row,int colume){//need the pos
-	int pos = (80 * row + colume)*2;
-	int color = 3;
-	int index = 0;
-	while(Messeage[index] != '\0'){
-		_printchar(Messeage[index],pos,color);
-		index++;
-		pos = pos + 2;
-	}
-	return;
-}
 void printname(){
-    char const* Messeage = "chenhy";
-    printpos(Messeage,15,10);
+    char const* Messeage = "I am OS";
+    print_for_heart(Messeage,16,11);
+
 }
-char* upper(char *Messeage){
-    int i = 0;
-    while(Messeage[i] >= 'a' && Messeage <= 'z'){
-        Messeage[i] = Messeage[i] + 'A' - 'a';
-    }
-    return Messeage;
+void printpoem(){
+    char const* Messeage = "I am test";
+    print_for_heart(Messeage,15,10);
+}
+void printheart(){
+    print_for_heart("     * *       * *     ",10,00);
+    print_for_heart("   * * * *   * * * *    ",11,00);
+    print_for_heart(" * * * * * * * * * * *    ",12,00);
+    print_for_heart("  * * * * * * * * * *   ",13,00);
+    print_for_heart("    * * * * * * * *    ",14,00);
+    print_for_heart("      * * * * * *     ",15,00);
+    print_for_heart("        * * * *      ",16,00);
+    print_for_heart("          * *       ",17,00);
 }

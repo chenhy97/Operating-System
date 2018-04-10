@@ -37,10 +37,8 @@ start:
 	POINT x1,y1,xdul1,ydul1,color1,char1
 	POINT x2,y2,xdul2,ydul2,color2,char2
 	call showname
-	;push word 0;
-	;push msg;
-	;call prints;
 	int 20h
+	int 35h
 	jmp start
 
 

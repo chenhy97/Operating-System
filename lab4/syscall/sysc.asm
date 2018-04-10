@@ -17,7 +17,8 @@ global _test
 extern printcircle
 extern showline
 extern printname
-extern upper
+extern printpoem
+extern printheart
 Pg_Segment dw 0x0000
 Pg_Offset dw 0xC000
 info_Segment dw 0x0000
@@ -251,7 +252,7 @@ end:
     pop gs
     ;pop dx
     popa
-    ;STI
+    STI
     iret
 _SetINT09h:
      pusha
@@ -260,27 +261,27 @@ _SetINT09h:
     mov ah, byte [color]
     
     mov al, 'O'
-    mov word [gs:0],ax
-    mov al, 'U'
-    mov word [gs:2],ax
-    mov al, 'C'
-    mov word [gs:4],ax
-    mov al, 'H'
-    mov word [gs:6],ax
-    mov al, 'S'
-    mov word [gs:8],ax
-    mov al, '!'
     mov word [gs:10],ax
-    mov al, 'O'
-    mov word [gs:12],ax
     mov al, 'U'
-    mov word [gs:14],ax
+    mov word [gs:12],ax
     mov al, 'C'
-    mov word [gs:16],ax
+    mov word [gs:14],ax
     mov al, 'H'
+    mov word [gs:16],ax
+    mov al, 'S'
     mov word [gs:18],ax
     mov al, '!'
     mov word [gs:20],ax
+    mov al, 'O'
+    mov word [gs:22],ax
+    mov al, 'U'
+    mov word [gs:24],ax
+    mov al, 'C'
+    mov word [gs:26],ax
+    mov al, 'H'
+    mov word [gs:28],ax
+    mov al, '!'
+    mov word [gs:30],ax
     popa
 
     cmp ah,6
@@ -304,7 +305,7 @@ cont:
 	iret
 _SetINT33h:
    ; CLI
-   enter 0,0
+   ;enter 0,0
     pusha
     push ds
     push gs
@@ -313,8 +314,8 @@ _SetINT33h:
     pop gs
     pop ds
     popa
-   ; STI
-   leave
+    STI
+   ;leave
     iret
 _SetINT34h:
      pusha
@@ -325,43 +326,48 @@ _SetINT34h:
     pop gs
     pop ds
     popa
+    STI
     iret
-
-_SetINT35h:;need to debug
-    enter 4,0
+_SetINT35h:
     pusha
     push ds
     push gs
-    mov ax, [bp+8]
-    push ax
     push word 0
-    call upper
-    mov [esp],eax
-    mov eax,[esp];
+    call printpoem
     pop gs
     pop ds
     popa
-    leave
+    STI
     iret
-
+_SetINT36h:
+    pusha
+    ;push es
+    push ds
+    push gs
+    push word 0
+    call printheart
+    pop gs
+    pop ds
+    ;pop es
+    popa
+    STI
+    iret
 _SetINT21h:
    enter 0,0
    pusha
    mov ax,[bp+8];调用int 21h,压入了ebp,和一个ip（？？？），
    cmp ah,0
-   jz showc
+   jz fn0
    cmp ah,1
-   jz inputc
+   jz fn1
    cmp ah,2
-   jz input_and_readc
+   jz fn2
    cmp ah,3
-   jz clr
-   cmp ah,4
-   jz ouch
+   jz fn3
    popa
    leave
    iret
- showc:;显示一个字符
+fn0:;显示一个字符
     mov ax,[bp+10]; ASCII码
     mov ah,0eh ; 功能号
     mov bl,0 ; Bl设为0
@@ -369,7 +375,7 @@ _SetINT21h:
     popa
     leave
     iret
-inputc:;存入缓冲区
+fn1:;存入缓冲区
     sub esp,4
     mov ah,00h
     int 16h
@@ -381,7 +387,7 @@ inputc:;存入缓冲区
     popa
     leave
     iret
-input_and_readc:;回显
+fn2:;回显
     sub esp,4
     mov ah,00H
     int 16h
@@ -396,53 +402,28 @@ input_and_readc:;回显
     popa 
     leave
     iret
-clr:;清屏
+fn3:;清屏
     mov ax,0003;have to clean screen by this way,or I can not print the string with cursor
     int 10h
     popa
     leave
     iret
-ouch:
-    push es
-    mov ax,0xb800
-    mov es,ax
-    mov di,40
-    push di
-	mov ecx,'o';char//ip = 2 bytes,esp = 4 bytes
-    mov ch,7
-	mov edi,40;pos
-	mov word[es:di],cx
-    mov ecx,'u';char//ip = 2 bytes,esp = 4 bytes
-    mov ch,7
-	mov edi,42;pos
-	mov word [es:di],cx
-    mov ecx,'c';char//ip = 2 bytes,esp = 4 bytes
-    mov ch,7
-	mov edi,44;pos
-	mov word [es:di],cx
-    mov ecx,'h';char//ip = 2 bytes,esp = 4 bytes
-    mov ch,7
-	mov edi,46;pos
-	mov [es:di],cx
-    pop di
-    pop es
-    popa
-    leave 
-    iret
+
 ;========================================================
 ;                   初始化中断向量程序区
 ;========================================================
 _initialInt:
     enter 0,0
-     SetInt 35h,_SetINT35h
     ;push 0;
      SetInt 20h,_SetINT20h
      SetInt 08h,_SetINT08h
      SetInt 33h,_SetINT33h
      SetInt 34h,_SetINT34h
-     ;SetInt 21h,_SetINT21h
+     SetInt 35h,_SetINT35h
+     SetInt 36h,_SetINT36h
+     SetInt 21h,_SetINT21h
      leave
-    newret;不能加，否则找不到
+    newret;
 
 _initialInt_09h:
      enter 0,0
@@ -452,29 +433,4 @@ _initialInt_09h:
 	mov word [int_09_saved + 2], ax
     SetInt 09h,_SetINT09h
     leave
-    newret
-_test:
-    pusha
-    push ax
-    push bx
-    push cx
-    push dx;;;;;;;;;;;;;;;
-    push gs;;;;;;;;;;;;;;;
-    mov ax,word [x]
-    push ax;
-    push word 0
-    inc word [x]
-    mov ax,word [y];
-    push ax;
-    push word 0
-    inc word [y]
-    call printcircle;
-    pop eax
-    pop ax
-    pop gs;;;;;;;;;;;;;;;
-    pop dx;;;;;;;;;;;;;;;
-    pop cx
-    pop bx
-    pop ax
-    popa
     newret

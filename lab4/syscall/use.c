@@ -76,18 +76,6 @@ void printsint(int num){
 	return result;
 }
 int strcmp(char *m1,char const* m2){
-	/*int len1 = strlen(m1);
-	int len2 = strlen(m2);
-	if(len1 != len2){
-		return 0;
-	}
-	int i= 0;
-	for(i = 0;i < len1;i++){
-		if(m1[i] != m2[i]){
-			return 0;
-		}
-	}
-	return 1;*/
 	int i = 0;
 	while(m1[i] != 0 && m2[i]!= 0){
 		if(m1[i] != m2[i]){

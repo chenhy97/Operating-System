@@ -40,6 +40,7 @@ start:
 	POINT x2,y2,xdul2,ydul2,color2,char2
 	call showname
 	int 20h
+	int 34h
 	jmp start
 
 

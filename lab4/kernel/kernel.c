@@ -4,11 +4,10 @@
 int main(){
     Initial_Int();
     clearscreen();
-    //_initialInt_09h();
     Initial_Int_09h();
-    //_loadP(5,25,0xC000);
+    _loadP(5,25,0xC000);
     //_loadP(4,21,0xC000);
-    //_RunProgress(0xC000);
+    _RunProgress(0xC000);
 
     char const *Messeage = "Built by Chen Hongyang on March 20, 2018";
     print("===================================================",9,12);
