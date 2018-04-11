@@ -11,13 +11,13 @@ SYSCALL=../syscall
 all:	user1.bin user2.bin user3.bin user4.bin test.bin test.elf test.txt user1.elf user1.txt#infoP.bin
 
 user1.bin: user1.o  $(SYSCALL)/sysc.o  $(SYSCALL)/interuptf.o
-	$(LD) $(LDFLAGS) -Ttext 0xC000 --oformat binary -o $@ $^
+	$(LD) $(LDFLAGS) -Ttext 0xA000 --oformat binary -o $@ $^
 user2.bin: user2.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o
-	$(LD) $(LDFLAGS) -Ttext 0xC000 --oformat binary -o $@ $^
+	$(LD) $(LDFLAGS) -Ttext 0xB000 --oformat binary -o $@ $^
 user3.bin: user3.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o
 	$(LD) $(LDFLAGS) -Ttext 0xC000 --oformat binary -o $@ $^
 user4.bin: user4.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o
-	$(LD) $(LDFLAGS) -Ttext 0xC000 --oformat binary -o $@ $^
+	$(LD) $(LDFLAGS) -Ttext 0xD000 --oformat binary -o $@ $^
 test.bin: test.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o
 	$(LD) $(LDFLAGS) -Ttext 0xC000 --oformat binary -o $@ $^
 
