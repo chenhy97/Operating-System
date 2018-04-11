@@ -5,7 +5,7 @@ int main(){
     Initial_Int();
     clearscreen();
     Initial_Int_09h();
-    _loadP(5,25,0xC000);
+    _loadP(10,25,0xC000);
     //_loadP(4,21,0xC000);
     _RunProgress(0xC000);
 

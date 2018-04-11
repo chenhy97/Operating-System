@@ -133,7 +133,6 @@ _loadP:
     pusha
     push es
     push ds
-    push dx
     mov ax,cs
     mov ds,ax
     mov es,ax
@@ -152,7 +151,6 @@ _loadP:
     mov bx,word [bp+14];内存地址
     mov ah,2
     int 13h
-    pop dx
     pop ds
     pop es
     popa
@@ -160,40 +158,30 @@ _loadP:
     newret
 _RunProgress:
     enter 0,0
-    push es 
-    pusha
-    push es
+    ;pusha
     mov ax,cs
     mov ds,ax
     mov es,ax
     mov bx,[bp+6]
     call bx
-    pop es
-    popa
  S:
     mov ah,00H
     int 16h
-    ;popa
-    mov ax,0x0400
-    push ax
-    int 21h
-    pop es
     leave
     newret
 ;========================================================
 ;                   中断向量程序区
 ;========================================================
 _SetINT20h:
-     ;Print Help,HelpLength,1301h,0301h
-    ; call print2
-    ;pusha
-    ;pushf
+    ;mov ax,cs
+    ;mov ds,ax
+    ;mov es,ax
+    ;popa
     push bx
     push cx
     push dx
     mov ah,01h;检测键盘状态。
     int 16h
-    ;popa
     pop dx
     pop cx
     pop bx
@@ -204,8 +192,11 @@ _SetINT08h:
     pusha
    ; push dx
     push gs
-    ;push ds
-    ;push es
+    push ds
+    push es
+    mov ax,cs
+    mov es,ax
+    mov ds,ax
     dec byte [count]
     jnz end
 notc:
@@ -247,15 +238,20 @@ end:
     mov al,20h
     out 20h,al
     out 0A0H,al
-   ; pop es
-    ;pop ds
+    pop es
+    pop ds
     pop gs
     ;pop dx
     popa
     STI
     iret
 _SetINT09h:
+     push ds
+     push es
      pusha
+     mov ax,cs
+     mov ds,ax
+     mov es,ax
     mov cx, 0xB800
     mov gs, cx
     mov ah, byte [color]
@@ -286,22 +282,17 @@ _SetINT09h:
 
     cmp ah,6
     jnz cont
-    push ax
     mov ah,1
     mov byte [color],ah
-    pop ax
 cont:
     inc byte [color]
-	push es
-	push ax
 	mov ax, cs
 	mov es, ax
 	sti
 	pushf
 	call far [es:int_09_saved]
-
-	pop ax
-	pop es
+    pop es;;;位置在哪里？？？？？思考！！！！！！！！！
+    pop ds
 	iret
 _SetINT33h:
    ; CLI
@@ -309,8 +300,13 @@ _SetINT33h:
     pusha
     push ds
     push gs
+    push es
+    mov ax,cs
+    mov es,ax
+    mov ds,ax
     push word 0
     call showline
+    pop es
     pop gs
     pop ds
     popa
@@ -321,8 +317,13 @@ _SetINT34h:
      pusha
     push ds
     push gs
+    push es
+    mov ax,cs
+    mov es,ax
+    mov ds,ax
     push word 0
     call printname
+    pop es
     pop gs
     pop ds
     popa
@@ -332,8 +333,13 @@ _SetINT35h:
     pusha
     push ds
     push gs
+    push es
+    mov ax,cs
+    mov es,ax
+    mov ds,ax
     push word 0
     call printpoem
+    pop es
     pop gs
     pop ds
     popa
@@ -344,8 +350,13 @@ _SetINT36h:
     ;push es
     push ds
     push gs
+    push es
+    mov ax,cs
+    mov es,ax
+    mov ds,ax
     push word 0
     call printheart
+    pop es
     pop gs
     pop ds
     ;pop es
@@ -353,25 +364,37 @@ _SetINT36h:
     STI
     iret
 _SetINT21h:
-   enter 0,0
-   pusha
-   mov ax,[bp+8];调用int 21h,压入了ebp,和一个ip（？？？），
-   cmp ah,0
-   jz fn0
-   cmp ah,1
-   jz fn1
-   cmp ah,2
-   jz fn2
-   cmp ah,3
-   jz fn3
-   popa
-   leave
-   iret
+    enter 0,0
+    pusha
+    push ds
+    push gs
+    push es
+    mov ax,cs
+    mov es,ax
+    mov ds,ax
+    mov ax,[bp+8];调用int 21h,压入了ebp,和一个ip（？？？），
+    cmp ah,0
+    jz fn0
+    cmp ah,1
+    jz fn1
+    cmp ah,2
+    jz fn2
+    cmp ah,3
+    jz fn3
+    pop es
+    pop gs
+    pop ds
+    popa
+    leave
+    iret
 fn0:;显示一个字符
     mov ax,[bp+10]; ASCII码
     mov ah,0eh ; 功能号
     mov bl,0 ; Bl设为0
     int 10H ; 调用中断
+    pop es
+    pop gs
+    pop ds
     popa
     leave
     iret
@@ -384,6 +407,9 @@ fn1:;存入缓冲区
     mov eax,[esp];save the output by this way
     add esp,4
     mov fs,ax
+    pop es
+    pop gs
+    pop ds
     popa
     leave
     iret
@@ -399,12 +425,18 @@ fn2:;回显
     int 10h
     add esp,4
     mov fs,ax
+    pop es
+    pop gs
+    pop ds
     popa 
     leave
     iret
 fn3:;清屏
     mov ax,0003;have to clean screen by this way,or I can not print the string with cursor
     int 10h
+    pop es
+    pop gs
+    pop ds
     popa
     leave
     iret

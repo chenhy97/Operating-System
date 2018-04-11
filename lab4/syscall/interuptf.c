@@ -1,15 +1,4 @@
 #include "use.h"
-void printpos(char const* Messeage,int row,int colume){//Why need this???
-	int pos = (80 * row + colume)*2;
-	int color = 3;
-	int index = 0;
-	while(Messeage[index] != '\0'){
-		_printchar(Messeage[index],pos,color);
-		index++;
-		pos = pos + 2;
-	}
-	return;
-}
 void print_for_heart(char const* Messeage,int row,int colume){//need the pos
 	int pos = (80 * row + colume)*2;
 	int color = 3;
