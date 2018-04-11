@@ -31,6 +31,7 @@ xdul dw 1
 ydul dw 1
 alpha db '-'
 int_09_saved dd 0
+program_saved dd 12
 color db 1
 %macro newret 0;inorder to get back,have to match with enter-leave
     pop edx
@@ -135,6 +136,7 @@ _loadP:
     push ds
     mov ax,cs
     mov ds,ax
+    mov ax,0x1000
     mov es,ax
     mov dl,0
     mov ax,[bp+10];起始扇区号
@@ -163,8 +165,13 @@ _RunProgress:
     mov ds,ax
     mov es,ax
     mov bx,[bp+6]
-    call bx
+    mov word [program_saved],bx;save the program address
+    mov word [program_saved+2],0x1000
+    call far [es:program_saved]
  S:
+    mov ax,cs;将用户程序的ds，es改回内核程序的ds，es
+    mov ds,ax
+    mov es,ax
     mov ah,00H
     int 16h
     leave
@@ -290,7 +297,7 @@ cont:
 	mov es, ax
 	sti
 	pushf
-	call far [es:int_09_saved]
+	call far [es:int_09_saved];jump to the previous int 9h
     pop es;;;位置在哪里？？？？？思考！！！！！！！！！
     pop ds
 	iret
@@ -459,8 +466,8 @@ _initialInt:
 
 _initialInt_09h:
      enter 0,0
-    mov ax, [09h * 4]
-	mov word [int_09_saved], ax
+    mov ax, [09h * 4];hook the int 09h
+	mov word [int_09_saved], ax;save the ip
 	mov ax, [09h * 4 + 2]
 	mov word [int_09_saved + 2], ax
     SetInt 09h,_SetINT09h
