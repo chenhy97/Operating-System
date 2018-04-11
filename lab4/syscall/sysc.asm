@@ -158,10 +158,13 @@ _loadP:
     popa
     leave
     newret
+;===============================================================
+;                          运行程序到0x1000段
+;===============================================================
 _RunProgress:
     enter 0,0
     ;pusha
-    mov ax,cs
+    mov ax,cs;加载程序记得段的同步
     mov ds,ax
     mov es,ax
     mov bx,[bp+6]
@@ -169,16 +172,23 @@ _RunProgress:
     mov word [program_saved+2],0x1000
     call far [es:program_saved]
  S:
-    mov ax,cs;将用户程序的ds，es改回内核程序的ds，es
+    mov ax,cs;返回内核时，将用户程序的ds，es改回内核程序的ds，es
     mov ds,ax
     mov es,ax
     mov ah,00H
     int 16h
     leave
     newret
-;========================================================
-;                   中断向量程序区
-;========================================================
+;================================================================================================================
+;                                                                                                               ;
+;                                                                                                               ;
+;                                                中断向量程序区                                                    *
+;                                                                                                               ;
+;                                                                                                               ;
+;================================================================================================================
+;====================================================
+;                   20h:退出用户程序，返回主程序
+;====================================================
 _SetINT20h:
     ;mov ax,cs
     ;mov ds,ax
@@ -194,7 +204,9 @@ _SetINT20h:
     pop bx
     jnz S
     iret
-    
+ ;====================================================
+;                   08h:时钟中断
+;====================================================   
 _SetINT08h:
     pusha
    ; push dx
@@ -206,7 +218,7 @@ _SetINT08h:
     mov ds,ax
     dec byte [count]
     jnz end
-notc:
+ notc:
     cmp byte[alpha],'-'
     jnz changleft
     mov byte[alpha],'\'
@@ -227,7 +239,7 @@ notc:
     mov byte[alpha],'-'
     jmp show
 
-show:
+ show:
     ;push word [alpha]
     ;push word 0
     ;call printcircle;
@@ -241,7 +253,7 @@ show:
     mov word [gs:220],ax
     mov byte [count],delay
 
-end:
+ end:
     mov al,20h
     out 20h,al
     out 0A0H,al
@@ -252,6 +264,9 @@ end:
     popa
     STI
     iret
+;====================================================
+;                 09h：键盘中断显示ouch
+;====================================================
 _SetINT09h:
      push ds
      push es
@@ -291,7 +306,7 @@ _SetINT09h:
     jnz cont
     mov ah,1
     mov byte [color],ah
-cont:
+ cont:
     inc byte [color]
 	mov ax, cs
 	mov es, ax
@@ -301,6 +316,9 @@ cont:
     pop es;;;位置在哪里？？？？？思考！！！！！！！！！
     pop ds
 	iret
+;====================================================
+;                  33h：显示斜体“chenhy”
+;====================================================
 _SetINT33h:
    ; CLI
    ;enter 0,0
@@ -311,7 +329,7 @@ _SetINT33h:
     mov ax,cs
     mov es,ax
     mov ds,ax
-    push word 0
+    push word 0 ;in order to turn back to the program correctly
     call showline
     pop es
     pop gs
@@ -320,6 +338,9 @@ _SetINT33h:
     STI
    ;leave
     iret
+;====================================================
+;                 34h：显示“I am OS”
+;====================================================
 _SetINT34h:
      pusha
     push ds
@@ -336,6 +357,9 @@ _SetINT34h:
     popa
     STI
     iret
+;====================================================
+;                35h：显示“I am test”
+;====================================================
 _SetINT35h:
     pusha
     push ds
@@ -352,6 +376,9 @@ _SetINT35h:
     popa
     STI
     iret
+;====================================================
+;                 36h：显示爱心图案
+;====================================================
 _SetINT36h:
     pusha
     ;push es
@@ -370,6 +397,9 @@ _SetINT36h:
     popa
     STI
     iret
+;====================================================
+;                 21h系统调用
+;====================================================
 _SetINT21h:
     enter 0,0
     pusha

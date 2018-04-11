@@ -1,9 +1,15 @@
 #include "use.h"
+//====================================================
+//                封装清屏函数
+//====================================================
 void clearscreen(){
 	_clearscreen();//C调用汇编时会压入四个字节，必须考虑到这个，写出newret，是pop edx,而非 pop dx；
 	//__asm__("pop %ax");
 	return ;
 }
+//====================================================
+//              显示字符串函数，可以指定位置
+//====================================================
 void print(char const* Messeage,int row,int colume){//need the pos
 	int pos = (80 * row + colume)*2;
 	int color = 3;
@@ -15,6 +21,9 @@ void print(char const* Messeage,int row,int colume){//need the pos
 	}
 	return;
 }
+//====================================================
+//               显示字符串函数，紧跟着光标
+//====================================================
 void prints(char const *Messeage){//can follow the position of your input
 	int index = 0;
 	while(Messeage[index]){
@@ -23,10 +32,16 @@ void prints(char const *Messeage){//can follow the position of your input
 	}
 	return;
 }
+//====================================================
+//                显示字符函数
+//====================================================
 void printc(char alpha){
 	_showchar(alpha);
 	return;
 }
+//====================================================
+//                数字转字符函数
+//====================================================
 void printsint(int num){
 	 int save = num;
 	 int count = 0;
@@ -50,11 +65,17 @@ void printsint(int num){
 	}
 	return;
 }
+//====================================================
+//                显示字符串并换行函数
+//====================================================
  void print_next_line(char const* Messeage){
 	prints(Messeage);
 	prints("\n\r");
 	return;
 }
+//====================================================
+//               获取字符串长度函数
+//====================================================
  int strlen(char const *Messeage){
 	int i = 0;
 	int count = 0;
@@ -64,6 +85,9 @@ void printsint(int num){
 	}
 	return count;
 }
+//====================================================
+//                读取用户输入并回显函数
+//====================================================
  void read_and_print_input(){
     int i = 1;
     while(i){
@@ -71,10 +95,16 @@ void printsint(int num){
         _showchar(savechar);
     }
 }
+//====================================================
+//        等待用户输入函数，返回用户输入在缓冲区中
+//====================================================
  char waitforinput(){
 	char result = _readinput();
 	return result;
 }
+//====================================================
+//                字符串匹配函数
+//====================================================
 int strcmp(char *m1,char const* m2){
 	int i = 0;
 	while(m1[i] != 0 && m2[i]!= 0){
@@ -88,6 +118,9 @@ int strcmp(char *m1,char const* m2){
 	}
 	return 1;
 }
+//====================================================
+//                字符串复制函数
+//====================================================
 void strcpy(char const *src,char *des){
 	int len = strlen(src);
 	int i = 0;
@@ -96,6 +129,11 @@ void strcpy(char const *src,char *des){
         des[i+1] = 0;
 	}
 }
+//*****************************************************************************************
+//
+//			未调试区（读磁盘用户程序函数）
+//
+//*****************************************************************************************
 /*void buildmap(){
     struct info map;
     strcpy("1.img",map.name[0]);
@@ -124,6 +162,9 @@ void showtable(){
 		prints("\n\r");
 	}
 }*/
+//====================================================
+//                封装中断初始化函数
+//====================================================
 void Initial_Int(){
 	_initialInt();
 	return;
