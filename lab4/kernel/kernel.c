@@ -1,13 +1,18 @@
 #include"../syscall/use.h"
 #include"../shell/command.h"
 #include"kernel.h"
+#include "../syscall/stdio.h"
 int main(){
-    Initial_Int();
     clearscreen();
+   // char str[100] = {};
+    //getline(str,10);
+   // prints(str);
+    Initial_Int();
     Initial_Int_09h();
-    //_loadP(10,25,0xA000);
-    //_loadP(4,21,0xC000);
-    //_RunProgress(0xA000);
+    //_loadP(10,25,0x1000);
+    //_loadP(10,65,0x1000);
+    //_RunProgress(0x1000);
+
 
     char const *Messeage = "Built by Chen Hongyang on March 20, 2018";
     print("===================================================",9,12);
@@ -17,13 +22,12 @@ int main(){
    print("===================================================",12,12);
    
 
+   char a = getch();
    clearscreen(); 
     char const *Msg1 = "Press any key to get help\n\r";
    prints(Msg1);
    print("!",13,39);
    //Initial_Int();
-   char a = waitforinput();  
-    
     /*buildmap();还有待解决debug
     void *addr = (void*) 0xB100;
     _loadP(2,21,addr);

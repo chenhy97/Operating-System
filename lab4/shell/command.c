@@ -1,5 +1,6 @@
 #include "../syscall/use.h"
 #include "command.h"
+#include "../syscall/stdio.h"
 void run(int queue[],int size);
 int terminal(){
     char const *CMDHead = "hongyangchendeMacBook-Air:chenhyOS users$ ";
@@ -28,7 +29,7 @@ int terminal(){
         queue[k] = 0;
     }*/
     while(i){
-        char save = waitforinput();
+        char save = getch();
         if(save == 32){//空格
             if(num_of_queue == Maxsize){
                 prints("\n\r");
@@ -49,14 +50,7 @@ int terminal(){
             //printsint(strcmp2);
             if(num_of_queue != 0 || number != 0 ||strcmp1 == 1 ||strcmp2 == 1 || strcmp3 == 1){
                 if(strcmp1 == 1 || strcmp2 == 1 || strcmp3 == 1){//判断字符串  
-                    //printsint(strcmp2);
-                    print_next_line("");//换行
-                    //prints("");
-                    //prints("");
-                    //prints("");
-                    //prints("");
-                    //prints("");//important,I don't know why this need;
-                    //prints(recived);
+                    print_next_line("");
                     if(strcmp1 == 1){
                         print_next_line(ByeByeMsg);
                         index_of_str = 0;
@@ -103,8 +97,6 @@ int terminal(){
                 recived[index_of_str] = 0;
                 continue;
             }
-
-            
         }
         else if(save >= '0' && save <='9'){
            printc(save);
@@ -134,20 +126,20 @@ void run(int queue[],int size){
         //_load_userProgram(queue[j]);
         //_delay();
         if(queue[j] == 1){
-            _loadP(10,25,0xA000);
-             _RunProgress(0xA000);
+            _loadP(10,25,0x1000);
+             _RunProgress(0x1000);
         }
         if(queue[j] == 2){
-            _loadP(10,35,0xB000);
-            _RunProgress(0xB000);
+            _loadP(10,35,0x2000);
+            _RunProgress(0x2000);
         }
         if(queue[j] == 3){
-            _loadP(10,45,0xC000);
-            _RunProgress(0xC000);
+            _loadP(10,45,0x3000);
+            _RunProgress(0x3000);
         }
         if(queue[j] == 4){
-            _loadP(10,55,0xD000);
-            _RunProgress(0xD000);
+            _loadP(10,55,0x4000);
+            _RunProgress(0x4000);
         }
     }
      clearscreen();

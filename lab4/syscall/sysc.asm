@@ -8,17 +8,17 @@ global _setPoint
 global _row_the_screen
 global _load_userProgram
 global _SetINT20h
-global _getch
 global _write
 global _initialInt
 global _initialInt_09h
 global _RunProgress
 global _test
+global _initialTimer
 extern printcircle
-extern showline
-extern printname
-extern printpoem
-extern printheart
+extern sys_showline
+extern sys_printname
+extern sys_printpoem
+extern sys_printheart
 Pg_Segment dw 0x0000
 Pg_Offset dw 0xC000
 info_Segment dw 0x0000
@@ -127,7 +127,7 @@ _setPoint:;bug????
     newret
 ;_row_the_screen:
 ;============================================================
-;   加载程序进内存[_load(number_shanqu,start_shanqu,address_memory)]**********未封装
+;   加载程序进内存[_load(number_shanqu,start_shanqu,address_memory)]**********不同的段内存！*******
 ;============================================================
 _loadP:
     enter 0,0
@@ -136,7 +136,8 @@ _loadP:
     push ds
     mov ax,cs
     mov ds,ax
-    mov ax,0x1000
+    ;mov ax,0x1000
+    mov ax, word [bp+14]
     mov es,ax
     mov dl,0
     mov ax,[bp+10];起始扇区号
@@ -150,7 +151,7 @@ _loadP:
     mov dh,ah
     mov ch,al
     mov al,byte [bp+6];读多少个扇区
-    mov bx,word [bp+14];内存地址
+    mov bx,0x100
     mov ah,2
     int 13h
     pop ds
@@ -159,7 +160,7 @@ _loadP:
     leave
     newret
 ;===============================================================
-;                          运行程序到0x1000段
+;                          运行程序到不同段
 ;===============================================================
 _RunProgress:
     enter 0,0
@@ -168,17 +169,19 @@ _RunProgress:
     mov ds,ax
     mov es,ax
     mov bx,[bp+6]
-    mov word [program_saved],bx;save the program address
-    mov word [program_saved+2],0x1000
+    mov word [program_saved],0x100;save the program address
+    mov word [program_saved+2],bx
     call far [es:program_saved]
  S:
     mov ax,cs;返回内核时，将用户程序的ds，es改回内核程序的ds，es
     mov ds,ax
     mov es,ax
+    mov ss,ax
     mov ah,00H
     int 16h
     leave
     newret
+
 ;================================================================================================================
 ;                                                                                                               ;
 ;                                                                                                               ;
@@ -190,9 +193,12 @@ _RunProgress:
 ;                   20h:退出用户程序，返回主程序
 ;====================================================
 _SetINT20h:
-    ;mov ax,cs
-    ;mov ds,ax
-    ;mov es,ax
+    push ds
+    push es
+    mov ax,cs
+    mov ds,ax
+    mov es,ax
+    mov ss,ax
     ;popa
     push bx
     push cx
@@ -202,20 +208,24 @@ _SetINT20h:
     pop dx
     pop cx
     pop bx
+    pop es
+    pop ds
     jnz S
     iret
  ;====================================================
 ;                   08h:时钟中断
-;====================================================   
+;==================================================== 
 _SetINT08h:
     pusha
    ; push dx
     push gs
     push ds
     push es
+    push ss
     mov ax,cs
     mov es,ax
     mov ds,ax
+    mov ss,ax
     dec byte [count]
     jnz end
  notc:
@@ -250,13 +260,14 @@ _SetINT08h:
     mov ah, byte [color]
     
     mov al, byte[alpha]
-    mov word [gs:220],ax
+    mov word [gs:142],ax
     mov byte [count],delay
 
  end:
     mov al,20h
     out 20h,al
     out 0A0H,al
+    pop ss
     pop es
     pop ds
     pop gs
@@ -270,36 +281,38 @@ _SetINT08h:
 _SetINT09h:
      push ds
      push es
+     push ss
      pusha
      mov ax,cs
      mov ds,ax
      mov es,ax
+     mov ss,ax
     mov cx, 0xB800
     mov gs, cx
     mov ah, byte [color]
     
     mov al, 'O'
-    mov word [gs:10],ax
+    mov word [gs:120],ax
     mov al, 'U'
-    mov word [gs:12],ax
+    mov word [gs:122],ax
     mov al, 'C'
-    mov word [gs:14],ax
+    mov word [gs:124],ax
     mov al, 'H'
-    mov word [gs:16],ax
+    mov word [gs:126],ax
     mov al, 'S'
-    mov word [gs:18],ax
+    mov word [gs:128],ax
     mov al, '!'
-    mov word [gs:20],ax
+    mov word [gs:130],ax
     mov al, 'O'
-    mov word [gs:22],ax
+    mov word [gs:132],ax
     mov al, 'U'
-    mov word [gs:24],ax
+    mov word [gs:134],ax
     mov al, 'C'
-    mov word [gs:26],ax
+    mov word [gs:136],ax
     mov al, 'H'
-    mov word [gs:28],ax
+    mov word [gs:138],ax
     mov al, '!'
-    mov word [gs:30],ax
+    mov word [gs:140],ax
     popa
 
     cmp ah,6
@@ -313,6 +326,7 @@ _SetINT09h:
 	sti
 	pushf
 	call far [es:int_09_saved];jump to the previous int 9h
+    pop ss
     pop es;;;位置在哪里？？？？？思考！！！！！！！！！
     pop ds
 	iret
@@ -326,11 +340,14 @@ _SetINT33h:
     push ds
     push gs
     push es
+    push ss
     mov ax,cs
     mov es,ax
     mov ds,ax
+    mov ss,ax
     push word 0 ;in order to turn back to the program correctly
-    call showline
+    call sys_showline
+    pop ss
     pop es
     pop gs
     pop ds
@@ -346,11 +363,14 @@ _SetINT34h:
     push ds
     push gs
     push es
+    push ss
     mov ax,cs
     mov es,ax
     mov ds,ax
+    mov ss,ax
     push word 0
-    call printname
+    call sys_printname
+    pop ss
     pop es
     pop gs
     pop ds
@@ -365,11 +385,14 @@ _SetINT35h:
     push ds
     push gs
     push es
+    push ss
     mov ax,cs
     mov es,ax
     mov ds,ax
+    mov ss,ax
     push word 0
-    call printpoem
+    call sys_printpoem
+    pop ss
     pop es
     pop gs
     pop ds
@@ -385,11 +408,14 @@ _SetINT36h:
     push ds
     push gs
     push es
+    push ss
     mov ax,cs
     mov es,ax
     mov ds,ax
+    mov ss,ax
     push word 0
-    call printheart
+    call sys_printheart
+    pop ss
     pop es
     pop gs
     pop ds
@@ -477,6 +503,7 @@ fn3:;清屏
     popa
     leave
     iret
+fn4:
 
 ;========================================================
 ;                   初始化中断向量程序区

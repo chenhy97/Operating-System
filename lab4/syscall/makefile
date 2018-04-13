@@ -6,16 +6,17 @@ AS=nasm
 ASFLAGS=
 
 
-all : sysc.o use.o interuptf.o
+all : sysc.o use.o interuptf.o stdio.o
 
 
 sysc.o: sysc.asm 
 	$(AS) $(ASFLAGS) -f elf32 $^ -o $@
 use.o : use.c use.h
 	$(CC) $(CCFLAGS) -c $^
-interuptf.o : interuptf.c use.h
+interuptf.o : interuptf.c stdio.h use.h
 	$(CC) $(CCFLAGS) -c $^
-
+stdio.o : stdio.c stdio.h
+	$(CC) $(CCFLAGS) -c $^
 clean:
 	rm *.bin -f 
 	rm *.o -f 

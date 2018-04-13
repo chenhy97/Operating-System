@@ -1,5 +1,5 @@
 #include "use.h"
-void print_for_heart(char const* Messeage,int row,int colume){//need the pos
+void sys_print_for_heart(char const* Messeage,int row,int colume){//need the pos
 	int pos = (80 * row + colume)*2;
 	int color = 3;
 	int index = 0;
@@ -10,7 +10,17 @@ void print_for_heart(char const* Messeage,int row,int colume){//need the pos
 	}
 	return;
 }
-void showline(){
+void sys_print_different_color(char const* Messeage,int row,int colume,int color){
+    int pos = (80 * row + colume)*2;
+	int index = 0;
+	while(Messeage[index] != '\0'){
+		_printchar(Messeage[index],pos,color);
+		index++;
+		pos = pos + 2;
+	}
+	return;
+}
+void sys_showline(){
     char alpha = 'a';
     char name[6];
     name[0] = 'c';
@@ -27,22 +37,42 @@ void showline(){
         _printchar(name[i],pos,color);
     }
 }
-void printname(){
-    char const* Messeage = "I am OS";
-    print_for_heart(Messeage,16,11);
 
+void sys_printname(){
+    char const* Messeage1 = "***      ***  *****     *****         ******                ****  ";
+    char const* Messeage2 = "***      ***   ****     ****       ***      ***          **     ** ";
+    char const* Messeage3 = "***      ***    ***     ***      ***          ***       **         "; 
+    char const* Messeage4 = "************       *****         ***          ***         ***      ";
+    char const* Messeage5 = "***      ***       *****         ***          ***            **    ";
+    char const* Messeage6 = "***      ***       *****           ***      ***          **   ***  ";
+    char const* Messeage7 = "***      ***       *****              ******               ****    ";
+
+    sys_print_for_heart(Messeage1,16,11);
+    sys_print_for_heart(Messeage2,17,11);
+    sys_print_for_heart(Messeage3,18,11);
+    sys_print_for_heart(Messeage4,19,11);
+    sys_print_for_heart(Messeage5,20,11);
+    sys_print_for_heart(Messeage6,21,11);
+    sys_print_for_heart(Messeage7,22,11);
 }
-void printpoem(){
-    char const* Messeage = "I am test";
-    print_for_heart(Messeage,15,10);
+void sys_printpoem(){
+    char const* Messeage = "Comuputer Sciense";
+    char const* Messeage2 = "chenhyOS";
+    int i = 1;
+    for(i = 1;i < 7;i ++){
+        sys_print_different_color(Messeage,15,10,i);
+        sys_print_different_color(Messeage2,16,10,i);
+        int j = 0;
+        int k = 0;
+    }
 }
-void printheart(){
-    print_for_heart("     * *       * *     ",10,00);
-    print_for_heart("   * * * *   * * * *    ",11,00);
-    print_for_heart(" * * * * * * * * * * *    ",12,00);
-    print_for_heart("  * * * * * * * * * *   ",13,00);
-    print_for_heart("    * * * * * * * *    ",14,00);
-    print_for_heart("      * * * * * *     ",15,00);
-    print_for_heart("        * * * *      ",16,00);
-    print_for_heart("          * *       ",17,00);
+void sys_printheart(){
+    sys_print_for_heart("     * *       * *     ",00,40);
+    sys_print_for_heart("   * * * *   * * * *    ",1,40);
+    sys_print_for_heart(" * * * * * * * * * * *    ",2,40);
+    sys_print_for_heart("  * * * * * * * * * *   ",3,40);
+    sys_print_for_heart("    * * * * * * * *    ",4,40);
+    sys_print_for_heart("      * * * * * *     ",5,40);
+    sys_print_for_heart("        * * * *      ",6,40);
+    sys_print_for_heart("          * *       ",7,40);
 }

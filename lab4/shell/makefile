@@ -9,7 +9,7 @@ ASFLAGS=
 USE=../syscall
 
 all: command.o
-command.o: command.c $(USE)/use.h
+command.o: command.c $(USE)/stdio.h 
 	$(CC) $(CCFLAGS) -c $^
 
 clean:

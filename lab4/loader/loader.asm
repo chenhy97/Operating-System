@@ -15,7 +15,7 @@ ReadOS:
 	mov es, ax
 	mov bx, OS_OFFSET
 	mov ah, 2 ; kind of function
-	mov al, 0xc ; read num of shanqu,小心！不止加载一个扇区！
+	mov al, 0xf ; read num of shanqu,小心！不止加载一个扇区！
 	mov dl, 0 ; floppy
 	mov dh, 0 ; citou
 	mov ch, 0 ; zhumian
