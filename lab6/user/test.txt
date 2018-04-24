@@ -1,0 +1,1274 @@
+
+test.elf:     file format elf32-i386
+
+
+Disassembly of section .text:
+
+00000100 <test>:
+ 100:	8c c8                	mov    %cs,%eax
+ 102:	8e d8                	mov    %eax,%ds
+ 104:	cd 33                	int    $0x33
+ 106:	cd 34                	int    $0x34
+ 108:	cd 35                	int    $0x35
+ 10a:	cd 36                	int    $0x36
+ 10c:	b4 02                	mov    $0x2,%ah
+ 10e:	50                   	push   %eax
+ 10f:	cd 21                	int    $0x21
+ 111:	eb fe                	jmp    111 <test+0x11>
+ 113:	66 90                	xchg   %ax,%ax
+ 115:	66 90                	xchg   %ax,%ax
+ 117:	66 90                	xchg   %ax,%ax
+ 119:	66 90                	xchg   %ax,%ax
+ 11b:	66 90                	xchg   %ax,%ax
+ 11d:	66 90                	xchg   %ax,%ax
+ 11f:	90                   	nop
+
+00000120 <Pg_Segment>:
+	...
+
+00000122 <Pg_Offset>:
+ 122:	00 c0                	add    %al,%al
+
+00000124 <info_Segment>:
+	...
+
+00000126 <info_Offset>:
+ 126:	00 b1 08 00 00 00    	add    %dh,0x8(%ecx)
+
+00000128 <count>:
+ 128:	08 00                	or     %al,(%eax)
+
+00000129 <x>:
+	...
+
+0000012b <y>:
+	...
+
+0000012d <xdul>:
+ 12d:	01 00                	add    %eax,(%eax)
+
+0000012f <ydul>:
+ 12f:	01 00                	add    %eax,(%eax)
+
+00000131 <alpha>:
+ 131:	2d 00 00 00 00       	sub    $0x0,%eax
+
+00000132 <int_09_saved>:
+ 132:	00 00                	add    %al,(%eax)
+	...
+
+00000136 <program09_saved>:
+ 136:	70 00                	jo     138 <program09_saved+0x2>
+	...
+
+0000013a <ds_saved>:
+ 13a:	7c 00                	jl     13c <ds_saved+0x2>
+	...
+
+0000013e <return_save>:
+ 13e:	88 00                	mov    %al,(%eax)
+	...
+
+00000142 <esi_save>:
+ 142:	96                   	xchg   %eax,%esi
+ 143:	00 00                	add    %al,(%eax)
+	...
+
+00000146 <kernelesp_saved>:
+ 146:	b4 00                	mov    $0x0,%ah
+	...
+
+0000014a <color>:
+ 14a:	01 b8 03 00 cd 10    	add    %edi,0x10cd0003(%eax)
+
+0000014b <_clearscreen>:
+ 14b:	b8 03 00 cd 10       	mov    $0x10cd0003,%eax
+ 150:	66 5a                	pop    %dx
+ 152:	ff e2                	jmp    *%edx
+
+00000154 <_printchar>:
+ 154:	c8 00 00 00          	enter  $0x0,$0x0
+ 158:	b8 00 b8 8e e8       	mov    $0xe88eb800,%eax
+ 15d:	57                   	push   %edi
+ 15e:	66 8b 4e 06          	mov    0x6(%esi),%cx
+ 162:	66 8b 7e 0a          	mov    0xa(%esi),%di
+ 166:	66 8b 56 0e          	mov    0xe(%esi),%dx
+ 16a:	88 d5                	mov    %dl,%ch
+ 16c:	65 89 0d 5f c9 b8 01 	mov    %ecx,%gs:0x1b8c95f
+ 173:	00 66 5a             	add    %ah,0x5a(%esi)
+ 176:	ff e2                	jmp    *%edx
+
+00000178 <_readinput>:
+ 178:	c8 04 00 00          	enter  $0x4,$0x0
+ 17c:	b4 00                	mov    $0x0,%ah
+ 17e:	cd 16                	int    $0x16
+ 180:	b4 00                	mov    $0x0,%ah
+ 182:	66 67 89 04          	mov    %ax,(%si)
+ 186:	24 66                	and    $0x66,%al
+ 188:	67 8b 04             	mov    (%si),%eax
+ 18b:	24 c9                	and    $0xc9,%al
+ 18d:	66 5a                	pop    %dx
+ 18f:	ff e2                	jmp    *%edx
+
+00000191 <_showchar>:
+ 191:	c8 00 00 00          	enter  $0x0,$0x0
+ 195:	8b 46 06             	mov    0x6(%esi),%eax
+ 198:	b4 0e                	mov    $0xe,%ah
+ 19a:	b3 00                	mov    $0x0,%bl
+ 19c:	cd 10                	int    $0x10
+ 19e:	c9                   	leave  
+ 19f:	66 5a                	pop    %dx
+ 1a1:	ff e2                	jmp    *%edx
+
+000001a3 <_setPoint>:
+ 1a3:	c8 00 00 00          	enter  $0x0,$0x0
+ 1a7:	53                   	push   %ebx
+ 1a8:	b7 00                	mov    $0x0,%bh
+ 1aa:	8a 77 06             	mov    0x6(%edi),%dh
+ 1ad:	8a 57 0a             	mov    0xa(%edi),%dl
+ 1b0:	b4 02                	mov    $0x2,%ah
+ 1b2:	cd 10                	int    $0x10
+ 1b4:	5b                   	pop    %ebx
+ 1b5:	c9                   	leave  
+ 1b6:	66 5a                	pop    %dx
+ 1b8:	ff e2                	jmp    *%edx
+
+000001ba <_loadP>:
+ 1ba:	c8 00 00 00          	enter  $0x0,$0x0
+ 1be:	60                   	pusha  
+ 1bf:	06                   	push   %es
+ 1c0:	1e                   	push   %ds
+ 1c1:	8c c8                	mov    %cs,%eax
+ 1c3:	8e d8                	mov    %eax,%ds
+ 1c5:	8b 46 0e             	mov    0xe(%esi),%eax
+ 1c8:	8e c0                	mov    %eax,%es
+ 1ca:	b2 00                	mov    $0x0,%dl
+ 1cc:	8b 46 0a             	mov    0xa(%esi),%eax
+ 1cf:	b3 12                	mov    $0x12,%bl
+ 1d1:	f6 f3                	div    %bl
+ 1d3:	88 e1                	mov    %ah,%cl
+ 1d5:	30 e4                	xor    %ah,%ah
+ 1d7:	b3 02                	mov    $0x2,%bl
+ 1d9:	f6 f3                	div    %bl
+ 1db:	88 e6                	mov    %ah,%dh
+ 1dd:	88 c5                	mov    %al,%ch
+ 1df:	8a 46 06             	mov    0x6(%esi),%al
+ 1e2:	bb 00 01 b4 02       	mov    $0x2b40100,%ebx
+ 1e7:	cd 13                	int    $0x13
+ 1e9:	1f                   	pop    %ds
+ 1ea:	07                   	pop    %es
+ 1eb:	61                   	popa   
+ 1ec:	c9                   	leave  
+ 1ed:	66 5a                	pop    %dx
+ 1ef:	ff e2                	jmp    *%edx
+
+000001f1 <_RunProgress>:
+ 1f1:	c8 00 00 00          	enter  $0x0,$0x0
+ 1f5:	8c c8                	mov    %cs,%eax
+ 1f7:	8e d8                	mov    %eax,%ds
+ 1f9:	8e c0                	mov    %eax,%es
+ 1fb:	8b 5e 06             	mov    0x6(%esi),%ebx
+ 1fe:	c7 06 36 01 00 01    	movl   $0x1000136,(%esi)
+ 204:	89 1e                	mov    %ebx,(%esi)
+ 206:	38 01                	cmp    %al,(%ecx)
+ 208:	26 ff 1e             	lcall  *%es:(%esi)
+ 20b:	36 01 8c c8 8e d8 8e 	add    %ecx,%ss:-0x3f712772(%eax,%ecx,8)
+ 212:	c0 
+
+0000020d <S>:
+ 20d:	8c c8                	mov    %cs,%eax
+ 20f:	8e d8                	mov    %eax,%ds
+ 211:	8e c0                	mov    %eax,%es
+ 213:	8e d0                	mov    %eax,%ss
+ 215:	b4 00                	mov    $0x0,%ah
+ 217:	cd 16                	int    $0x16
+ 219:	c9                   	leave  
+ 21a:	66 5a                	pop    %dx
+ 21c:	ff e2                	jmp    *%edx
+
+0000021e <_SetINT20h>:
+ 21e:	1e                   	push   %ds
+ 21f:	06                   	push   %es
+ 220:	8c c8                	mov    %cs,%eax
+ 222:	8e d8                	mov    %eax,%ds
+ 224:	8e c0                	mov    %eax,%es
+ 226:	8e d0                	mov    %eax,%ss
+ 228:	53                   	push   %ebx
+ 229:	51                   	push   %ecx
+ 22a:	52                   	push   %edx
+ 22b:	b4 01                	mov    $0x1,%ah
+ 22d:	cd 16                	int    $0x16
+ 22f:	5a                   	pop    %edx
+ 230:	59                   	pop    %ecx
+ 231:	5b                   	pop    %ebx
+ 232:	07                   	pop    %es
+ 233:	1f                   	pop    %ds
+ 234:	75 d7                	jne    20d <S>
+ 236:	cf                   	iret   
+
+00000237 <_SetINT08h>:
+ 237:	60                   	pusha  
+ 238:	0f a8                	push   %gs
+ 23a:	1e                   	push   %ds
+ 23b:	06                   	push   %es
+ 23c:	16                   	push   %ss
+ 23d:	8c c8                	mov    %cs,%eax
+ 23f:	8e c0                	mov    %eax,%es
+ 241:	8e d8                	mov    %eax,%ds
+ 243:	8e d0                	mov    %eax,%ss
+ 245:	fe 0e                	decb   (%esi)
+ 247:	28 01                	sub    %al,(%ecx)
+ 249:	75 4f                	jne    29a <end>
+
+0000024b <notc>:
+ 24b:	80 3e 31             	cmpb   $0x31,(%esi)
+ 24e:	01 2d 75 07 c6 06    	add    %ebp,0x6c60775
+ 254:	31 01                	xor    %eax,(%ecx)
+ 256:	5c                   	pop    %esp
+ 257:	eb 2a                	jmp    283 <show>
+
+00000259 <changleft>:
+ 259:	80 3e 31             	cmpb   $0x31,(%esi)
+ 25c:	01 5c 75 07          	add    %ebx,0x7(%ebp,%esi,2)
+ 260:	c6 06 31             	movb   $0x31,(%esi)
+ 263:	01 7c eb 1c          	add    %edi,0x1c(%ebx,%ebp,8)
+
+00000267 <changright>:
+ 267:	80 3e 31             	cmpb   $0x31,(%esi)
+ 26a:	01 7c 75 07          	add    %edi,0x7(%ebp,%esi,2)
+ 26e:	c6 06 31             	movb   $0x31,(%esi)
+ 271:	01 2f                	add    %ebp,(%edi)
+ 273:	eb 0e                	jmp    283 <show>
+
+00000275 <changheng>:
+ 275:	80 3e 31             	cmpb   $0x31,(%esi)
+ 278:	01 2f                	add    %ebp,(%edi)
+ 27a:	75 cf                	jne    24b <notc>
+ 27c:	c6 06 31             	movb   $0x31,(%esi)
+ 27f:	01 2d eb 00 b9 00    	add    %ebp,0xb900eb
+
+00000283 <show>:
+ 283:	b9 00 b8 8e e9       	mov    $0xe98eb800,%ecx
+ 288:	b4 09                	mov    $0x9,%ah
+ 28a:	8a 26                	mov    (%esi),%ah
+ 28c:	4a                   	dec    %edx
+ 28d:	01 a0 31 01 65 a3    	add    %esp,-0x5c9afecf(%eax)
+ 293:	8e 00                	mov    (%eax),%es
+ 295:	c6 06 28             	movb   $0x28,(%esi)
+ 298:	01 08                	add    %ecx,(%eax)
+
+0000029a <end>:
+ 29a:	b0 20                	mov    $0x20,%al
+ 29c:	e6 20                	out    %al,$0x20
+ 29e:	e6 a0                	out    %al,$0xa0
+ 2a0:	17                   	pop    %ss
+ 2a1:	07                   	pop    %es
+ 2a2:	1f                   	pop    %ds
+ 2a3:	0f a9                	pop    %gs
+ 2a5:	61                   	popa   
+ 2a6:	fb                   	sti    
+ 2a7:	cf                   	iret   
+
+000002a8 <_SetINT09h>:
+ 2a8:	1e                   	push   %ds
+ 2a9:	06                   	push   %es
+ 2aa:	16                   	push   %ss
+ 2ab:	60                   	pusha  
+ 2ac:	8c c8                	mov    %cs,%eax
+ 2ae:	8e d8                	mov    %eax,%ds
+ 2b0:	8e c0                	mov    %eax,%es
+ 2b2:	8e d0                	mov    %eax,%ss
+ 2b4:	b9 00 b8 8e e9       	mov    $0xe98eb800,%ecx
+ 2b9:	8a 26                	mov    (%esi),%ah
+ 2bb:	4a                   	dec    %edx
+ 2bc:	01 b0 4f 65 a3 78    	add    %esi,0x78a3654f(%eax)
+ 2c2:	00 b0 55 65 a3 7a    	add    %dh,0x7aa36555(%eax)
+ 2c8:	00 b0 43 65 a3 7c    	add    %dh,0x7ca36543(%eax)
+ 2ce:	00 b0 48 65 a3 7e    	add    %dh,0x7ea36548(%eax)
+ 2d4:	00 b0 53 65 a3 80    	add    %dh,-0x7f5c9aad(%eax)
+ 2da:	00 b0 21 65 a3 82    	add    %dh,-0x7d5c9adf(%eax)
+ 2e0:	00 b0 4f 65 a3 84    	add    %dh,-0x7b5c9ab1(%eax)
+ 2e6:	00 b0 55 65 a3 86    	add    %dh,-0x795c9aab(%eax)
+ 2ec:	00 b0 43 65 a3 88    	add    %dh,-0x775c9abd(%eax)
+ 2f2:	00 b0 48 65 a3 8a    	add    %dh,-0x755c9ab8(%eax)
+ 2f8:	00 b0 21 65 a3 8c    	add    %dh,-0x735c9adf(%eax)
+ 2fe:	00 61 80             	add    %ah,-0x80(%ecx)
+ 301:	fc                   	cld    
+ 302:	06                   	push   %es
+ 303:	75 06                	jne    30b <cont>
+ 305:	b4 01                	mov    $0x1,%ah
+ 307:	88 26                	mov    %ah,(%esi)
+ 309:	4a                   	dec    %edx
+ 30a:	01 fe                	add    %edi,%esi
+
+0000030b <cont>:
+ 30b:	fe 06                	incb   (%esi)
+ 30d:	4a                   	dec    %edx
+ 30e:	01 8c c8 8e c0 fb 9c 	add    %ecx,-0x63043f72(%eax,%ecx,8)
+ 315:	26 ff 1e             	lcall  *%es:(%esi)
+ 318:	32 01                	xor    (%ecx),%al
+ 31a:	17                   	pop    %ss
+ 31b:	07                   	pop    %es
+ 31c:	1f                   	pop    %ds
+ 31d:	cf                   	iret   
+
+0000031e <_SetINT33h>:
+ 31e:	60                   	pusha  
+ 31f:	1e                   	push   %ds
+ 320:	0f a8                	push   %gs
+ 322:	06                   	push   %es
+ 323:	16                   	push   %ss
+ 324:	8c c8                	mov    %cs,%eax
+ 326:	8e c0                	mov    %eax,%es
+ 328:	8e d8                	mov    %eax,%ds
+ 32a:	8e d0                	mov    %eax,%ss
+ 32c:	6a 00                	push   $0x0
+ 32e:	e8 13 04 17 07       	call   7170746 <_end+0x716f5e2>
+ 333:	0f a9                	pop    %gs
+ 335:	1f                   	pop    %ds
+ 336:	61                   	popa   
+ 337:	fb                   	sti    
+ 338:	cf                   	iret   
+
+00000339 <_SetINT34h>:
+ 339:	60                   	pusha  
+ 33a:	1e                   	push   %ds
+ 33b:	0f a8                	push   %gs
+ 33d:	06                   	push   %es
+ 33e:	16                   	push   %ss
+ 33f:	8c c8                	mov    %cs,%eax
+ 341:	8e c0                	mov    %eax,%es
+ 343:	8e d8                	mov    %eax,%ds
+ 345:	8e d0                	mov    %eax,%ss
+ 347:	6a 00                	push   $0x0
+ 349:	e8 a8 04 17 07       	call   71707f6 <_end+0x716f692>
+ 34e:	0f a9                	pop    %gs
+ 350:	1f                   	pop    %ds
+ 351:	61                   	popa   
+ 352:	fb                   	sti    
+ 353:	cf                   	iret   
+
+00000354 <_SetINT35h>:
+ 354:	60                   	pusha  
+ 355:	1e                   	push   %ds
+ 356:	0f a8                	push   %gs
+ 358:	06                   	push   %es
+ 359:	16                   	push   %ss
+ 35a:	8c c8                	mov    %cs,%eax
+ 35c:	8e c0                	mov    %eax,%es
+ 35e:	8e d8                	mov    %eax,%ds
+ 360:	8e d0                	mov    %eax,%ss
+ 362:	6a 00                	push   $0x0
+ 364:	e8 6c 05 17 07       	call   71708d5 <_end+0x716f771>
+ 369:	0f a9                	pop    %gs
+ 36b:	1f                   	pop    %ds
+ 36c:	61                   	popa   
+ 36d:	fb                   	sti    
+ 36e:	cf                   	iret   
+
+0000036f <_SetINT36h>:
+ 36f:	60                   	pusha  
+ 370:	1e                   	push   %ds
+ 371:	0f a8                	push   %gs
+ 373:	06                   	push   %es
+ 374:	16                   	push   %ss
+ 375:	8c c8                	mov    %cs,%eax
+ 377:	8e c0                	mov    %eax,%es
+ 379:	8e d8                	mov    %eax,%ds
+ 37b:	8e d0                	mov    %eax,%ss
+ 37d:	6a 00                	push   $0x0
+ 37f:	e8 d7 05 17 07       	call   717095b <_end+0x716f7f7>
+ 384:	0f a9                	pop    %gs
+ 386:	1f                   	pop    %ds
+ 387:	61                   	popa   
+ 388:	fb                   	sti    
+ 389:	cf                   	iret   
+
+0000038a <_SetINT21h>:
+ 38a:	c8 00 00 00          	enter  $0x0,$0x0
+ 38e:	60                   	pusha  
+ 38f:	1e                   	push   %ds
+ 390:	0f a8                	push   %gs
+ 392:	06                   	push   %es
+ 393:	8c c8                	mov    %cs,%eax
+ 395:	8e c0                	mov    %eax,%es
+ 397:	8e d8                	mov    %eax,%ds
+ 399:	8b 46 08             	mov    0x8(%esi),%eax
+ 39c:	80 fc 00             	cmp    $0x0,%ah
+ 39f:	74 16                	je     3b7 <fn0>
+ 3a1:	80 fc 01             	cmp    $0x1,%ah
+ 3a4:	74 21                	je     3c7 <fn1>
+ 3a6:	80 fc 02             	cmp    $0x2,%ah
+ 3a9:	74 3d                	je     3e8 <fn2>
+ 3ab:	80 fc 03             	cmp    $0x3,%ah
+ 3ae:	74 5f                	je     40f <fn3>
+ 3b0:	07                   	pop    %es
+ 3b1:	0f a9                	pop    %gs
+ 3b3:	1f                   	pop    %ds
+ 3b4:	61                   	popa   
+ 3b5:	c9                   	leave  
+ 3b6:	cf                   	iret   
+
+000003b7 <fn0>:
+ 3b7:	8b 46 0a             	mov    0xa(%esi),%eax
+ 3ba:	b4 0e                	mov    $0xe,%ah
+ 3bc:	b3 00                	mov    $0x0,%bl
+ 3be:	cd 10                	int    $0x10
+ 3c0:	07                   	pop    %es
+ 3c1:	0f a9                	pop    %gs
+ 3c3:	1f                   	pop    %ds
+ 3c4:	61                   	popa   
+ 3c5:	c9                   	leave  
+ 3c6:	cf                   	iret   
+
+000003c7 <fn1>:
+ 3c7:	66 83 ec 04          	sub    $0x4,%sp
+ 3cb:	b4 00                	mov    $0x0,%ah
+ 3cd:	cd 16                	int    $0x16
+ 3cf:	b4 00                	mov    $0x0,%ah
+ 3d1:	66 67 89 04          	mov    %ax,(%si)
+ 3d5:	24 66                	and    $0x66,%al
+ 3d7:	67 8b 04             	mov    (%si),%eax
+ 3da:	24 66                	and    $0x66,%al
+ 3dc:	83 c4 04             	add    $0x4,%esp
+ 3df:	8e e0                	mov    %eax,%fs
+ 3e1:	07                   	pop    %es
+ 3e2:	0f a9                	pop    %gs
+ 3e4:	1f                   	pop    %ds
+ 3e5:	61                   	popa   
+ 3e6:	c9                   	leave  
+ 3e7:	cf                   	iret   
+
+000003e8 <fn2>:
+ 3e8:	66 83 ec 04          	sub    $0x4,%sp
+ 3ec:	b4 00                	mov    $0x0,%ah
+ 3ee:	cd 16                	int    $0x16
+ 3f0:	b4 00                	mov    $0x0,%ah
+ 3f2:	66 67 89 04          	mov    %ax,(%si)
+ 3f6:	24 66                	and    $0x66,%al
+ 3f8:	67 8b 04             	mov    (%si),%eax
+ 3fb:	24 b4                	and    $0xb4,%al
+ 3fd:	0e                   	push   %cs
+ 3fe:	b3 00                	mov    $0x0,%bl
+ 400:	cd 10                	int    $0x10
+ 402:	66 83 c4 04          	add    $0x4,%sp
+ 406:	8e e0                	mov    %eax,%fs
+ 408:	07                   	pop    %es
+ 409:	0f a9                	pop    %gs
+ 40b:	1f                   	pop    %ds
+ 40c:	61                   	popa   
+ 40d:	c9                   	leave  
+ 40e:	cf                   	iret   
+
+0000040f <fn3>:
+ 40f:	b8 03 00 cd 10       	mov    $0x10cd0003,%eax
+ 414:	07                   	pop    %es
+ 415:	0f a9                	pop    %gs
+ 417:	1f                   	pop    %ds
+ 418:	61                   	popa   
+ 419:	c9                   	leave  
+ 41a:	cf                   	iret   
+
+0000041b <_initialInt>:
+ 41b:	c8 00 00 00          	enter  $0x0,$0x0
+ 41f:	60                   	pusha  
+ 420:	06                   	push   %es
+ 421:	1e                   	push   %ds
+ 422:	8c c8                	mov    %cs,%eax
+ 424:	8e d8                	mov    %eax,%ds
+ 426:	b8 00 00 8e c0       	mov    $0xc08e0000,%eax
+ 42b:	b8 20 00 bb 04       	mov    $0x4bb0020,%eax
+ 430:	00 f7                	add    %dh,%bh
+ 432:	e3 89                	jecxz  3bd <fn0+0x6>
+ 434:	c7                   	(bad)  
+ 435:	b8 1e 02 26 89       	mov    $0x8926021e,%eax
+ 43a:	05 8c c8 26 89       	add    $0x8926c88c,%eax
+ 43f:	45                   	inc    %ebp
+ 440:	02 1f                	add    (%edi),%bl
+ 442:	07                   	pop    %es
+ 443:	61                   	popa   
+ 444:	60                   	pusha  
+ 445:	06                   	push   %es
+ 446:	1e                   	push   %ds
+ 447:	8c c8                	mov    %cs,%eax
+ 449:	8e d8                	mov    %eax,%ds
+ 44b:	b8 00 00 8e c0       	mov    $0xc08e0000,%eax
+ 450:	b8 33 00 bb 04       	mov    $0x4bb0033,%eax
+ 455:	00 f7                	add    %dh,%bh
+ 457:	e3 89                	jecxz  3e2 <fn1+0x1b>
+ 459:	c7                   	(bad)  
+ 45a:	b8 1e 03 26 89       	mov    $0x8926031e,%eax
+ 45f:	05 8c c8 26 89       	add    $0x8926c88c,%eax
+ 464:	45                   	inc    %ebp
+ 465:	02 1f                	add    (%edi),%bl
+ 467:	07                   	pop    %es
+ 468:	61                   	popa   
+ 469:	60                   	pusha  
+ 46a:	06                   	push   %es
+ 46b:	1e                   	push   %ds
+ 46c:	8c c8                	mov    %cs,%eax
+ 46e:	8e d8                	mov    %eax,%ds
+ 470:	b8 00 00 8e c0       	mov    $0xc08e0000,%eax
+ 475:	b8 34 00 bb 04       	mov    $0x4bb0034,%eax
+ 47a:	00 f7                	add    %dh,%bh
+ 47c:	e3 89                	jecxz  407 <fn2+0x1f>
+ 47e:	c7                   	(bad)  
+ 47f:	b8 39 03 26 89       	mov    $0x89260339,%eax
+ 484:	05 8c c8 26 89       	add    $0x8926c88c,%eax
+ 489:	45                   	inc    %ebp
+ 48a:	02 1f                	add    (%edi),%bl
+ 48c:	07                   	pop    %es
+ 48d:	61                   	popa   
+ 48e:	60                   	pusha  
+ 48f:	06                   	push   %es
+ 490:	1e                   	push   %ds
+ 491:	8c c8                	mov    %cs,%eax
+ 493:	8e d8                	mov    %eax,%ds
+ 495:	b8 00 00 8e c0       	mov    $0xc08e0000,%eax
+ 49a:	b8 35 00 bb 04       	mov    $0x4bb0035,%eax
+ 49f:	00 f7                	add    %dh,%bh
+ 4a1:	e3 89                	jecxz  42c <_initialInt+0x11>
+ 4a3:	c7                   	(bad)  
+ 4a4:	b8 54 03 26 89       	mov    $0x89260354,%eax
+ 4a9:	05 8c c8 26 89       	add    $0x8926c88c,%eax
+ 4ae:	45                   	inc    %ebp
+ 4af:	02 1f                	add    (%edi),%bl
+ 4b1:	07                   	pop    %es
+ 4b2:	61                   	popa   
+ 4b3:	60                   	pusha  
+ 4b4:	06                   	push   %es
+ 4b5:	1e                   	push   %ds
+ 4b6:	8c c8                	mov    %cs,%eax
+ 4b8:	8e d8                	mov    %eax,%ds
+ 4ba:	b8 00 00 8e c0       	mov    $0xc08e0000,%eax
+ 4bf:	b8 36 00 bb 04       	mov    $0x4bb0036,%eax
+ 4c4:	00 f7                	add    %dh,%bh
+ 4c6:	e3 89                	jecxz  451 <_initialInt+0x36>
+ 4c8:	c7                   	(bad)  
+ 4c9:	b8 6f 03 26 89       	mov    $0x8926036f,%eax
+ 4ce:	05 8c c8 26 89       	add    $0x8926c88c,%eax
+ 4d3:	45                   	inc    %ebp
+ 4d4:	02 1f                	add    (%edi),%bl
+ 4d6:	07                   	pop    %es
+ 4d7:	61                   	popa   
+ 4d8:	60                   	pusha  
+ 4d9:	06                   	push   %es
+ 4da:	1e                   	push   %ds
+ 4db:	8c c8                	mov    %cs,%eax
+ 4dd:	8e d8                	mov    %eax,%ds
+ 4df:	b8 00 00 8e c0       	mov    $0xc08e0000,%eax
+ 4e4:	b8 21 00 bb 04       	mov    $0x4bb0021,%eax
+ 4e9:	00 f7                	add    %dh,%bh
+ 4eb:	e3 89                	jecxz  476 <_initialInt+0x5b>
+ 4ed:	c7                   	(bad)  
+ 4ee:	b8 8a 03 26 89       	mov    $0x8926038a,%eax
+ 4f3:	05 8c c8 26 89       	add    $0x8926c88c,%eax
+ 4f8:	45                   	inc    %ebp
+ 4f9:	02 1f                	add    (%edi),%bl
+ 4fb:	07                   	pop    %es
+ 4fc:	61                   	popa   
+ 4fd:	c9                   	leave  
+ 4fe:	66 5a                	pop    %dx
+ 500:	ff e2                	jmp    *%edx
+
+00000502 <_initialInt_09h>:
+ 502:	c8 00 00 00          	enter  $0x0,$0x0
+ 506:	a1 24 00 a3 32       	mov    0x32a30024,%eax
+ 50b:	01 a1 26 00 a3 34    	add    %esp,0x34a30026(%ecx)
+ 511:	01 60 06             	add    %esp,0x6(%eax)
+ 514:	1e                   	push   %ds
+ 515:	8c c8                	mov    %cs,%eax
+ 517:	8e d8                	mov    %eax,%ds
+ 519:	b8 00 00 8e c0       	mov    $0xc08e0000,%eax
+ 51e:	b8 09 00 bb 04       	mov    $0x4bb0009,%eax
+ 523:	00 f7                	add    %dh,%bh
+ 525:	e3 89                	jecxz  4b0 <_initialInt+0x95>
+ 527:	c7                   	(bad)  
+ 528:	b8 a8 02 26 89       	mov    $0x892602a8,%eax
+ 52d:	05 8c c8 26 89       	add    $0x8926c88c,%eax
+ 532:	45                   	inc    %ebp
+ 533:	02 1f                	add    (%edi),%bl
+ 535:	07                   	pop    %es
+ 536:	61                   	popa   
+ 537:	c9                   	leave  
+ 538:	66 5a                	pop    %dx
+ 53a:	ff e2                	jmp    *%edx
+
+0000053c <_initialInt_08h>:
+ 53c:	c8 00 00 00          	enter  $0x0,$0x0
+ 540:	b0 40                	mov    $0x40,%al
+ 542:	e6 43                	out    %al,$0x43
+ 544:	b8 0b e9 e6 40       	mov    $0x40e6e90b,%eax
+ 549:	88 e0                	mov    %ah,%al
+ 54b:	e6 40                	out    %al,$0x40
+ 54d:	60                   	pusha  
+ 54e:	06                   	push   %es
+ 54f:	1e                   	push   %ds
+ 550:	8c c8                	mov    %cs,%eax
+ 552:	8e d8                	mov    %eax,%ds
+ 554:	b8 00 00 8e c0       	mov    $0xc08e0000,%eax
+ 559:	b8 08 00 bb 04       	mov    $0x4bb0008,%eax
+ 55e:	00 f7                	add    %dh,%bh
+ 560:	e3 89                	jecxz  4eb <_initialInt+0xd0>
+ 562:	c7                   	(bad)  
+ 563:	b8 37 02 26 89       	mov    $0x89260237,%eax
+ 568:	05 8c c8 26 89       	add    $0x8926c88c,%eax
+ 56d:	45                   	inc    %ebp
+ 56e:	02 1f                	add    (%edi),%bl
+ 570:	07                   	pop    %es
+ 571:	61                   	popa   
+ 572:	c9                   	leave  
+ 573:	66 5a                	pop    %dx
+ 575:	ff e2                	jmp    *%edx
+
+00000577 <_save>:
+ 577:	1e                   	push   %ds
+ 578:	0e                   	push   %cs
+ 579:	1f                   	pop    %ds
+ 57a:	8f 06                	popl   (%esi)
+ 57c:	3a 01                	cmp    (%ecx),%al
+ 57e:	66 8f 06             	popw   (%esi)
+ 581:	3e 01 66 89          	add    %esp,%ds:-0x77(%esi)
+ 585:	36                   	ss
+ 586:	42                   	inc    %edx
+ 587:	01 66 8b             	add    %esp,-0x75(%esi)
+ 58a:	36                   	ss
+ 58b:	60                   	pusha  
+ 58c:	11 66 83             	adc    %esp,-0x7d(%esi)
+ 58f:	c6                   	(bad)  
+ 590:	26 66 67 8f 06 67 8f 	popw   %es:-0x7099
+ 597:	46                   	inc    %esi
+ 598:	02 67 8f             	add    -0x71(%edi),%ah
+ 59b:	46                   	inc    %esi
+ 59c:	04 66                	add    $0x66,%al
+ 59e:	67 89 66 fc          	mov    %esp,-0x4(%bp)
+ 5a2:	67 8c 56 fa          	mov    %ss,-0x6(%bp)
+ 5a6:	8c de                	mov    %ds,%esi
+ 5a8:	8e d6                	mov    %esi,%ss
+ 5aa:	66 8b 26             	mov    (%esi),%sp
+ 5ad:	60                   	pusha  
+ 5ae:	11 66 83             	adc    %esp,-0x7d(%esi)
+ 5b1:	c4 1e                	les    (%esi),%ebx
+ 5b3:	ff 36                	pushl  (%esi)
+ 5b5:	3a 01                	cmp    (%ecx),%al
+ 5b7:	06                   	push   %es
+ 5b8:	66 55                	push   %bp
+ 5ba:	66 57                	push   %di
+ 5bc:	66 ff 36             	pushw  (%esi)
+ 5bf:	42                   	inc    %edx
+ 5c0:	01 66 52             	add    %esp,0x52(%esi)
+ 5c3:	66 51                	push   %cx
+ 5c5:	66 53                	push   %bx
+ 5c7:	66 50                	push   %ax
+ 5c9:	66 8b 26             	mov    (%esi),%sp
+ 5cc:	46                   	inc    %esi
+ 5cd:	01 66 a1             	add    %esp,-0x5f(%esi)
+ 5d0:	3e 01 66 ff          	add    %esp,%ds:-0x1(%esi)
+ 5d4:	e0 66                	loopne 63c <sys_print_for_heart+0x11>
+
+000005d5 <_restart>:
+ 5d5:	66 89 26             	mov    %sp,(%esi)
+ 5d8:	46                   	inc    %esi
+ 5d9:	01 66 8b             	add    %esp,-0x75(%esi)
+ 5dc:	26                   	es
+ 5dd:	60                   	pusha  
+ 5de:	11 66 58             	adc    %esp,0x58(%esi)
+ 5e1:	66 5b                	pop    %bx
+ 5e3:	66 59                	pop    %cx
+ 5e5:	66 5a                	pop    %dx
+ 5e7:	66 5e                	pop    %si
+ 5e9:	66 5f                	pop    %di
+ 5eb:	66 5d                	pop    %bp
+ 5ed:	07                   	pop    %es
+ 5ee:	8f 06                	popl   (%esi)
+ 5f0:	3a 01                	cmp    (%ecx),%al
+ 5f2:	66 89 36             	mov    %si,(%esi)
+ 5f5:	42                   	inc    %edx
+ 5f6:	01 17                	add    %edx,(%edi)
+ 5f8:	66 89 e6             	mov    %sp,%si
+ 5fb:	66 67 8b 26 66 67    	mov    0x6766,%sp
+ 601:	ff 76 0a             	pushl  0xa(%esi)
+ 604:	66 67 ff 76 08       	pushw  0x8(%bp)
+ 609:	66 67 ff 76 04       	pushw  0x4(%bp)
+ 60e:	66 8b 36             	mov    (%esi),%si
+ 611:	42                   	inc    %edx
+ 612:	01 8e 1e 3a 01 50    	add    %ecx,0x50013a1e(%esi)
+ 618:	b0 20                	mov    $0x20,%al
+ 61a:	e6 20                	out    %al,$0x20
+ 61c:	e6 a0                	out    %al,$0xa0
+ 61e:	58                   	pop    %eax
+ 61f:	cf                   	iret   
+
+00000620 <Timer>:
+ 620:	e8 54 ff 6a 00       	call   6b0579 <_end+0x6af415>
+ 625:	e8 7b 04 e8 aa       	call   aae80aa5 <_end+0xaae7f941>
+ 62a:	ff 66 55             	jmp    *0x55(%esi)
+
+0000062b <sys_print_for_heart>:
+#include "use.h"
+void sys_print_for_heart(char const* Messeage,int row,int colume){//need the pos
+ 62b:	66 55                	push   %bp
+ 62d:	66 89 e5             	mov    %sp,%bp
+ 630:	66 83 ec 0c          	sub    $0xc,%sp
+	int pos = (80 * row + colume)*2;
+ 634:	67 66 8b 55 0c       	mov    0xc(%di),%dx
+ 639:	66 89 d0             	mov    %dx,%ax
+ 63c:	66 c1 e0 02          	shl    $0x2,%ax
+ 640:	66 01 d0             	add    %dx,%ax
+ 643:	66 c1 e0 04          	shl    $0x4,%ax
+ 647:	66 89 c2             	mov    %ax,%dx
+ 64a:	67 66 8b 45 10       	mov    0x10(%di),%ax
+ 64f:	66 01 d0             	add    %dx,%ax
+ 652:	66 01 c0             	add    %ax,%ax
+ 655:	67 66 89 45 fc       	mov    %ax,-0x4(%di)
+	int color = 3;
+ 65a:	67 66 c7 45 f4 03 00 	movw   $0x3,-0xc(%di)
+ 661:	00 00                	add    %al,(%eax)
+	int index = 0;
+ 663:	67 66 c7 45 f8 00 00 	movw   $0x0,-0x8(%di)
+ 66a:	00 00                	add    %al,(%eax)
+	while(Messeage[index] != '\0'){
+ 66c:	eb 35                	jmp    6a3 <sys_print_for_heart+0x78>
+		_printchar(Messeage[index],pos,color);
+ 66e:	67 66 8b 55 f8       	mov    -0x8(%di),%dx
+ 673:	67 66 8b 45 08       	mov    0x8(%di),%ax
+ 678:	66 01 d0             	add    %dx,%ax
+ 67b:	67 8a 00             	mov    (%bx,%si),%al
+ 67e:	66 0f be c0          	movsbw %al,%ax
+ 682:	67 66 ff 75 f4       	pushw  -0xc(%di)
+ 687:	67 66 ff 75 fc       	pushw  -0x4(%di)
+ 68c:	66 50                	push   %ax
+ 68e:	66 e8 c0 fa          	callw  152 <_clearscreen+0x7>
+ 692:	ff                   	(bad)  
+ 693:	ff 66 83             	jmp    *-0x7d(%esi)
+ 696:	c4 0c 67             	les    (%edi,%eiz,2),%ecx
+		index++;
+ 699:	66 ff 45 f8          	incw   -0x8(%ebp)
+		pos = pos + 2;
+ 69d:	67 66 83 45 fc 02    	addw   $0x2,-0x4(%di)
+#include "use.h"
+void sys_print_for_heart(char const* Messeage,int row,int colume){//need the pos
+	int pos = (80 * row + colume)*2;
+	int color = 3;
+	int index = 0;
+	while(Messeage[index] != '\0'){
+ 6a3:	67 66 8b 55 f8       	mov    -0x8(%di),%dx
+ 6a8:	67 66 8b 45 08       	mov    0x8(%di),%ax
+ 6ad:	66 01 d0             	add    %dx,%ax
+ 6b0:	67 8a 00             	mov    (%bx,%si),%al
+ 6b3:	84 c0                	test   %al,%al
+ 6b5:	75 b7                	jne    66e <sys_print_for_heart+0x43>
+		_printchar(Messeage[index],pos,color);
+		index++;
+		pos = pos + 2;
+	}
+	return;
+ 6b7:	90                   	nop
+}
+ 6b8:	66 c9                	leavew 
+ 6ba:	66 c3                	retw   
+
+000006bc <sys_print_different_color>:
+void sys_print_different_color(char const* Messeage,int row,int colume,int color){
+ 6bc:	66 55                	push   %bp
+ 6be:	66 89 e5             	mov    %sp,%bp
+ 6c1:	66 83 ec 08          	sub    $0x8,%sp
+    int pos = (80 * row + colume)*2;
+ 6c5:	67 66 8b 55 0c       	mov    0xc(%di),%dx
+ 6ca:	66 89 d0             	mov    %dx,%ax
+ 6cd:	66 c1 e0 02          	shl    $0x2,%ax
+ 6d1:	66 01 d0             	add    %dx,%ax
+ 6d4:	66 c1 e0 04          	shl    $0x4,%ax
+ 6d8:	66 89 c2             	mov    %ax,%dx
+ 6db:	67 66 8b 45 10       	mov    0x10(%di),%ax
+ 6e0:	66 01 d0             	add    %dx,%ax
+ 6e3:	66 01 c0             	add    %ax,%ax
+ 6e6:	67 66 89 45 fc       	mov    %ax,-0x4(%di)
+	int index = 0;
+ 6eb:	67 66 c7 45 f8 00 00 	movw   $0x0,-0x8(%di)
+ 6f2:	00 00                	add    %al,(%eax)
+	while(Messeage[index] != '\0'){
+ 6f4:	eb 35                	jmp    72b <sys_print_different_color+0x6f>
+		_printchar(Messeage[index],pos,color);
+ 6f6:	67 66 8b 55 f8       	mov    -0x8(%di),%dx
+ 6fb:	67 66 8b 45 08       	mov    0x8(%di),%ax
+ 700:	66 01 d0             	add    %dx,%ax
+ 703:	67 8a 00             	mov    (%bx,%si),%al
+ 706:	66 0f be c0          	movsbw %al,%ax
+ 70a:	67 66 ff 75 14       	pushw  0x14(%di)
+ 70f:	67 66 ff 75 fc       	pushw  -0x4(%di)
+ 714:	66 50                	push   %ax
+ 716:	66 e8 38 fa          	callw  152 <_clearscreen+0x7>
+ 71a:	ff                   	(bad)  
+ 71b:	ff 66 83             	jmp    *-0x7d(%esi)
+ 71e:	c4 0c 67             	les    (%edi,%eiz,2),%ecx
+		index++;
+ 721:	66 ff 45 f8          	incw   -0x8(%ebp)
+		pos = pos + 2;
+ 725:	67 66 83 45 fc 02    	addw   $0x2,-0x4(%di)
+	return;
+}
+void sys_print_different_color(char const* Messeage,int row,int colume,int color){
+    int pos = (80 * row + colume)*2;
+	int index = 0;
+	while(Messeage[index] != '\0'){
+ 72b:	67 66 8b 55 f8       	mov    -0x8(%di),%dx
+ 730:	67 66 8b 45 08       	mov    0x8(%di),%ax
+ 735:	66 01 d0             	add    %dx,%ax
+ 738:	67 8a 00             	mov    (%bx,%si),%al
+ 73b:	84 c0                	test   %al,%al
+ 73d:	75 b7                	jne    6f6 <sys_print_different_color+0x3a>
+		_printchar(Messeage[index],pos,color);
+		index++;
+		pos = pos + 2;
+	}
+	return;
+ 73f:	90                   	nop
+}
+ 740:	66 c9                	leavew 
+ 742:	66 c3                	retw   
+
+00000744 <sys_showline>:
+void sys_showline(){
+ 744:	66 55                	push   %bp
+ 746:	66 89 e5             	mov    %sp,%bp
+ 749:	66 83 ec 18          	sub    $0x18,%sp
+    char alpha = 'a';
+ 74d:	67 c6 45 fb 61       	movb   $0x61,-0x5(%di)
+    char name[6];
+    name[0] = 'c';
+ 752:	67 c6 45 ea 63       	movb   $0x63,-0x16(%di)
+    name[1] = 'h';
+ 757:	67 c6 45 eb 68       	movb   $0x68,-0x15(%di)
+    name[2] = 'e';
+ 75c:	67 c6 45 ec 65       	movb   $0x65,-0x14(%di)
+    name[3] = 'n';
+ 761:	67 c6 45 ed 6e       	movb   $0x6e,-0x13(%di)
+    name[4] = 'h';
+ 766:	67 c6 45 ee 68       	movb   $0x68,-0x12(%di)
+    name[5] = 'y';
+ 76b:	67 c6 45 ef 79       	movb   $0x79,-0x11(%di)
+    int color = 3;
+ 770:	67 66 c7 45 f4 03 00 	movw   $0x3,-0xc(%di)
+ 777:	00 00                	add    %al,(%eax)
+    int i = 0;
+ 779:	67 66 c7 45 fc 00 00 	movw   $0x0,-0x4(%di)
+ 780:	00 00                	add    %al,(%eax)
+    int pos = (80 * 0 + 0)*2;
+ 782:	67 66 c7 45 f0 00 00 	movw   $0x0,-0x10(%di)
+ 789:	00 00                	add    %al,(%eax)
+    for(i = 0;i < 6;i ++){
+ 78b:	67 66 c7 45 fc 00 00 	movw   $0x0,-0x4(%di)
+ 792:	00 00                	add    %al,(%eax)
+ 794:	eb 52                	jmp    7e8 <sys_showline+0xa4>
+        pos = (80 * i + i) * 2;
+ 796:	67 66 8b 55 fc       	mov    -0x4(%di),%dx
+ 79b:	66 89 d0             	mov    %dx,%ax
+ 79e:	66 c1 e0 03          	shl    $0x3,%ax
+ 7a2:	66 01 d0             	add    %dx,%ax
+ 7a5:	67 66 8d 14          	lea    (%si),%dx
+ 7a9:	c5 00                	lds    (%eax),%eax
+ 7ab:	00 00                	add    %al,(%eax)
+ 7ad:	00 66 01             	add    %ah,0x1(%esi)
+ 7b0:	d0 66 01             	shlb   0x1(%esi)
+ 7b3:	c0 67 66 89          	shlb   $0x89,0x66(%edi)
+ 7b7:	45                   	inc    %ebp
+ 7b8:	f0 67 66 8d 55 ea    	lock lea -0x16(%di),%dx
+        _printchar(name[i],pos,color);
+ 7be:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
+ 7c3:	66 01 d0             	add    %dx,%ax
+ 7c6:	67 8a 00             	mov    (%bx,%si),%al
+ 7c9:	66 0f be c0          	movsbw %al,%ax
+ 7cd:	67 66 ff 75 f4       	pushw  -0xc(%di)
+ 7d2:	67 66 ff 75 f0       	pushw  -0x10(%di)
+ 7d7:	66 50                	push   %ax
+ 7d9:	66 e8 75 f9          	callw  152 <_clearscreen+0x7>
+ 7dd:	ff                   	(bad)  
+ 7de:	ff 66 83             	jmp    *-0x7d(%esi)
+ 7e1:	c4 0c 67             	les    (%edi,%eiz,2),%ecx
+    name[4] = 'h';
+    name[5] = 'y';
+    int color = 3;
+    int i = 0;
+    int pos = (80 * 0 + 0)*2;
+    for(i = 0;i < 6;i ++){
+ 7e4:	66 ff 45 fc          	incw   -0x4(%ebp)
+ 7e8:	67 66 83 7d fc 05    	cmpw   $0x5,-0x4(%di)
+ 7ee:	7e a6                	jle    796 <sys_showline+0x52>
+        pos = (80 * i + i) * 2;
+        _printchar(name[i],pos,color);
+    }
+}
+ 7f0:	66 c9                	leavew 
+ 7f2:	66 c3                	retw   
+
+000007f4 <sys_printname>:
+
+void sys_printname(){
+ 7f4:	66 55                	push   %bp
+ 7f6:	66 89 e5             	mov    %sp,%bp
+ 7f9:	66 83 ec 1c          	sub    $0x1c,%sp
+    char const* Messeage1 = "***      ***  *****     *****         ******                ****  ";
+ 7fd:	67 66 c7 45 fc 64 0b 	movw   $0xb64,-0x4(%di)
+ 804:	00 00                	add    %al,(%eax)
+    char const* Messeage2 = "***      ***   ****     ****       ***      ***          **     ** ";
+ 806:	67 66 c7 45 f8 a8 0b 	movw   $0xba8,-0x8(%di)
+ 80d:	00 00                	add    %al,(%eax)
+    char const* Messeage3 = "***      ***    ***     ***      ***          ***       **         "; 
+ 80f:	67 66 c7 45 f4 ec 0b 	movw   $0xbec,-0xc(%di)
+ 816:	00 00                	add    %al,(%eax)
+    char const* Messeage4 = "************       *****         ***          ***         ***      ";
+ 818:	67 66 c7 45 f0 30 0c 	movw   $0xc30,-0x10(%di)
+ 81f:	00 00                	add    %al,(%eax)
+    char const* Messeage5 = "***      ***       *****         ***          ***            **    ";
+ 821:	67 66 c7 45 ec 74 0c 	movw   $0xc74,-0x14(%di)
+ 828:	00 00                	add    %al,(%eax)
+    char const* Messeage6 = "***      ***       *****           ***      ***          **   ***  ";
+ 82a:	67 66 c7 45 e8 b8 0c 	movw   $0xcb8,-0x18(%di)
+ 831:	00 00                	add    %al,(%eax)
+    char const* Messeage7 = "***      ***       *****              ******               ****    ";
+ 833:	67 66 c7 45 e4 fc 0c 	movw   $0xcfc,-0x1c(%di)
+ 83a:	00 00                	add    %al,(%eax)
+
+    sys_print_for_heart(Messeage1,16,11);
+ 83c:	66 6a 0b             	pushw  $0xb
+ 83f:	66 6a 10             	pushw  $0x10
+ 842:	67 66 ff 75 fc       	pushw  -0x4(%di)
+ 847:	66 e8 de fd          	callw  629 <Timer+0x9>
+ 84b:	ff                   	(bad)  
+ 84c:	ff 66 83             	jmp    *-0x7d(%esi)
+ 84f:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    sys_print_for_heart(Messeage2,17,11);
+ 852:	6a 0b                	push   $0xb
+ 854:	66 6a 11             	pushw  $0x11
+ 857:	67 66 ff 75 f8       	pushw  -0x8(%di)
+ 85c:	66 e8 c9 fd          	callw  629 <Timer+0x9>
+ 860:	ff                   	(bad)  
+ 861:	ff 66 83             	jmp    *-0x7d(%esi)
+ 864:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    sys_print_for_heart(Messeage3,18,11);
+ 867:	6a 0b                	push   $0xb
+ 869:	66 6a 12             	pushw  $0x12
+ 86c:	67 66 ff 75 f4       	pushw  -0xc(%di)
+ 871:	66 e8 b4 fd          	callw  629 <Timer+0x9>
+ 875:	ff                   	(bad)  
+ 876:	ff 66 83             	jmp    *-0x7d(%esi)
+ 879:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    sys_print_for_heart(Messeage4,19,11);
+ 87c:	6a 0b                	push   $0xb
+ 87e:	66 6a 13             	pushw  $0x13
+ 881:	67 66 ff 75 f0       	pushw  -0x10(%di)
+ 886:	66 e8 9f fd          	callw  629 <Timer+0x9>
+ 88a:	ff                   	(bad)  
+ 88b:	ff 66 83             	jmp    *-0x7d(%esi)
+ 88e:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    sys_print_for_heart(Messeage5,20,11);
+ 891:	6a 0b                	push   $0xb
+ 893:	66 6a 14             	pushw  $0x14
+ 896:	67 66 ff 75 ec       	pushw  -0x14(%di)
+ 89b:	66 e8 8a fd          	callw  629 <Timer+0x9>
+ 89f:	ff                   	(bad)  
+ 8a0:	ff 66 83             	jmp    *-0x7d(%esi)
+ 8a3:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    sys_print_for_heart(Messeage6,21,11);
+ 8a6:	6a 0b                	push   $0xb
+ 8a8:	66 6a 15             	pushw  $0x15
+ 8ab:	67 66 ff 75 e8       	pushw  -0x18(%di)
+ 8b0:	66 e8 75 fd          	callw  629 <Timer+0x9>
+ 8b4:	ff                   	(bad)  
+ 8b5:	ff 66 83             	jmp    *-0x7d(%esi)
+ 8b8:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    sys_print_for_heart(Messeage7,22,11);
+ 8bb:	6a 0b                	push   $0xb
+ 8bd:	66 6a 16             	pushw  $0x16
+ 8c0:	67 66 ff 75 e4       	pushw  -0x1c(%di)
+ 8c5:	66 e8 60 fd          	callw  629 <Timer+0x9>
+ 8c9:	ff                   	(bad)  
+ 8ca:	ff 66 83             	jmp    *-0x7d(%esi)
+ 8cd:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+}
+ 8d0:	c9                   	leave  
+ 8d1:	66 c3                	retw   
+
+000008d3 <sys_printpoem>:
+void sys_printpoem(){
+ 8d3:	66 55                	push   %bp
+ 8d5:	66 89 e5             	mov    %sp,%bp
+ 8d8:	66 83 ec 14          	sub    $0x14,%sp
+    char const* Messeage = "Comuputer Sciense";
+ 8dc:	67 66 c7 45 f8 40 0d 	movw   $0xd40,-0x8(%di)
+ 8e3:	00 00                	add    %al,(%eax)
+    char const* Messeage2 = "chenhyOS";
+ 8e5:	67 66 c7 45 f4 52 0d 	movw   $0xd52,-0xc(%di)
+ 8ec:	00 00                	add    %al,(%eax)
+    int i = 1;
+ 8ee:	67 66 c7 45 fc 01 00 	movw   $0x1,-0x4(%di)
+ 8f5:	00 00                	add    %al,(%eax)
+    for(i = 1;i < 7;i ++){
+ 8f7:	67 66 c7 45 fc 01 00 	movw   $0x1,-0x4(%di)
+ 8fe:	00 00                	add    %al,(%eax)
+ 900:	eb 4b                	jmp    94d <sys_printpoem+0x7a>
+        sys_print_different_color(Messeage,15,10,i);
+ 902:	67 66 ff 75 fc       	pushw  -0x4(%di)
+ 907:	66 6a 0a             	pushw  $0xa
+ 90a:	66 6a 0f             	pushw  $0xf
+ 90d:	67 66 ff 75 f8       	pushw  -0x8(%di)
+ 912:	66 e8 a4 fd          	callw  6ba <sys_print_for_heart+0x8f>
+ 916:	ff                   	(bad)  
+ 917:	ff 66 83             	jmp    *-0x7d(%esi)
+ 91a:	c4 10                	les    (%eax),%edx
+        sys_print_different_color(Messeage2,16,10,i);
+ 91c:	67 66 ff 75 fc       	pushw  -0x4(%di)
+ 921:	66 6a 0a             	pushw  $0xa
+ 924:	66 6a 10             	pushw  $0x10
+ 927:	67 66 ff 75 f4       	pushw  -0xc(%di)
+ 92c:	66 e8 8a fd          	callw  6ba <sys_print_for_heart+0x8f>
+ 930:	ff                   	(bad)  
+ 931:	ff 66 83             	jmp    *-0x7d(%esi)
+ 934:	c4 10                	les    (%eax),%edx
+        int j = 0;
+ 936:	67 66 c7 45 f0 00 00 	movw   $0x0,-0x10(%di)
+ 93d:	00 00                	add    %al,(%eax)
+        int k = 0;
+ 93f:	67 66 c7 45 ec 00 00 	movw   $0x0,-0x14(%di)
+ 946:	00 00                	add    %al,(%eax)
+}
+void sys_printpoem(){
+    char const* Messeage = "Comuputer Sciense";
+    char const* Messeage2 = "chenhyOS";
+    int i = 1;
+    for(i = 1;i < 7;i ++){
+ 948:	67 66 ff 45 fc       	incw   -0x4(%di)
+ 94d:	67 66 83 7d fc 06    	cmpw   $0x6,-0x4(%di)
+ 953:	7e ad                	jle    902 <sys_printpoem+0x2f>
+        sys_print_different_color(Messeage,15,10,i);
+        sys_print_different_color(Messeage2,16,10,i);
+        int j = 0;
+        int k = 0;
+    }
+}
+ 955:	66 c9                	leavew 
+ 957:	66 c3                	retw   
+
+00000959 <sys_printheart>:
+void sys_printheart(){
+ 959:	66 55                	push   %bp
+ 95b:	66 89 e5             	mov    %sp,%bp
+    sys_print_for_heart("     * *       * *     ",00,40);
+ 95e:	66 6a 28             	pushw  $0x28
+ 961:	66 6a 00             	pushw  $0x0
+ 964:	66 68 5b 0d          	pushw  $0xd5b
+ 968:	00 00                	add    %al,(%eax)
+ 96a:	66 e8 bb fc          	callw  629 <Timer+0x9>
+ 96e:	ff                   	(bad)  
+ 96f:	ff 66 83             	jmp    *-0x7d(%esi)
+ 972:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    sys_print_for_heart("   * * * *   * * * *    ",1,40);
+ 975:	6a 28                	push   $0x28
+ 977:	66 6a 01             	pushw  $0x1
+ 97a:	66 68 73 0d          	pushw  $0xd73
+ 97e:	00 00                	add    %al,(%eax)
+ 980:	66 e8 a5 fc          	callw  629 <Timer+0x9>
+ 984:	ff                   	(bad)  
+ 985:	ff 66 83             	jmp    *-0x7d(%esi)
+ 988:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    sys_print_for_heart(" * * * * * * * * * * *    ",2,40);
+ 98b:	6a 28                	push   $0x28
+ 98d:	66 6a 02             	pushw  $0x2
+ 990:	66 68 8c 0d          	pushw  $0xd8c
+ 994:	00 00                	add    %al,(%eax)
+ 996:	66 e8 8f fc          	callw  629 <Timer+0x9>
+ 99a:	ff                   	(bad)  
+ 99b:	ff 66 83             	jmp    *-0x7d(%esi)
+ 99e:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    sys_print_for_heart("  * * * * * * * * * *   ",3,40);
+ 9a1:	6a 28                	push   $0x28
+ 9a3:	66 6a 03             	pushw  $0x3
+ 9a6:	66 68 a7 0d          	pushw  $0xda7
+ 9aa:	00 00                	add    %al,(%eax)
+ 9ac:	66 e8 79 fc          	callw  629 <Timer+0x9>
+ 9b0:	ff                   	(bad)  
+ 9b1:	ff 66 83             	jmp    *-0x7d(%esi)
+ 9b4:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    sys_print_for_heart("    * * * * * * * *    ",4,40);
+ 9b7:	6a 28                	push   $0x28
+ 9b9:	66 6a 04             	pushw  $0x4
+ 9bc:	66 68 c0 0d          	pushw  $0xdc0
+ 9c0:	00 00                	add    %al,(%eax)
+ 9c2:	66 e8 63 fc          	callw  629 <Timer+0x9>
+ 9c6:	ff                   	(bad)  
+ 9c7:	ff 66 83             	jmp    *-0x7d(%esi)
+ 9ca:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    sys_print_for_heart("      * * * * * *     ",5,40);
+ 9cd:	6a 28                	push   $0x28
+ 9cf:	66 6a 05             	pushw  $0x5
+ 9d2:	66 68 d8 0d          	pushw  $0xdd8
+ 9d6:	00 00                	add    %al,(%eax)
+ 9d8:	66 e8 4d fc          	callw  629 <Timer+0x9>
+ 9dc:	ff                   	(bad)  
+ 9dd:	ff 66 83             	jmp    *-0x7d(%esi)
+ 9e0:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    sys_print_for_heart("        * * * *      ",6,40);
+ 9e3:	6a 28                	push   $0x28
+ 9e5:	66 6a 06             	pushw  $0x6
+ 9e8:	66 68 ef 0d          	pushw  $0xdef
+ 9ec:	00 00                	add    %al,(%eax)
+ 9ee:	66 e8 37 fc          	callw  629 <Timer+0x9>
+ 9f2:	ff                   	(bad)  
+ 9f3:	ff 66 83             	jmp    *-0x7d(%esi)
+ 9f6:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    sys_print_for_heart("          * *       ",7,40);
+ 9f9:	6a 28                	push   $0x28
+ 9fb:	66 6a 07             	pushw  $0x7
+ 9fe:	66 68 05 0e          	pushw  $0xe05
+ a02:	00 00                	add    %al,(%eax)
+ a04:	66 e8 21 fc          	callw  629 <Timer+0x9>
+ a08:	ff                   	(bad)  
+ a09:	ff 66 83             	jmp    *-0x7d(%esi)
+ a0c:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+ a0f:	c9                   	leave  
+ a10:	66 c3                	retw   
+
+00000a12 <initial_PCB>:
+#include "schedule.h"
+struct PCB PCB_list[5];
+void initial_PCB(int index){
+ a12:	66 55                	push   %bp
+ a14:	66 89 e5             	mov    %sp,%bp
+    PCB_list[index].cs = 0x1000+0x1000*(index + 1);//5代表内核，0代表用户程序
+ a17:	67 66 8b 45 08       	mov    0x8(%di),%ax
+ a1c:	66 83 c0 02          	add    $0x2,%ax
+ a20:	66 c1 e0 0c          	shl    $0xc,%ax
+ a24:	66 89 c2             	mov    %ax,%dx
+ a27:	67 66 8b 45 08       	mov    0x8(%di),%ax
+ a2c:	66 c1 e0 06          	shl    $0x6,%ax
+ a30:	66 05 50 10          	add    $0x1050,%ax
+ a34:	00 00                	add    %al,(%eax)
+ a36:	67 66 89 10          	mov    %dx,(%bx,%si)
+    PCB_list[index].eip = 0x100;
+ a3a:	67 66 8b 45 08       	mov    0x8(%di),%ax
+ a3f:	66 c1 e0 06          	shl    $0x6,%ax
+ a43:	66 05 40 10          	add    $0x1040,%ax
+ a47:	00 00                	add    %al,(%eax)
+ a49:	67 66 c7 40 0c 00 01 	movw   $0x100,0xc(%bx,%si)
+ a50:	00 00                	add    %al,(%eax)
+    PCB_list[index].prg_status = 1;
+ a52:	67 66 8b 45 08       	mov    0x8(%di),%ax
+ a57:	66 c1 e0 06          	shl    $0x6,%ax
+ a5b:	66 05 50 10          	add    $0x1050,%ax
+ a5f:	00 00                	add    %al,(%eax)
+ a61:	67 66 c7 40 08 01 00 	movw   $0x1,0x8(%bx,%si)
+ a68:	00 00                	add    %al,(%eax)
+    PCB_list[index].eflags = 512;
+ a6a:	67 66 8b 45 08       	mov    0x8(%di),%ax
+ a6f:	66 c1 e0 06          	shl    $0x6,%ax
+ a73:	66 05 50 10          	add    $0x1050,%ax
+ a77:	00 00                	add    %al,(%eax)
+ a79:	67 66 c7 40 04 00 02 	movw   $0x200,0x4(%bx,%si)
+ a80:	00 00                	add    %al,(%eax)
+    PCB_list[index].prg_name = '1'+index - 1;
+ a82:	67 66 8b 45 08       	mov    0x8(%di),%ax
+ a87:	66 83 c0 30          	add    $0x30,%ax
+ a8b:	67 66 8b 55 08       	mov    0x8(%di),%dx
+ a90:	66 c1 e2 06          	shl    $0x6,%dx
+ a94:	66 81 c2 50 10       	add    $0x1050,%dx
+ a99:	00 00                	add    %al,(%eax)
+ a9b:	67 88 42 0c          	mov    %al,0xc(%bp,%si)
+}
+ a9f:	66 5d                	pop    %bp
+ aa1:	66 c3                	retw   
+
+00000aa3 <sys_schedule>:
+void sys_schedule(){
+ aa3:	66 55                	push   %bp
+ aa5:	66 89 e5             	mov    %sp,%bp
+ aa8:	66 83 ec 08          	sub    $0x8,%sp
+    int i,j;
+    if(PCB_list == _CurrentProg){
+ aac:	66 a1 60 11 66 3d    	mov    0x3d661160,%ax
+ ab2:	20 10                	and    %dl,(%eax)
+ ab4:	00 00                	add    %al,(%eax)
+ ab6:	75 09                	jne    ac1 <sys_schedule+0x1e>
+        i = 0;
+ ab8:	67 66 c7 45 fc 00 00 	movw   $0x0,-0x4(%di)
+ abf:	00 00                	add    %al,(%eax)
+    }
+    if(PCB_list + 1 == _CurrentProg ){
+ ac1:	66 a1 60 11 66 3d    	mov    0x3d661160,%ax
+ ac7:	60                   	pusha  
+ ac8:	10 00                	adc    %al,(%eax)
+ aca:	00 75 09             	add    %dh,0x9(%ebp)
+        i = 1;
+ acd:	67 66 c7 45 fc 01 00 	movw   $0x1,-0x4(%di)
+ ad4:	00 00                	add    %al,(%eax)
+    }
+    if(PCB_list + 2 == _CurrentProg){
+ ad6:	66 a1 60 11 66 3d    	mov    0x3d661160,%ax
+ adc:	a0 10 00 00 75       	mov    0x75000010,%al
+ ae1:	09 67 66             	or     %esp,0x66(%edi)
+        i = 2;
+ ae4:	c7 45 fc 02 00 00 00 	movl   $0x2,-0x4(%ebp)
+    }
+    if(PCB_list + 3 == _CurrentProg){
+ aeb:	66 a1 60 11 66 3d    	mov    0x3d661160,%ax
+ af1:	e0 10                	loopne b03 <sys_schedule+0x60>
+ af3:	00 00                	add    %al,(%eax)
+ af5:	75 09                	jne    b00 <sys_schedule+0x5d>
+        i = 3;
+ af7:	67 66 c7 45 fc 03 00 	movw   $0x3,-0x4(%di)
+ afe:	00 00                	add    %al,(%eax)
+    }
+    for(j = 0;j < 4;j ++){
+ b00:	67 66 c7 45 f8 00 00 	movw   $0x0,-0x8(%di)
+ b07:	00 00                	add    %al,(%eax)
+ b09:	eb 42                	jmp    b4d <sys_schedule+0xaa>
+        if(i == 3){
+ b0b:	67 66 83 7d fc 03    	cmpw   $0x3,-0x4(%di)
+ b11:	75 14                	jne    b27 <sys_schedule+0x84>
+            _CurrentProg = 0;
+ b13:	66 c7 06 60 11       	movw   $0x1160,(%esi)
+ b18:	00 00                	add    %al,(%eax)
+ b1a:	00 00                	add    %al,(%eax)
+            i = 0;
+ b1c:	67 66 c7 45 fc 00 00 	movw   $0x0,-0x4(%di)
+ b23:	00 00                	add    %al,(%eax)
+ b25:	eb 11                	jmp    b38 <sys_schedule+0x95>
+        }
+        else{
+            _CurrentProg ++;
+ b27:	66 a1 60 11 66 83    	mov    0x83661160,%ax
+ b2d:	c0 40 66 a3          	rolb   $0xa3,0x66(%eax)
+ b31:	60                   	pusha  
+ b32:	11 67 66             	adc    %esp,0x66(%edi)
+            i ++;
+ b35:	ff 45 fc             	incl   -0x4(%ebp)
+        }
+        if(_CurrentProg -> prg_status != 0){
+ b38:	66 a1 60 11 67 66    	mov    0x66671160,%ax
+ b3e:	8b 40 38             	mov    0x38(%eax),%eax
+ b41:	66 85 c0             	test   %ax,%ax
+ b44:	74 02                	je     b48 <sys_schedule+0xa5>
+            return;
+ b46:	eb 17                	jmp    b5f <sys_schedule+0xbc>
+        i = 2;
+    }
+    if(PCB_list + 3 == _CurrentProg){
+        i = 3;
+    }
+    for(j = 0;j < 4;j ++){
+ b48:	67 66 ff 45 f8       	incw   -0x8(%di)
+ b4d:	67 66 83 7d f8 03    	cmpw   $0x3,-0x8(%di)
+ b53:	7e b6                	jle    b0b <sys_schedule+0x68>
+        }
+        if(_CurrentProg -> prg_status != 0){
+            return;
+        }
+    }
+    _CurrentProg = PCB_list + 4;
+ b55:	66 c7 06 60 11       	movw   $0x1160,(%esi)
+ b5a:	20 11                	and    %dl,(%ecx)
+ b5c:	00 00                	add    %al,(%eax)
+    return;
+ b5e:	90                   	nop
+ b5f:	66 c9                	leavew 
+ b61:	66 c3                	retw   
