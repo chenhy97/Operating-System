@@ -25,7 +25,7 @@ kernel.elf: kernel.o $(SYSCALL)/use.o $(SYSCALL)/sysc.o  $(USER_OBJ) $(SYSCALL)/
 kernel.txt: kernel.elf
 	$(OBJDUMP) -S $^ > $@
 
-kernel.o: kernel.c kernel.h  $(USER_HEADER)
+kernel.o: kernel.c kernel.h  $(USER_HEADER) 
 	$(CC) $(CCFLAGS) -c $^
 $(SYSCALL)/sysc.o:
 	cd $(SYSCALL)/ && make

@@ -18,7 +18,7 @@ void bulidmap();
 void showtable();
 void Initial_Int();
 void Initial_Int_09h();
-void initialTimer();
+void Initial_Int_08h();
 void loadProg(int count,int begin,int memory_position);
 struct info{
     char name[4][16];

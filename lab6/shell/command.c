@@ -80,13 +80,11 @@ int terminal(){
                     run(queue,num_of_queue);
                     num_of_queue = 0;
                     number = 0;
+                    clearscreen();
                     prints(CMDHead);
                     index_of_str = 0;
                     recived[index_of_str] = 0;
                     continue;
-                }
-                else{
-                    prints("fuck");
                 }
             }
             else{
@@ -121,7 +119,7 @@ int terminal(){
 void run(int queue[],int size){
     int j = 0;
     clearscreen();
-    for(j = 0;j < size;j ++){
+   /* for(j = 0;j < size;j ++){
         //_delay();
         //_load_userProgram(queue[j]);
         //_delay();
@@ -141,6 +139,11 @@ void run(int queue[],int size){
             //_loadP(10,55,0x4000);
             _RunProgress(0x4000);
         }
+    }*/
+    for(j = 0;j < size;j ++){
+        initial_PCB(queue[j]);
     }
-     clearscreen();
+   // clearscreen();
+    char no_use = getch();
+    //Initial_Int_08h();
 }

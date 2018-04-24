@@ -5,8 +5,12 @@
 user1:
 mov	ax, cs	       ; 置其他段寄存器值与CS相同
 mov	ds, ax
+mov ss,ax
+mov sp,0x100
 mov ax,0B800h
 mov es,ax
+record dw 20
+mov word [record],80
 %macro POINT 6
 	mov ax, [%1]
 	mov [x],ax
@@ -40,13 +44,16 @@ start:
 	call loop1
 	POINT x1,y1,xdul1,ydul1,color1,char1
 	POINT x2,y2,xdul2,ydul2,color2,char2
-	call showname
+	;call showname
 
 	
 
-	;int 35h
-	int 20h
 	int 33h
+	dec word[record]
+	cmp word[record],1
+	jnz again
+	int 38h
+again:
 	jmp start
 
 

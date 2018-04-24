@@ -57,6 +57,4 @@ void Initial_Int_08h(){
 }
 void loadProg(int count,int begin,int memory_postion){
     _loadP(count,begin,memory_postion);
-	int index = (memory_postion - 0x1000)/0x1000 - 1;
-	initial_PCB(index);
 }
