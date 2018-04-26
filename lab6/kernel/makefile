@@ -18,14 +18,14 @@ STD_IO = $(SYSCALL)/stdio.h
 #USER_PRO=$(UP)/user1.o $(UP)/user2.o $(UP)/user3.o $(UP)/user4.o
 all: kernel.bin kernel.elf kernel.txt
 
-kernel.bin: kernel.o  $(SYSCALL)/use.o $(SYSCALL)/sysc.o  $(USER_OBJ) $(SYSCALL)/schedule.o $(SYSCALL)/stdio.o $(SYSCALL)/interuptf.o #$(USER_PRO)
+kernel.bin: kernel.o  $(SYSCALL)/use.o $(SYSCALL)/sysc.o  $(USER_OBJ) $(SYSCALL)/stdio.o $(SYSCALL)/interuptf.o#$(USER_PRO)
 	$(LD) $(LDFLAGS) -Ttext 0x7d00 --oformat binary -o $@ $^
-kernel.elf: kernel.o $(SYSCALL)/use.o $(SYSCALL)/sysc.o  $(USER_OBJ) $(SYSCALL)/stdio.o $(SYSCALL)/interuptf.o $(SYSCALL)/schedule.o
+kernel.elf: kernel.o $(SYSCALL)/use.o $(SYSCALL)/sysc.o  $(USER_OBJ) $(SYSCALL)/stdio.o $(SYSCALL)/interuptf.o
 	$(LD) $(OBJFLAGS) -Ttext 0x7d00 -o $@ $^
 kernel.txt: kernel.elf
 	$(OBJDUMP) -S $^ > $@
 
-kernel.o: kernel.c kernel.h  $(USER_HEADER) 
+kernel.o: kernel.c kernel.h  $(USER_HEADER)
 	$(CC) $(CCFLAGS) -c $^
 $(SYSCALL)/sysc.o:
 	cd $(SYSCALL)/ && make
@@ -34,9 +34,6 @@ $(SYSCALL)/use.o:
 	cd $(SYSCALL)/ && make
 	cd ../kernel
 $(SYSCALL)/interuptf.o:
-	cd $(SYSCALL)/ && make
-	cd ../kernel
-$(SYSCALL)/schedule.o:
 	cd $(SYSCALL)/ && make
 	cd ../kernel
 $(SYSCALL)/stdio.o:

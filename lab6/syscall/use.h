@@ -7,7 +7,6 @@ extern void  _write(int count,int start,void* addr);
 extern void _initialInt();
 extern void _initialInt_09h();
 extern void _row_the_screen();
-extern void _loadP(int count,int begin,int memory_position);
 
 
 
@@ -18,8 +17,7 @@ void bulidmap();
 void showtable();
 void Initial_Int();
 void Initial_Int_09h();
-void Initial_Int_08h();
-void loadProg(int count,int begin,int memory_position);
+void initialTimer();
 struct info{
     char name[4][16];
     int size[4];

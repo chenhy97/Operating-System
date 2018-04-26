@@ -1,5 +1,4 @@
 #include "use.h"
-char ttime[20]="";
 void sys_print_for_heart(char const* Messeage,int row,int colume){//need the pos
 	int pos = (80 * row + colume)*2;
 	int color = 3;

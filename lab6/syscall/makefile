@@ -6,7 +6,7 @@ AS=nasm
 ASFLAGS=
 
 
-all : sysc.o use.o interuptf.o stdio.o schedule.o
+all : sysc.o use.o interuptf.o stdio.o
 
 
 sysc.o: sysc.asm 
@@ -14,8 +14,6 @@ sysc.o: sysc.asm
 use.o : use.c use.h
 	$(CC) $(CCFLAGS) -c $^
 interuptf.o : interuptf.c stdio.h use.h
-	$(CC) $(CCFLAGS) -c $^
-schedule.o : schedule.c schedule.h
 	$(CC) $(CCFLAGS) -c $^
 stdio.o : stdio.c stdio.h
 	$(CC) $(CCFLAGS) -c $^

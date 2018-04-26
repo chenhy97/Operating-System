@@ -1,5 +1,4 @@
 #include "use.h"
-#include "schedule.h"
 //====================================================
 //                封装清屏函数
 //====================================================
@@ -51,10 +50,4 @@ void Initial_Int(){
 }
 void Initial_Int_09h(){
 	_initialInt_09h();
-}
-void Initial_Int_08h(){
-	_initialInt_08h();
-}
-void loadProg(int count,int begin,int memory_postion){
-    _loadP(count,begin,memory_postion);
 }

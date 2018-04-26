@@ -10,22 +10,22 @@ ASFLAGS=
 SYSCALL=../syscall
 all:	user1.bin user2.bin user3.bin user4.bin test.bin test.elf test.txt user1.elf user1.txt#infoP.bin
 
-user1.bin: user1.o  $(SYSCALL)/sysc.o  $(SYSCALL)/interuptf.o $(SYSCALL)/schedule.o
+user1.bin: user1.o  $(SYSCALL)/sysc.o  $(SYSCALL)/interuptf.o
 	$(LD) $(LDFLAGS) -Ttext 0x100 --oformat binary -o $@ $^
-user2.bin: user2.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o $(SYSCALL)/schedule.o
+user2.bin: user2.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o
 	$(LD) $(LDFLAGS) -Ttext 0x100 --oformat binary -o $@ $^
-user3.bin: user3.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o $(SYSCALL)/schedule.o
+user3.bin: user3.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o
 	$(LD) $(LDFLAGS) -Ttext 0x100 --oformat binary -o $@ $^
-user4.bin: user4.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o $(SYSCALL)/schedule.o
+user4.bin: user4.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o
 	$(LD) $(LDFLAGS) -Ttext 0x100 --oformat binary -o $@ $^
-test.bin: test.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o $(SYSCALL)/schedule.o
+test.bin: test.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o
 	$(LD) $(LDFLAGS) -Ttext 0x100 --oformat binary -o $@ $^
 
-test.elf: test.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o $(SYSCALL)/schedule.o
+test.elf: test.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o
 	$(LD) $(OBJFLAGS) -Ttext 0x100 -o $@ $^
 test.txt: test.elf
 	$(OBJDUMP) -S $^ > $@
-user1.elf: user1.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o $(SYSCALL)/schedule.o
+user1.elf: user1.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o
 	$(LD) $(OBJFLAGS) -Ttext 0x100 -o $@ $^
 user1.txt: user1.elf
 	$(OBJDUMP) -S $^ > $@
