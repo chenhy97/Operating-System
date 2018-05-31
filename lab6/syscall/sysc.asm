@@ -73,6 +73,29 @@ MessageLength31  equ ($-Message31)
     popa
 %endmacro
 ;===============================
+;   复制堆栈_sys_stack_copy(old -> ss,old -> esp,newone -> ss)
+;===============================
+_sys_stack_copy:
+    enter 0,0
+    pusha
+    mov ax,[bp + 6];old -> ss
+    mov dx,[bp + 10];old -> esp
+    mov cx,[bp + 14];new -> ss
+    mov bx,ds
+loop1:
+    cmp dx,0x100
+    jz end_for_copy
+    mov ds,ax
+    mov bx,word [edx]
+    mov ds,cx
+    mov [edx],bx
+    add dx,4
+    jmp loop1
+end_for_copy:    
+    popa
+    leave
+    newret
+;===============================
     ; 清屏
 ;===============================
 _clearscreen:
@@ -590,6 +613,12 @@ _SetINT38h:
     call sys_exit
     pop ds
     pop ax
+    iret
+
+_SetINT39h:
+    CLI
+    push word 0
+    call fork
     iret
 ;========================================================
 ;                   初始化中断向量程序区

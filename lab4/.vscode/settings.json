@@ -1,9 +1,0 @@
-{
-    "git.ignoreLimitWarning": true,
-    "C_Cpp.errorSquiggles": "Disabled",
-    "files.associations": {
-        "*.asm": "asm",
-        "use.h": "c",
-        "stdio.h": "c"
-    }
-}
