@@ -20,6 +20,12 @@ global _Get_Hours_2
 global _Get_Minutes_1
 global _Get_Minutes_2
 global _sys_stack_copy
+global _save
+global _fork_user
+global _Schedule_once
+global _Schedule
+global _wait
+global _exit
 
 extern printcircle
 extern sys_showline
@@ -28,9 +34,11 @@ extern sys_printpoem
 extern sys_printheart
 extern sys_schedule
 extern _CurrentProg
+extern sys_wait
 extern sys_exit
+extern sys_exit_fork
 extern ttime
-extern fork
+extern do_fork
 delay equ 8
 count db delay
 alpha db '-'
@@ -45,11 +53,14 @@ esp_saved_inkernel dd 200
 esp_saved_in_user dd 240
 ss_saved_in_user dd 300
 color db 1
-
+ss_saved_fork dd 450
+retaddr dd 600
 Message31: dw 'time: '
 MessageLength31  equ ($-Message31)
 
 %macro newret 0;inorder to get back,have to match with enter-leave
+    ;pop dword [cs:retaddr]
+    ;jmp word [cs:retaddr]
     pop edx
     jmp dx
 %endmacro
@@ -78,7 +89,9 @@ MessageLength31  equ ($-Message31)
 ;===============================
 _sys_stack_copy:
     enter 0,0
+    mov ss,ax
     pusha
+    push ds
     mov ax,[bp + 6];old -> ss
     mov dx,[bp + 10];old -> esp
     mov cx,[bp + 14];new -> ss
@@ -90,9 +103,10 @@ while_loop1:
     mov bx,word [edx]
     mov ds,cx
     mov [edx],bx
-    add dx,4
+    add dx,2
     jmp while_loop1
-end_for_copy:    
+end_for_copy:
+    pop ds    
     popa
     leave
     newret
@@ -140,12 +154,15 @@ _readinput:;not yet try;wait for input
 ;==============================
 _showchar:
     enter 0,0
-    
+    push ax
+    push bx
     mov ax,[bp+6] ; ASCII码
     mov ah,0eh ; 功能号
     ;mov bh,0
     mov bl,0 ; Bl设为0
     int 10H ; 调用中断
+    pop bx
+    pop ax
     leave
    ; mov ax,1
     newret
@@ -222,6 +239,33 @@ _RunProgress:
     leave
     newret
 
+_Schedule_once:
+    enter 0,0
+    push word 0
+    int 41h;
+    leave
+    newret
+
+_fork_user:
+    enter 0,0
+    push word 0
+    int 39h
+    leave
+    newret
+_Schedule:
+    enter 0,0
+    push ss
+    push word 0
+    int 42h
+    pop ss
+    leave
+    newret
+_wait:
+    enter 0,0
+    push word 0
+    int 43h
+    leave 
+    newret
 ;================================================================================================================
 ;                                                                                                               ;
 ;                                                                                                               ;
@@ -618,8 +662,36 @@ _SetINT38h:
 _SetINT39h:
     CLI
     enter 0,0
+    push ds
+    ;push ax
     push 0
-    call fork
+    mov ax,cs
+    mov ds,ax
+    call do_fork
+   ; pop ax
+    pop ds
+    leave
+    iret
+_SetINT41h:
+    CLI
+    call _save
+    call _restart
+    mov al,20h
+    out 20h,al
+    out 0A0H,al
+    STI
+    iret
+_SetINT43h:
+    CLI
+    enter 0,0
+    push ds
+    push ax
+    push 0
+    mov ax,cs
+    mov ds,ax
+    call sys_wait
+    pop ax
+    pop ds
     leave
     iret
 ;========================================================
@@ -637,6 +709,9 @@ _initialInt:
      SetInt 37h,_SetINT37h
      SetInt 38h,_SetINT38h
      SetInt 39h,_SetINT39h
+     SetInt 41h,_SetINT41h
+     SetInt 42h,_SetINT08h_turn_around
+     SetInt 43h,_SetINT43h
      leave
     newret;
 
@@ -669,6 +744,7 @@ _save:
     pop ds
     pop word [ds_saved]
     pop word [return_save]
+   ; mov word [ss_saved_fork],ss
     mov dword [kernelesp_saved],esp
     mov dword [esi_save],esi
     mov esi,dword [_CurrentProg]
@@ -696,6 +772,7 @@ _save:
     push ecx
     push ebx
     push eax
+   ; mov ss,word [ss_saved_fork]
     mov esp,dword [kernelesp_saved];：：：：：：：：：：：：：：：：：：：：：在进入用户程序的时候先保存kernelsp！?????
     mov ax,word [return_save]
     jmp ax

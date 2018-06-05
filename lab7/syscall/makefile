@@ -15,7 +15,7 @@ use.o : use.c use.h
 	$(CC) $(CCFLAGS) -c $^
 interuptf.o : interuptf.c stdio.h use.h
 	$(CC) $(CCFLAGS) -c $^
-fork.o : fork.c fork.h schedule.h
+fork.o : fork.c fork.h schedule.h use.h
 	$(CC) $(CCFLAGS) -c $^
 time.o : time.c time.h
 	$(CC) $(CCFLAGS) -c $^

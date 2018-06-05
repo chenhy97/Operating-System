@@ -51,6 +51,7 @@ build: $(LOADER)/loader.bin $(KERNEL)/kernel.bin
 	dd if=$(USER)/user3.bin of=S.img bs=512 count=20 conv=notrunc seek=134;sync
 	dd if=$(USER)/user4.bin of=S.img bs=512 count=20 conv=notrunc seek=154;sync
 	dd if=$(USER)/test.bin of=S.img bs=512 count=20 conv=notrunc seek=174;sync
+	dd if=$(USER)/testfork.bin of=S.img bs=512 count=20 conv=notrunc seek=194;sync
 clean:
 	find . -name "*.bin" -type f -delete
 	find . -name "*.o" -type f -delete
