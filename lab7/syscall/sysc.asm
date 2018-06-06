@@ -241,30 +241,38 @@ _RunProgress:
 
 _Schedule_once:
     enter 0,0
-    push word 0
+    ;push word 0
     int 41h;
     leave
     newret
 
 _fork_user:
     enter 0,0
-    push word 0
+    ;push word 0
     int 39h
     leave
     newret
 _Schedule:
     enter 0,0
     push ss
-    push word 0
+    ;push word 0
     int 42h
     pop ss
     leave
     newret
 _wait:
     enter 0,0
-    push word 0
+    ;push word 0
     int 43h
     leave 
+    newret
+_exit:
+    enter 0,0
+    mov eax,dword [ebp + 6]
+    push eax
+   ; push word 0
+    int 3Ah
+    leave
     newret
 ;================================================================================================================
 ;                                                                                                               ;
@@ -685,12 +693,27 @@ _SetINT43h:
     CLI
     enter 0,0
     push ds
-    push ax
+    ;push ax
     push 0
     mov ax,cs
     mov ds,ax
     call sys_wait
-    pop ax
+    ;pop ax
+    pop ds
+    leave
+    iret
+_SetINT3Ah:
+    CLI
+    enter 0,0
+    push ds
+    ;push ax
+    mov eax,[ebp + 8]
+    push eax
+    push 0
+    mov ax,cs
+    mov ds,ax
+    call sys_exit_fork
+    ;pop ax
     pop ds
     leave
     iret
@@ -709,6 +732,7 @@ _initialInt:
      SetInt 37h,_SetINT37h
      SetInt 38h,_SetINT38h
      SetInt 39h,_SetINT39h
+     SetInt 3Ah,_SetINT3Ah
      SetInt 41h,_SetINT41h
      SetInt 42h,_SetINT08h_turn_around
      SetInt 43h,_SetINT43h

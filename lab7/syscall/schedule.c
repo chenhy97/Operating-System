@@ -12,7 +12,7 @@ void initial_PCB(int index){
     PCB_list[index ].prg_status = RUN;
     PCB_list[index ].eflags = 512;
     PCB_list[index ].id = index;
-    PCB_list[index ].fid = 5;
+    PCB_list[index ].fid = 0;
 }
 void Set_PCB(){
     int i = 0;
@@ -52,8 +52,8 @@ void sys_exit(){
 }
 void sys_exit_fork(char ch){
     _CurrentProg -> prg_status = EXIT;
-    PCB_list[_CurrentProg -> fid] -> prg_status = READY;
-    PCB_list[_CurrentProg -> fid] -> eax = ch;
+    PCB_list[_CurrentProg -> fid].prg_status = READY;
+    PCB_list[_CurrentProg -> fid].eax = ch;
     _Schedule();
 }
 void sys_bolocked(){
@@ -62,9 +62,10 @@ void sys_bolocked(){
 void sys_run(){
     _CurrentProg -> prg_status = RUN;
 }
-void sys_wait(){
+int sys_wait(){
     _CurrentProg -> prg_status = BLOCKED;
     _Schedule();
+    return _CurrentProg -> eax;
 }
 int do_fork(){
    struct PCB* fork_prg;
@@ -86,7 +87,7 @@ int do_fork(){
         _Schedule_once();
         __asm__("sub $6,%esp");
         _sys_stack_copy(_CurrentProg -> ss,_CurrentProg -> esp,fork_prg -> ss);
-         __asm__("add $6,%esp");
+        __asm__("add $6,%esp");
         fork_prg -> ip = _CurrentProg -> ip;
         fork_prg -> eax = 0;
         if(fork_prg == _CurrentProg){

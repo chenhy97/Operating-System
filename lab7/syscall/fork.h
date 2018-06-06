@@ -2,5 +2,5 @@
 #define FORK_H
 //int do_fork();
 int fork();
-void wait();
+char wait();
 #endif

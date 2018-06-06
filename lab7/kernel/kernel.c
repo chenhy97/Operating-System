@@ -20,12 +20,10 @@ int main(){
     loadProg(18,155,0x5000);
     _loadP(18,175,0x6000);
     _loadP(18,195,0x7000);
-    initial_PCB(5);
-    _CurrentProg = PCB_list + 5;
-    //int fork_a = do_fork();
-    //printsint(fork_a);
-   // _CurrentProg = PCB_list;//important! mov dword ptr ds:0x9e60, 0x00009d20,把PCB_list的地址9d20存到ds的9e60处，此后就直接用9e60来织带PCB_list
-    //Initial_Int_08h();
+    initial_PCB(6);
+    _CurrentProg = PCB_list + 6;
+    //_CurrentProg = PCB_list;//important! mov dword ptr ds:0x9e60, 0x00009d20,把PCB_list的地址9d20存到ds的9e60处，此后就直接用9e60来织带PCB_list
+   // Initial_Int_08h();
    _RunProgress(0x7000);
 
 
