@@ -30,33 +30,41 @@ ReadOS:
     mov ah,2
     int 13h
 	
+    mov ah,2                 ; 功能号
+    mov al,18                 ;扇区数
+    mov dh,1                 ;磁头号 ; 起始编号为0
+    mov ch,0                 ;柱面号 ; 起始编号为0
+    add bx, 18*512 ;偏移地址; 存放数据的内存偏移地址
+    int 13h
+
 	mov ah,2                 ; 功能号
     mov al,18                 ;扇区数
     mov dh,0                 ;磁头号 ; 起始编号为0
-    mov ch,2                 ;柱面号 ; 起始编号为0
+    mov ch,1                 ;柱面号 ; 起始编号为0
     add bx, 18*512 ;偏移地址; 存放数据的内存偏移地址
     int 13h 
 
 	mov ah,2                 ; 功能号
     mov al,18                 ;扇区数
     mov dh,1                 ;磁头号 ; 起始编号为0
-    mov ch,2                 ;柱面号 ; 起始编号为0
+    mov ch,1                 ;柱面号 ; 起始编号为0
     add bx, 18*512 ;偏移地址; 存放数据的内存偏移地址
     int 13h
 
 	 mov ah,2                 ; 功能号
     mov al,18                 ;扇区数
     mov dh,0                 ;磁头号 ; 起始编号为0
-    mov ch,3                 ;柱面号 ; 起始编号为0
+    mov ch,2                 ;柱面号 ; 起始编号为0
     add bx, 18*512 ;偏移地址; 存放数据的内存偏移地址
     int 13h
 
 	 mov ah,2                 ; 功能号
     mov al,18                 ;扇区数
     mov dh,1                 ;磁头号 ; 起始编号为0
-    mov ch,3                 ;柱面号 ; 起始编号为0
+    mov ch,2                 ;柱面号 ; 起始编号为0
     add bx, 18*512 ;偏移地址; 存放数据的内存偏移地址
     int 13h
+
 JUMP_TO_OS:
 	;Clear Screen
 	mov ax, 3

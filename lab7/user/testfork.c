@@ -25,7 +25,7 @@ int main(){
     else{
         char const*son_talk = "I am son\n\r";
         prints(son_talk);
-        int num = countLetterNum("I love 10");
+        int num = countLetterNum("Il10abcd");
         exit(num);
     }
 }
@@ -34,7 +34,6 @@ int countLetterNum(char const* s1){
     int count = 0;
     while(s1[index] != 0){
         if((s1[index] >= 'a' && s1[index] <= 'z' )||(s1[index] >= 'A' && s1[index] <= 'Z') ){
-            //index ++;
             count ++;
         }
         index ++;

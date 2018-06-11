@@ -26,10 +26,10 @@ int main(){
      115:	66 bc 00 01          	mov    $0x100,%sp
      119:	00 00                	add    %al,(%eax)
     char const* str = "I love 10";
-     11b:	67 66 c7 45 fc 6c 1c 	movw   $0x1c6c,-0x4(%di)
+     11b:	67 66 c7 45 fc 1c 1d 	movw   $0x1d1c,-0x4(%di)
      122:	00 00                	add    %al,(%eax)
     int pid = fork();
-     124:	66 e8 d2 1a          	callw  1bfa <stack_copy+0x35>
+     124:	66 e8 81 1b          	callw  1ca9 <stack_copy+0x35>
      128:	00 00                	add    %al,(%eax)
      12a:	67 66 89 45 f8       	mov    %ax,-0x8(%di)
     printsint(pid);
@@ -41,7 +41,7 @@ int main(){
      13e:	67 66 83 7d f8 ff    	cmpw   $0xffff,-0x8(%di)
      144:	75 18                	jne    15e <main+0x5e>
         char const *messeage = "Error in fork\n\r";
-     146:	67 66 c7 45 f4 76 1c 	movw   $0x1c76,-0xc(%di)
+     146:	67 66 c7 45 f4 26 1d 	movw   $0x1d26,-0xc(%di)
      14d:	00 00                	add    %al,(%eax)
         prints(messeage);
      14f:	67 66 ff 75 f4       	pushw  -0xc(%di)
@@ -53,7 +53,7 @@ int main(){
      15e:	67 66 83 7d f8 00    	cmpw   $0x0,-0x8(%di)
      164:	74 43                	je     1a9 <main+0xa9>
         char const*dad_talk = "I am daddy\n\r";
-     166:	67 66 c7 45 f0 86 1c 	movw   $0x1c86,-0x10(%di)
+     166:	67 66 c7 45 f0 36 1d 	movw   $0x1d36,-0x10(%di)
      16d:	00 00                	add    %al,(%eax)
         prints(dad_talk);
      16f:	67 66 ff 75 f0       	pushw  -0x10(%di)
@@ -61,7 +61,7 @@ int main(){
      178:	00 00                	add    %al,(%eax)
      17a:	66 83 c4 04          	add    $0x4,%sp
         char ch = wait();
-     17e:	66 e8 95 1a          	callw  1c17 <fork+0x1b>
+     17e:	66 e8 44 1b          	callw  1cc6 <fork+0x1b>
      182:	00 00                	add    %al,(%eax)
      184:	67 88 45 ef          	mov    %al,-0x11(%di)
         printc(ch);
@@ -72,22 +72,22 @@ int main(){
      196:	66 83 c4 04          	add    $0x4,%sp
         exit(6);
      19a:	66 6a 06             	pushw  $0x6
-     19d:	66 e8 9f 1a          	callw  1c40 <wait+0x27>
+     19d:	66 e8 4e 1b          	callw  1cef <wait+0x27>
      1a1:	00 00                	add    %al,(%eax)
      1a3:	66 83 c4 04          	add    $0x4,%sp
      1a7:	eb 3c                	jmp    1e5 <main+0xe5>
     }
     else{
         char const*son_talk = "I am son\n\r";
-     1a9:	67 66 c7 45 e8 93 1c 	movw   $0x1c93,-0x18(%di)
+     1a9:	67 66 c7 45 e8 43 1d 	movw   $0x1d43,-0x18(%di)
      1b0:	00 00                	add    %al,(%eax)
         prints(son_talk);
      1b2:	67 66 ff 75 e8       	pushw  -0x18(%di)
      1b7:	66 e8 14 0e          	callw  fcf <print+0x8f>
      1bb:	00 00                	add    %al,(%eax)
      1bd:	66 83 c4 04          	add    $0x4,%sp
-        int num = countLetterNum("I love 10");
-     1c1:	66 68 6c 1c          	pushw  $0x1c6c
+        int num = countLetterNum("Il10abcd");
+     1c1:	66 68 4e 1d          	pushw  $0x1d4e
      1c5:	00 00                	add    %al,(%eax)
      1c7:	66 e8 1c 00          	callw  1e7 <main+0xe7>
      1cb:	00 00                	add    %al,(%eax)
@@ -95,7 +95,7 @@ int main(){
      1d1:	67 66 89 45 e4       	mov    %ax,-0x1c(%di)
         exit(num);
      1d6:	67 66 ff 75 e4       	pushw  -0x1c(%di)
-     1db:	66 e8 61 1a          	callw  1c40 <wait+0x27>
+     1db:	66 e8 10 1b          	callw  1cef <wait+0x27>
      1df:	00 00                	add    %al,(%eax)
      1e1:	66 83 c4 04          	add    $0x4,%sp
     }
@@ -141,7 +141,6 @@ int countLetterNum(char const* s1){
      24f:	67 8a 00             	mov    (%bx,%si),%al
      252:	3c 5a                	cmp    $0x5a,%al
      254:	7f 05                	jg     25b <countLetterNum+0x72>
-            //index ++;
             count ++;
      256:	67 66 ff 45 f8       	incw   -0x8(%di)
         }
@@ -159,7 +158,7 @@ int countLetterNum(char const* s1){
      26d:	67 8a 00             	mov    (%bx,%si),%al
      270:	84 c0                	test   %al,%al
      272:	75 92                	jne    206 <countLetterNum+0x1d>
-            //index ++;
+        if((s1[index] >= 'a' && s1[index] <= 'z' )||(s1[index] >= 'A' && s1[index] <= 'Z') ){
             count ++;
         }
         index ++;
@@ -199,7 +198,7 @@ int countLetterNum(char const* s1){
 	...
 
 00000294 <temp>:
-     294:	e8 03 b4 00 00       	call   b69c <_end+0x8038>
+     294:	e8 03 b4 00 00       	call   b69c <_end+0x7f58>
 
 00000296 <kernelesp_saved>:
      296:	b4 00                	mov    $0x0,%ah
@@ -443,8 +442,8 @@ int countLetterNum(char const* s1){
 
 00000441 <_SetINT08h_turn_around>:
      441:	fa                   	cli    
-     442:	e8 2b 05 6a 00       	call   6a0972 <_end+0x69d30e>
-     447:	e8 9d 11 e8 97       	call   97e815e9 <_end+0x97e7df85>
+     442:	e8 2b 05 6a 00       	call   6a0972 <_end+0x69d22e>
+     447:	e8 9d 11 e8 97       	call   97e815e9 <_end+0x97e7dea5>
      44c:	05 b0 20 e6 20       	add    $0x20e620b0,%eax
      451:	e6 a0                	out    %al,$0xa0
      453:	fb                   	sti    
@@ -526,7 +525,7 @@ int countLetterNum(char const* s1){
      4db:	02 66 8b             	add    -0x75(%esi),%ah
      4de:	26                   	es
      4df:	9a 02 60 b9 00 b8 8e 	lcall  $0x8eb8,$0xb96002
-     4e6:	e9 8a 26 a6 02       	jmp    2a62b75 <_end+0x2a5f511>
+     4e6:	e9 8a 26 a6 02       	jmp    2a62b75 <_end+0x2a5f431>
      4eb:	b0 4f                	mov    $0x4f,%al
      4ed:	65 a3 78 00 b0 55    	mov    %eax,%gs:0x55b00078
      4f3:	65 a3 7a 00 b0 43    	mov    %eax,%gs:0x43b0007a
@@ -753,7 +752,7 @@ int countLetterNum(char const* s1){
 
 000006b1 <_SetINT37h>:
      6b1:	fa                   	cli    
-     6b2:	e8 83 03 cf fa       	call   facf0a3a <_end+0xfaced3d6>
+     6b2:	e8 83 03 cf fa       	call   facf0a3a <_end+0xfaced2f6>
 
 000006b6 <_SetINT38h>:
      6b6:	fa                   	cli    
@@ -762,7 +761,7 @@ int countLetterNum(char const* s1){
      6b9:	8c c8                	mov    %cs,%eax
      6bb:	8e d8                	mov    %eax,%ds
      6bd:	6a 00                	push   $0x0
-     6bf:	e8 73 10 1f 58       	call   581f1737 <_end+0x581ee0d3>
+     6bf:	e8 95 10 1f 58       	call   581f1759 <_end+0x581ee015>
      6c4:	cf                   	iret   
 
 000006c5 <_SetINT39h>:
@@ -772,12 +771,12 @@ int countLetterNum(char const* s1){
      6cb:	6a 00                	push   $0x0
      6cd:	8c c8                	mov    %cs,%eax
      6cf:	8e d8                	mov    %eax,%ds
-     6d1:	e8 3d 11 1f c9       	call   c91f1813 <_end+0xc91ee1af>
+     6d1:	e8 ed 11 1f c9       	call   c91f18c3 <_end+0xc91ee17f>
      6d6:	cf                   	iret   
 
 000006d7 <_SetINT41h>:
      6d7:	fa                   	cli    
-     6d8:	e8 95 02 e8 06       	call   6e80972 <_end+0x6e7d30e>
+     6d8:	e8 95 02 e8 06       	call   6e80972 <_end+0x6e7d22e>
      6dd:	03 b0 20 e6 20 e6    	add    -0x19df19e0(%eax),%esi
      6e3:	a0 fb cf fa c8       	mov    0xc8facffb,%al
 
@@ -788,7 +787,7 @@ int countLetterNum(char const* s1){
      6ec:	6a 00                	push   $0x0
      6ee:	8c c8                	mov    %cs,%eax
      6f0:	8e d8                	mov    %eax,%ds
-     6f2:	e8 f8 10 1f c9       	call   c91f17ef <_end+0xc91ee18b>
+     6f2:	e8 e7 10 1f c9       	call   c91f17de <_end+0xc91ee09a>
      6f7:	cf                   	iret   
 
 000006f8 <_SetINT3Ah>:
@@ -800,7 +799,7 @@ int countLetterNum(char const* s1){
      705:	6a 00                	push   $0x0
      707:	8c c8                	mov    %cs,%eax
      709:	8e d8                	mov    %eax,%ds
-     70b:	e8 3d 10 1f c9       	call   c91f174d <_end+0xc91ee0e9>
+     70b:	e8 61 10 1f c9       	call   c91f1771 <_end+0xc91ee02d>
      710:	cf                   	iret   
 
 00000711 <_initialInt>:
@@ -1080,8 +1079,8 @@ int countLetterNum(char const* s1){
      988:	90                   	nop
      989:	02 66 8b             	add    -0x75(%esi),%ah
      98c:	36                   	ss
-     98d:	60                   	pusha  
-     98e:	36                   	ss
+     98d:	40                   	inc    %eax
+     98e:	37                   	aaa    
      98f:	66 83 c6 2c          	add    $0x2c,%si
      993:	67 8f 06 67 8f       	popl   -0x7099
      998:	46                   	inc    %esi
@@ -1097,8 +1096,8 @@ int countLetterNum(char const* s1){
      9b3:	8c de                	mov    %ds,%esi
      9b5:	8e d6                	mov    %esi,%ss
      9b7:	66 8b 26             	mov    (%esi),%sp
-     9ba:	60                   	pusha  
-     9bb:	36                   	ss
+     9ba:	40                   	inc    %eax
+     9bb:	37                   	aaa    
      9bc:	66 83 c4 24          	add    $0x24,%sp
      9c0:	6a 00                	push   $0x0
      9c2:	ff 36                	pushl  (%esi)
@@ -1122,8 +1121,8 @@ int countLetterNum(char const* s1){
      9e7:	96                   	xchg   %eax,%esi
      9e8:	02 66 8b             	add    -0x75(%esi),%ah
      9eb:	26                   	es
-     9ec:	60                   	pusha  
-     9ed:	36                   	ss
+     9ec:	40                   	inc    %eax
+     9ed:	37                   	aaa    
      9ee:	66 58                	pop    %ax
      9f0:	66 5b                	pop    %bx
      9f2:	66 59                	pop    %cx
@@ -1167,7 +1166,7 @@ int countLetterNum(char const* s1){
      a41:	8e d8                	mov    %eax,%ds
      a43:	8c c8                	mov    %cs,%eax
      a45:	8e c0                	mov    %eax,%es
-     a47:	bf 20 34 b4 02       	mov    $0x2b43420,%edi
+     a47:	bf 00 35 b4 02       	mov    $0x2b43500,%edi
      a4c:	cd 1a                	int    $0x1a
      a4e:	88 e8                	mov    %ch,%al
      a50:	b4 00                	mov    $0x0,%ah
@@ -1211,7 +1210,7 @@ int countLetterNum(char const* s1){
      ab9:	8c c8                	mov    %cs,%eax
      abb:	8e d8                	mov    %eax,%ds
      abd:	8e c0                	mov    %eax,%es
-     abf:	bd 20 34 8c d8       	mov    $0xd88c3420,%ebp
+     abf:	bd 00 35 8c d8       	mov    $0xd88c3500,%ebp
      ac4:	8e c0                	mov    %eax,%es
      ac6:	b9 0f 00 b8 01       	mov    $0x1b8000f,%ecx
      acb:	13 bb 0f 00 b6 0a    	adc    0xab6000f(%ebx),%edi
@@ -1490,25 +1489,25 @@ void sys_printname(){
      d24:	66 89 e5             	mov    %sp,%bp
      d27:	66 83 ec 1c          	sub    $0x1c,%sp
     char const* Messeage1 = "***      ***  *****     *****         ******                ****  ";
-     d2b:	67 66 c7 45 fc a0 1c 	movw   $0x1ca0,-0x4(%di)
+     d2b:	67 66 c7 45 fc 58 1d 	movw   $0x1d58,-0x4(%di)
      d32:	00 00                	add    %al,(%eax)
     char const* Messeage2 = "***      ***   ****     ****       ***      ***          **     ** ";
-     d34:	67 66 c7 45 f8 e4 1c 	movw   $0x1ce4,-0x8(%di)
+     d34:	67 66 c7 45 f8 9c 1d 	movw   $0x1d9c,-0x8(%di)
      d3b:	00 00                	add    %al,(%eax)
     char const* Messeage3 = "***      ***    ***     ***      ***          ***       **         "; 
-     d3d:	67 66 c7 45 f4 28 1d 	movw   $0x1d28,-0xc(%di)
+     d3d:	67 66 c7 45 f4 e0 1d 	movw   $0x1de0,-0xc(%di)
      d44:	00 00                	add    %al,(%eax)
     char const* Messeage4 = "************       *****         ***          ***         ***      ";
-     d46:	67 66 c7 45 f0 6c 1d 	movw   $0x1d6c,-0x10(%di)
+     d46:	67 66 c7 45 f0 24 1e 	movw   $0x1e24,-0x10(%di)
      d4d:	00 00                	add    %al,(%eax)
     char const* Messeage5 = "***      ***       *****         ***          ***            **    ";
-     d4f:	67 66 c7 45 ec b0 1d 	movw   $0x1db0,-0x14(%di)
+     d4f:	67 66 c7 45 ec 68 1e 	movw   $0x1e68,-0x14(%di)
      d56:	00 00                	add    %al,(%eax)
     char const* Messeage6 = "***      ***       *****           ***      ***          **   ***  ";
-     d58:	67 66 c7 45 e8 f4 1d 	movw   $0x1df4,-0x18(%di)
+     d58:	67 66 c7 45 e8 ac 1e 	movw   $0x1eac,-0x18(%di)
      d5f:	00 00                	add    %al,(%eax)
     char const* Messeage7 = "***      ***       *****              ******               ****    ";
-     d61:	67 66 c7 45 e4 38 1e 	movw   $0x1e38,-0x1c(%di)
+     d61:	67 66 c7 45 e4 f0 1e 	movw   $0x1ef0,-0x1c(%di)
      d68:	00 00                	add    %al,(%eax)
 
     sys_print_for_heart(Messeage1,16,11);
@@ -1577,10 +1576,10 @@ void sys_printpoem(){
      e03:	66 89 e5             	mov    %sp,%bp
      e06:	66 83 ec 14          	sub    $0x14,%sp
     char const* Messeage = "Comuputer Sciense";
-     e0a:	67 66 c7 45 f8 7c 1e 	movw   $0x1e7c,-0x8(%di)
+     e0a:	67 66 c7 45 f8 34 1f 	movw   $0x1f34,-0x8(%di)
      e11:	00 00                	add    %al,(%eax)
     char const* Messeage2 = "chenhyOS";
-     e13:	67 66 c7 45 f4 8e 1e 	movw   $0x1e8e,-0xc(%di)
+     e13:	67 66 c7 45 f4 46 1f 	movw   $0x1f46,-0xc(%di)
      e1a:	00 00                	add    %al,(%eax)
     int i = 1;
      e1c:	67 66 c7 45 fc 01 00 	movw   $0x1,-0x4(%di)
@@ -1638,7 +1637,7 @@ void sys_printheart(){
     sys_print_for_heart("     * *       * *     ",00,40);
      e8c:	66 6a 28             	pushw  $0x28
      e8f:	66 6a 00             	pushw  $0x0
-     e92:	66 68 97 1e          	pushw  $0x1e97
+     e92:	66 68 4f 1f          	pushw  $0x1f4f
      e96:	00 00                	add    %al,(%eax)
      e98:	66 e8 bb fc          	callw  b57 <_Get_Minutes_2+0x1b>
      e9c:	ff                   	(bad)  
@@ -1647,7 +1646,7 @@ void sys_printheart(){
     sys_print_for_heart("   * * * *   * * * *    ",1,40);
      ea3:	6a 28                	push   $0x28
      ea5:	66 6a 01             	pushw  $0x1
-     ea8:	66 68 af 1e          	pushw  $0x1eaf
+     ea8:	66 68 67 1f          	pushw  $0x1f67
      eac:	00 00                	add    %al,(%eax)
      eae:	66 e8 a5 fc          	callw  b57 <_Get_Minutes_2+0x1b>
      eb2:	ff                   	(bad)  
@@ -1656,7 +1655,7 @@ void sys_printheart(){
     sys_print_for_heart(" * * * * * * * * * * *    ",2,40);
      eb9:	6a 28                	push   $0x28
      ebb:	66 6a 02             	pushw  $0x2
-     ebe:	66 68 c8 1e          	pushw  $0x1ec8
+     ebe:	66 68 80 1f          	pushw  $0x1f80
      ec2:	00 00                	add    %al,(%eax)
      ec4:	66 e8 8f fc          	callw  b57 <_Get_Minutes_2+0x1b>
      ec8:	ff                   	(bad)  
@@ -1665,7 +1664,7 @@ void sys_printheart(){
     sys_print_for_heart("  * * * * * * * * * *   ",3,40);
      ecf:	6a 28                	push   $0x28
      ed1:	66 6a 03             	pushw  $0x3
-     ed4:	66 68 e3 1e          	pushw  $0x1ee3
+     ed4:	66 68 9b 1f          	pushw  $0x1f9b
      ed8:	00 00                	add    %al,(%eax)
      eda:	66 e8 79 fc          	callw  b57 <_Get_Minutes_2+0x1b>
      ede:	ff                   	(bad)  
@@ -1674,7 +1673,7 @@ void sys_printheart(){
     sys_print_for_heart("    * * * * * * * *    ",4,40);
      ee5:	6a 28                	push   $0x28
      ee7:	66 6a 04             	pushw  $0x4
-     eea:	66 68 fc 1e          	pushw  $0x1efc
+     eea:	66 68 b4 1f          	pushw  $0x1fb4
      eee:	00 00                	add    %al,(%eax)
      ef0:	66 e8 63 fc          	callw  b57 <_Get_Minutes_2+0x1b>
      ef4:	ff                   	(bad)  
@@ -1683,7 +1682,7 @@ void sys_printheart(){
     sys_print_for_heart("      * * * * * *     ",5,40);
      efb:	6a 28                	push   $0x28
      efd:	66 6a 05             	pushw  $0x5
-     f00:	66 68 14 1f          	pushw  $0x1f14
+     f00:	66 68 cc 1f          	pushw  $0x1fcc
      f04:	00 00                	add    %al,(%eax)
      f06:	66 e8 4d fc          	callw  b57 <_Get_Minutes_2+0x1b>
      f0a:	ff                   	(bad)  
@@ -1692,7 +1691,7 @@ void sys_printheart(){
     sys_print_for_heart("        * * * *      ",6,40);
      f11:	6a 28                	push   $0x28
      f13:	66 6a 06             	pushw  $0x6
-     f16:	66 68 2b 1f          	pushw  $0x1f2b
+     f16:	66 68 e3 1f          	pushw  $0x1fe3
      f1a:	00 00                	add    %al,(%eax)
      f1c:	66 e8 37 fc          	callw  b57 <_Get_Minutes_2+0x1b>
      f20:	ff                   	(bad)  
@@ -1701,7 +1700,7 @@ void sys_printheart(){
     sys_print_for_heart("          * *       ",7,40);
      f27:	6a 28                	push   $0x28
      f29:	66 6a 07             	pushw  $0x7
-     f2c:	66 68 41 1f          	pushw  $0x1f41
+     f2c:	66 68 f9 1f          	pushw  $0x1ff9
      f30:	00 00                	add    %al,(%eax)
      f32:	66 e8 21 fc          	callw  b57 <_Get_Minutes_2+0x1b>
      f36:	ff                   	(bad)  
@@ -1975,7 +1974,7 @@ void printsint(int num){
     1153:	ff 66 83             	jmp    *-0x7d(%esi)
     1156:	c4 04 66             	les    (%esi,%eiz,2),%eax
 	prints("\n\r");
-    1159:	68 56 1f 00 00       	push   $0x1f56
+    1159:	68 0e 20 00 00       	push   $0x200e
     115e:	66 e8 6d fe          	callw  fcf <print+0x8f>
     1162:	ff                   	(bad)  
     1163:	ff 66 83             	jmp    *-0x7d(%esi)
@@ -2369,7 +2368,7 @@ void initial_PCB(int index){
     145a:	66 89 c1             	mov    %ax,%cx
     145d:	66 c1 e1 04          	shl    $0x4,%cx
     1461:	66 01 c8             	add    %cx,%ax
-    1464:	66 05 70 34          	add    $0x3470,%ax
+    1464:	66 05 50 35          	add    $0x3550,%ax
     1468:	00 00                	add    %al,(%eax)
     146a:	67 66 89 10          	mov    %dx,(%bx,%si)
     PCB_list[index ].ds = 0x2000+0x1000*(index - 1);//0代表内核，1代表用户程序
@@ -2382,7 +2381,7 @@ void initial_PCB(int index){
     1485:	66 89 c1             	mov    %ax,%cx
     1488:	66 c1 e1 04          	shl    $0x4,%cx
     148c:	66 01 c8             	add    %cx,%ax
-    148f:	66 05 60 34          	add    $0x3460,%ax
+    148f:	66 05 40 35          	add    $0x3540,%ax
     1493:	00 00                	add    %al,(%eax)
     1495:	67 66 89 10          	mov    %dx,(%bx,%si)
     PCB_list[index ].ss = 0x2000+0x1000*(index - 1);
@@ -2395,7 +2394,7 @@ void initial_PCB(int index){
     14b0:	66 89 c1             	mov    %ax,%cx
     14b3:	66 c1 e1 04          	shl    $0x4,%cx
     14b7:	66 01 c8             	add    %cx,%ax
-    14ba:	66 05 60 34          	add    $0x3460,%ax
+    14ba:	66 05 40 35          	add    $0x3540,%ax
     14be:	00 00                	add    %al,(%eax)
     14c0:	67 66 89 50 04       	mov    %dx,0x4(%bx,%si)
     PCB_list[index ].esp = 0x100;
@@ -2404,7 +2403,7 @@ void initial_PCB(int index){
     14ce:	66 89 c2             	mov    %ax,%dx
     14d1:	66 c1 e2 04          	shl    $0x4,%dx
     14d5:	66 01 d0             	add    %dx,%ax
-    14d8:	66 05 60 34          	add    $0x3460,%ax
+    14d8:	66 05 40 35          	add    $0x3540,%ax
     14dc:	00 00                	add    %al,(%eax)
     14de:	67 66 c7 40 08 00 01 	movw   $0x100,0x8(%bx,%si)
     14e5:	00 00                	add    %al,(%eax)
@@ -2414,7 +2413,7 @@ void initial_PCB(int index){
     14f0:	66 89 c2             	mov    %ax,%dx
     14f3:	66 c1 e2 04          	shl    $0x4,%dx
     14f7:	66 01 d0             	add    %dx,%ax
-    14fa:	66 05 60 34          	add    $0x3460,%ax
+    14fa:	66 05 40 35          	add    $0x3540,%ax
     14fe:	00 00                	add    %al,(%eax)
     1500:	67 66 c7 40 0c 00 01 	movw   $0x100,0xc(%bx,%si)
     1507:	00 00                	add    %al,(%eax)
@@ -2424,7 +2423,7 @@ void initial_PCB(int index){
     1512:	66 89 c2             	mov    %ax,%dx
     1515:	66 c1 e2 04          	shl    $0x4,%dx
     1519:	66 01 d0             	add    %dx,%ax
-    151c:	66 05 70 34          	add    $0x3470,%ax
+    151c:	66 05 50 35          	add    $0x3550,%ax
     1520:	00 00                	add    %al,(%eax)
     1522:	67 66 c7 40 08 01 00 	movw   $0x1,0x8(%bx,%si)
     1529:	00 00                	add    %al,(%eax)
@@ -2434,7 +2433,7 @@ void initial_PCB(int index){
     1534:	66 89 c2             	mov    %ax,%dx
     1537:	66 c1 e2 04          	shl    $0x4,%dx
     153b:	66 01 d0             	add    %dx,%ax
-    153e:	66 05 70 34          	add    $0x3470,%ax
+    153e:	66 05 50 35          	add    $0x3550,%ax
     1542:	00 00                	add    %al,(%eax)
     1544:	67 66 c7 40 04 00 02 	movw   $0x200,0x4(%bx,%si)
     154b:	00 00                	add    %al,(%eax)
@@ -2444,7 +2443,7 @@ void initial_PCB(int index){
     1556:	66 89 c2             	mov    %ax,%dx
     1559:	66 c1 e2 04          	shl    $0x4,%dx
     155d:	66 01 d0             	add    %dx,%ax
-    1560:	67 66 8d 90 70 34    	lea    0x3470(%bx,%si),%dx
+    1560:	67 66 8d 90 50 35    	lea    0x3550(%bx,%si),%dx
     1566:	00 00                	add    %al,(%eax)
     1568:	67 66 8b 45 08       	mov    0x8(%di),%ax
     156d:	67 66 89 42 0c       	mov    %ax,0xc(%bp,%si)
@@ -2454,7 +2453,7 @@ void initial_PCB(int index){
     157b:	66 89 c2             	mov    %ax,%dx
     157e:	66 c1 e2 04          	shl    $0x4,%dx
     1582:	66 01 d0             	add    %dx,%ax
-    1585:	66 05 80 34          	add    $0x3480,%ax
+    1585:	66 05 60 35          	add    $0x3560,%ax
     1589:	00 00                	add    %al,(%eax)
     158b:	67 66 c7 00 00 00    	movw   $0x0,(%bx,%si)
     1591:	00 00                	add    %al,(%eax)
@@ -2480,7 +2479,7 @@ void Set_PCB(){
     15bd:	66 89 c2             	mov    %ax,%dx
     15c0:	66 c1 e2 04          	shl    $0x4,%dx
     15c4:	66 01 d0             	add    %dx,%ax
-    15c7:	66 05 70 34          	add    $0x3470,%ax
+    15c7:	66 05 50 35          	add    $0x3550,%ax
     15cb:	00 00                	add    %al,(%eax)
     15cd:	67 66 c7 40 08 00 00 	movw   $0x0,0x8(%bx,%si)
     15d4:	00 00                	add    %al,(%eax)
@@ -2510,10 +2509,10 @@ void sys_schedule(){
     15f7:	ff                   	(bad)  
     15f8:	ff 66 a1             	jmp    *-0x5f(%esi)
     i = _CurrentProg - PCB_list;
-    15fb:	60                   	pusha  
-    15fc:	36                   	ss
+    15fb:	40                   	inc    %eax
+    15fc:	37                   	aaa    
     15fd:	66 89 c2             	mov    %ax,%dx
-    1600:	66 b8 40 34          	mov    $0x3440,%ax
+    1600:	66 b8 20 35          	mov    $0x3520,%ax
     1604:	00 00                	add    %al,(%eax)
     1606:	66 29 c2             	sub    %ax,%dx
     1609:	66 89 d0             	mov    %dx,%ax
@@ -2538,46 +2537,46 @@ void sys_schedule(){
     for(j = 0;j < PCB_NUMMER;j ++){
     1644:	67 66 c7 45 f8 00 00 	movw   $0x0,-0x8(%di)
     164b:	00 00                	add    %al,(%eax)
-    164d:	e9 a6 00 67 66       	jmp    666716f8 <_end+0x6666e094>
+    164d:	e9 a6 00 67 66       	jmp    666716f8 <_end+0x6666dfb4>
         if(i == PCB_NUMMER - 1){
     1652:	83 7d fc 07          	cmpl   $0x7,-0x4(%ebp)
     1656:	75 14                	jne    166c <sys_schedule+0x85>
             _CurrentProg = PCB_list + 1;
-    1658:	66 c7 06 60 36       	movw   $0x3660,(%esi)
-    165d:	84 34 00             	test   %dh,(%eax,%eax,1)
-    1660:	00 67 66             	add    %ah,0x66(%edi)
+    1658:	66 c7 06 40 37       	movw   $0x3740,(%esi)
+    165d:	64                   	fs
+    165e:	35 00 00 67 66       	xor    $0x66670000,%eax
             i = 1;
     1663:	c7 45 fc 01 00 00 00 	movl   $0x1,-0x4(%ebp)
     166a:	eb 11                	jmp    167d <sys_schedule+0x96>
         }
         else{
             _CurrentProg ++;
-    166c:	66 a1 60 36 66 83    	mov    0x83663660,%ax
-    1672:	c0 44 66 a3 60       	rolb   $0x60,-0x5d(%esi,%eiz,2)
-    1677:	36 67 66 ff 45 fc    	incw   %ss:-0x4(%di)
+    166c:	66 a1 40 37 66 83    	mov    0x83663740,%ax
+    1672:	c0 44 66 a3 40       	rolb   $0x40,-0x5d(%esi,%eiz,2)
+    1677:	37                   	aaa    
             i ++;
+    1678:	67 66 ff 45 fc       	incw   -0x4(%di)
         }
         if(_CurrentProg -> prg_status == RUN){
-    167d:	66 a1 60 36 67 66    	mov    0x66673660,%ax
+    167d:	66 a1 40 37 67 66    	mov    0x66673740,%ax
     1683:	8b 40 38             	mov    0x38(%eax),%eax
     1686:	66 83 f8 01          	cmp    $0x1,%ax
     168a:	75 03                	jne    168f <sys_schedule+0xa8>
             return;
-    168c:	e9 a2 00 66 a1       	jmp    a1661733 <_end+0xa165e0cf>
+    168c:	e9 c4 00 66 a1       	jmp    a1661755 <_end+0xa165e011>
         }
         if(_CurrentProg -> prg_status == READY && index == -1){
-    1691:	60                   	pusha  
-    1692:	36 67 66 8b 40 38    	mov    %ss:0x38(%bx,%si),%ax
+    1691:	40                   	inc    %eax
+    1692:	37                   	aaa    
+    1693:	67 66 8b 40 38       	mov    0x38(%bx,%si),%ax
     1698:	66 83 f8 03          	cmp    $0x3,%ax
     169c:	75 53                	jne    16f1 <sys_schedule+0x10a>
     169e:	67 66 83 7d f4 ff    	cmpw   $0xffff,-0xc(%di)
     16a4:	75 4b                	jne    16f1 <sys_schedule+0x10a>
            index = _CurrentProg - PCB_list;
-    16a6:	66 a1 60 36 66 89    	mov    0x89663660,%ax
+    16a6:	66 a1 40 37 66 89    	mov    0x89663740,%ax
     16ac:	c2 66 b8             	ret    $0xb866
-    16af:	40                   	inc    %eax
-    16b0:	34 00                	xor    $0x0,%al
-    16b2:	00 66 29             	add    %ah,0x29(%esi)
+    16af:	20 35 00 00 66 29    	and    %dh,0x29660000
     16b5:	c2 66 89             	ret    $0x8966
     16b8:	d0 66 c1             	shlb   -0x3f(%esi)
     16bb:	f8                   	clc    
@@ -2606,7 +2605,7 @@ void sys_schedule(){
     for(j = 0;j < PCB_NUMMER;j ++){
     16f1:	67 66 ff 45 f8       	incw   -0x8(%di)
     16f6:	67 66 83 7d f8 07    	cmpw   $0x7,-0x8(%di)
-    16fc:	0f 8e 50 ff 67 66    	jle    66681652 <_end+0x6667dfee>
+    16fc:	0f 8e 50 ff 67 66    	jle    66681652 <_end+0x6667df0e>
         }
         if(_CurrentProg -> prg_status == READY && index == -1){
            index = _CurrentProg - PCB_list;
@@ -2614,521 +2613,594 @@ void sys_schedule(){
     }
     if(index != -1){
     1702:	83 7d f4 ff          	cmpl   $0xffffffff,-0xc(%ebp)
-    1706:	74 1f                	je     1727 <sys_schedule+0x140>
+    1706:	74 41                	je     1749 <sys_schedule+0x162>
         _CurrentProg = PCB_list + index;
     1708:	67 66 8b 45 f4       	mov    -0xc(%di),%ax
     170d:	66 c1 e0 02          	shl    $0x2,%ax
     1711:	66 89 c2             	mov    %ax,%dx
     1714:	66 c1 e2 04          	shl    $0x4,%dx
     1718:	66 01 d0             	add    %dx,%ax
-    171b:	66 05 40 34          	add    $0x3440,%ax
+    171b:	66 05 20 35          	add    $0x3520,%ax
     171f:	00 00                	add    %al,(%eax)
-    1721:	66 a3 60 36 eb 0a    	mov    %ax,0xaeb3660
+    1721:	66 a3 40 37 67 66    	mov    %ax,0x66673740
+        PCB_list[index].prg_status = RUN;
+    1727:	8b 45 f4             	mov    -0xc(%ebp),%eax
+    172a:	66 c1 e0 02          	shl    $0x2,%ax
+    172e:	66 89 c2             	mov    %ax,%dx
+    1731:	66 c1 e2 04          	shl    $0x4,%dx
+    1735:	66 01 d0             	add    %dx,%ax
+    1738:	66 05 50 35          	add    $0x3550,%ax
+    173c:	00 00                	add    %al,(%eax)
+    173e:	67 66 c7 40 08 01 00 	movw   $0x1,0x8(%bx,%si)
+    1745:	00 00                	add    %al,(%eax)
         return;
+    1747:	eb 0a                	jmp    1753 <sys_schedule+0x16c>
     }
     _CurrentProg = PCB_list ;
-    1727:	66 c7 06 60 36       	movw   $0x3660,(%esi)
-    172c:	40                   	inc    %eax
-    172d:	34 00                	xor    $0x0,%al
-    172f:	00 90 66 c9 66 c3    	add    %dl,-0x3c99369a(%eax)
-
-00001735 <sys_exit>:
+    1749:	66 c7 06 40 37       	movw   $0x3740,(%esi)
+    174e:	20 35 00 00 90 66    	and    %dh,0x66900000
     return;
 }
+    1754:	c9                   	leave  
+    1755:	66 c3                	retw   
+
+00001757 <sys_exit>:
 void sys_exit(){
-    1735:	66 55                	push   %bp
-    1737:	66 89 e5             	mov    %sp,%bp
+    1757:	66 55                	push   %bp
+    1759:	66 89 e5             	mov    %sp,%bp
+    __asm__("cli\n");
+    175c:	fa                   	cli    
     _CurrentProg -> prg_status = EXIT;
-    173a:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    1740:	c7 40 38 00 00 00 00 	movl   $0x0,0x38(%eax)
-}
-    1747:	66 5d                	pop    %bp
-    1749:	66 c3                	retw   
-
-0000174b <sys_exit_fork>:
-void sys_exit_fork(char ch){
-    174b:	66 55                	push   %bp
-    174d:	66 89 e5             	mov    %sp,%bp
-    1750:	66 83 ec 04          	sub    $0x4,%sp
-    1754:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1759:	67 88 45 fc          	mov    %al,-0x4(%di)
-    _CurrentProg -> prg_status = EXIT;
-    175d:	66 a1 60 36 67 66    	mov    0x66673660,%ax
+    175d:	66 a1 40 37 67 66    	mov    0x66673740,%ax
     1763:	c7 40 38 00 00 00 00 	movl   $0x0,0x38(%eax)
-    PCB_list[_CurrentProg -> fid].prg_status = READY;
-    176a:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    1770:	8b 40 40             	mov    0x40(%eax),%eax
-    1773:	66 c1 e0 02          	shl    $0x2,%ax
-    1777:	66 89 c2             	mov    %ax,%dx
-    177a:	66 c1 e2 04          	shl    $0x4,%dx
-    177e:	66 01 d0             	add    %dx,%ax
-    1781:	66 05 70 34          	add    $0x3470,%ax
-    1785:	00 00                	add    %al,(%eax)
-    1787:	67 66 c7 40 08 03 00 	movw   $0x3,0x8(%bx,%si)
-    178e:	00 00                	add    %al,(%eax)
+    __asm__("sti\n");
+    176a:	fb                   	sti    
+}
+    176b:	66 5d                	pop    %bp
+    176d:	66 c3                	retw   
+
+0000176f <sys_exit_fork>:
+
+void sys_exit_fork(char ch){
+    176f:	66 55                	push   %bp
+    1771:	66 89 e5             	mov    %sp,%bp
+    1774:	66 83 ec 08          	sub    $0x8,%sp
+    1778:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    177d:	67 88 45 f8          	mov    %al,-0x8(%di)
+    int index = _CurrentProg -> fid;
+    1781:	66 a1 40 37 67 66    	mov    0x66673740,%ax
+    1787:	8b 40 40             	mov    0x40(%eax),%eax
+    178a:	67 66 89 45 fc       	mov    %ax,-0x4(%di)
+    sys_wakeup(index);
+    178f:	67 66 ff 75 fc       	pushw  -0x4(%di)
+    1794:	66 e8 e4 00          	callw  187c <sys_bolocked+0x2b>
+    1798:	00 00                	add    %al,(%eax)
+    179a:	66 83 c4 04          	add    $0x4,%sp
     PCB_list[_CurrentProg -> fid].eax = ch;
-    1790:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    1796:	8b 40 40             	mov    0x40(%eax),%eax
-    1799:	67 66 0f be 55 fc    	movsbw -0x4(%di),%dx
-    179f:	66 c1 e0 02          	shl    $0x2,%ax
-    17a3:	66 89 c1             	mov    %ax,%cx
-    17a6:	66 c1 e1 04          	shl    $0x4,%cx
-    17aa:	66 01 c8             	add    %cx,%ax
-    17ad:	66 05 40 34          	add    $0x3440,%ax
-    17b1:	00 00                	add    %al,(%eax)
-    17b3:	67 66 89 10          	mov    %dx,(%bx,%si)
+    179e:	66 a1 40 37 67 66    	mov    0x66673740,%ax
+    17a4:	8b 40 40             	mov    0x40(%eax),%eax
+    17a7:	67 66 0f be 55 f8    	movsbw -0x8(%di),%dx
+    17ad:	66 c1 e0 02          	shl    $0x2,%ax
+    17b1:	66 89 c1             	mov    %ax,%cx
+    17b4:	66 c1 e1 04          	shl    $0x4,%cx
+    17b8:	66 01 c8             	add    %cx,%ax
+    17bb:	66 05 20 35          	add    $0x3520,%ax
+    17bf:	00 00                	add    %al,(%eax)
+    17c1:	67 66 89 10          	mov    %dx,(%bx,%si)
+    _CurrentProg -> prg_status = EXIT;
+    17c5:	66 a1 40 37 67 66    	mov    0x66673740,%ax
+    17cb:	c7 40 38 00 00 00 00 	movl   $0x0,0x38(%eax)
     _Schedule();
-    17b7:	66 e8 1e ec          	callw  3d9 <_fork_user+0x9>
-    17bb:	ff                   	(bad)  
-    17bc:	ff 66 c9             	jmp    *-0x37(%esi)
+    17d2:	66 e8 03 ec          	callw  3d9 <_fork_user+0x9>
+    17d6:	ff                   	(bad)  
+    17d7:	ff 66 c9             	jmp    *-0x37(%esi)
 }
-    17bf:	66 c3                	retw   
+    17da:	66 c3                	retw   
 
-000017c1 <sys_bolocked>:
-void sys_bolocked(){
-    17c1:	66 55                	push   %bp
-    17c3:	66 89 e5             	mov    %sp,%bp
-    _CurrentProg -> prg_status = BLOCKED;
-    17c6:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    17cc:	c7 40 38 02 00 00 00 	movl   $0x2,0x38(%eax)
-}
-    17d3:	66 5d                	pop    %bp
-    17d5:	66 c3                	retw   
-
-000017d7 <sys_run>:
-void sys_run(){
-    17d7:	66 55                	push   %bp
-    17d9:	66 89 e5             	mov    %sp,%bp
-    _CurrentProg -> prg_status = RUN;
-    17dc:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    17e2:	c7 40 38 01 00 00 00 	movl   $0x1,0x38(%eax)
-}
-    17e9:	66 5d                	pop    %bp
-    17eb:	66 c3                	retw   
-
-000017ed <sys_wait>:
+000017dc <sys_wait>:
 int sys_wait(){
-    17ed:	66 55                	push   %bp
-    17ef:	66 89 e5             	mov    %sp,%bp
-    _CurrentProg -> prg_status = BLOCKED;
-    17f2:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    17f8:	c7 40 38 02 00 00 00 	movl   $0x2,0x38(%eax)
+    17dc:	66 55                	push   %bp
+    17de:	66 89 e5             	mov    %sp,%bp
+    17e1:	66 83 ec 04          	sub    $0x4,%sp
+    int index = _CurrentProg - PCB_list;
+    17e5:	66 a1 40 37 66 89    	mov    0x89663740,%ax
+    17eb:	c2 66 b8             	ret    $0xb866
+    17ee:	20 35 00 00 66 29    	and    %dh,0x29660000
+    17f4:	c2 66 89             	ret    $0x8966
+    17f7:	d0 66 c1             	shlb   -0x3f(%esi)
+    17fa:	f8                   	clc    
+    17fb:	02 66 89             	add    -0x77(%esi),%ah
+    17fe:	c2 66 89             	ret    $0x8966
+    1801:	d0 66 01             	shlb   0x1(%esi)
+    1804:	c0 66 01 d0          	shlb   $0xd0,0x1(%esi)
+    1808:	67 66 8d 14          	lea    (%si),%dx
+    180c:	85 00                	test   %eax,(%eax)
+    180e:	00 00                	add    %al,(%eax)
+    1810:	00 66 01             	add    %ah,0x1(%esi)
+    1813:	d0 66 89             	shlb   -0x77(%esi)
+    1816:	c2 66 c1             	ret    $0xc166
+    1819:	e2 08                	loop   1823 <sys_wait+0x47>
+    181b:	66 01 d0             	add    %dx,%ax
+    181e:	66 89 c2             	mov    %ax,%dx
+    1821:	66 c1 e2 10          	shl    $0x10,%dx
+    1825:	66 01 d0             	add    %dx,%ax
+    1828:	66 f7 d8             	neg    %ax
+    182b:	67 66 89 45 fc       	mov    %ax,-0x4(%di)
+    sys_bolocked(index);
+    1830:	67 66 ff 75 fc       	pushw  -0x4(%di)
+    1835:	66 e8 16 00          	callw  184f <sys_wait+0x73>
+    1839:	00 00                	add    %al,(%eax)
+    183b:	66 83 c4 04          	add    $0x4,%sp
     _Schedule();
-    17ff:	66 e8 d6 eb          	callw  3d9 <_fork_user+0x9>
-    1803:	ff                   	(bad)  
-    1804:	ff 66 a1             	jmp    *-0x5f(%esi)
+    183f:	66 e8 96 eb          	callw  3d9 <_fork_user+0x9>
+    1843:	ff                   	(bad)  
+    1844:	ff 66 a1             	jmp    *-0x5f(%esi)
     return _CurrentProg -> eax;
-    1807:	60                   	pusha  
-    1808:	36 67 66 8b 00       	mov    %ss:(%bx,%si),%ax
+    1847:	40                   	inc    %eax
+    1848:	37                   	aaa    
+    1849:	67 66 8b 00          	mov    (%bx,%si),%ax
 }
-    180d:	66 5d                	pop    %bp
-    180f:	66 c3                	retw   
+    184d:	66 c9                	leavew 
+    184f:	66 c3                	retw   
 
-00001811 <do_fork>:
+00001851 <sys_bolocked>:
+void sys_bolocked(int index){
+    1851:	66 55                	push   %bp
+    1853:	66 89 e5             	mov    %sp,%bp
+    __asm__("cli\n");
+    1856:	fa                   	cli    
+    PCB_list[index].prg_status = BLOCKED;
+    1857:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    185c:	66 c1 e0 02          	shl    $0x2,%ax
+    1860:	66 89 c2             	mov    %ax,%dx
+    1863:	66 c1 e2 04          	shl    $0x4,%dx
+    1867:	66 01 d0             	add    %dx,%ax
+    186a:	66 05 50 35          	add    $0x3550,%ax
+    186e:	00 00                	add    %al,(%eax)
+    1870:	67 66 c7 40 08 02 00 	movw   $0x2,0x8(%bx,%si)
+    1877:	00 00                	add    %al,(%eax)
+    __asm__("sti\n");
+    1879:	fb                   	sti    
+}
+    187a:	66 5d                	pop    %bp
+    187c:	66 c3                	retw   
+
+0000187e <sys_wakeup>:
+void sys_wakeup(int index){
+    187e:	66 55                	push   %bp
+    1880:	66 89 e5             	mov    %sp,%bp
+    __asm__("cli\n");
+    1883:	fa                   	cli    
+    PCB_list[index].prg_status = READY;
+    1884:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1889:	66 c1 e0 02          	shl    $0x2,%ax
+    188d:	66 89 c2             	mov    %ax,%dx
+    1890:	66 c1 e2 04          	shl    $0x4,%dx
+    1894:	66 01 d0             	add    %dx,%ax
+    1897:	66 05 50 35          	add    $0x3550,%ax
+    189b:	00 00                	add    %al,(%eax)
+    189d:	67 66 c7 40 08 03 00 	movw   $0x3,0x8(%bx,%si)
+    18a4:	00 00                	add    %al,(%eax)
+    __asm__("sti\n");
+    18a6:	fb                   	sti    
+}
+    18a7:	66 5d                	pop    %bp
+    18a9:	66 c3                	retw   
+
+000018ab <sys_run>:
+void sys_run(){
+    18ab:	66 55                	push   %bp
+    18ad:	66 89 e5             	mov    %sp,%bp
+    _CurrentProg -> prg_status = RUN;
+    18b0:	66 a1 40 37 67 66    	mov    0x66673740,%ax
+    18b6:	c7 40 38 01 00 00 00 	movl   $0x1,0x38(%eax)
+}
+    18bd:	66 5d                	pop    %bp
+    18bf:	66 c3                	retw   
+
+000018c1 <do_fork>:
+
 int do_fork(){
-    1811:	66 55                	push   %bp
-    1813:	66 89 e5             	mov    %sp,%bp
-    1816:	66 83 ec 04          	sub    $0x4,%sp
+    18c1:	66 55                	push   %bp
+    18c3:	66 89 e5             	mov    %sp,%bp
+    18c6:	66 83 ec 04          	sub    $0x4,%sp
    struct PCB* fork_prg;
     fork_prg = PCB_list + 1;
-    181a:	67 66 c7 45 fc 84 34 	movw   $0x3484,-0x4(%di)
-    1821:	00 00                	add    %al,(%eax)
+    18ca:	67 66 c7 45 fc 64 35 	movw   $0x3564,-0x4(%di)
+    18d1:	00 00                	add    %al,(%eax)
     while(fork_prg < PCB_list+PCB_NUMMER && fork_prg -> prg_status == RUN )    fork_prg = fork_prg + 1;//应该增加used位，防止被覆盖
-    1823:	eb 06                	jmp    182b <do_fork+0x1a>
-    1825:	67 66 83 45 fc 44    	addw   $0x44,-0x4(%di)
-    182b:	67 66 81 7d fc 60 36 	cmpw   $0x3660,-0x4(%di)
-    1832:	00 00                	add    %al,(%eax)
-    1834:	73 10                	jae    1846 <do_fork+0x35>
-    1836:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
-    183b:	67 66 8b 40 38       	mov    0x38(%bx,%si),%ax
-    1840:	66 83 f8 01          	cmp    $0x1,%ax
-    1844:	74 df                	je     1825 <do_fork+0x14>
+    18d3:	eb 06                	jmp    18db <do_fork+0x1a>
+    18d5:	67 66 83 45 fc 44    	addw   $0x44,-0x4(%di)
+    18db:	67 66 81 7d fc 40 37 	cmpw   $0x3740,-0x4(%di)
+    18e2:	00 00                	add    %al,(%eax)
+    18e4:	73 10                	jae    18f6 <do_fork+0x35>
+    18e6:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
+    18eb:	67 66 8b 40 38       	mov    0x38(%bx,%si),%ax
+    18f0:	66 83 f8 01          	cmp    $0x1,%ax
+    18f4:	74 df                	je     18d5 <do_fork+0x14>
     if(fork_prg > PCB_list+(PCB_NUMMER - 1)) _CurrentProg -> eax = -1;
-    1846:	67 66 81 7d fc 1c 36 	cmpw   $0x361c,-0x4(%di)
-    184d:	00 00                	add    %al,(%eax)
-    184f:	76 0f                	jbe    1860 <do_fork+0x4f>
-    1851:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    1857:	c7 00 ff ff ff ff    	movl   $0xffffffff,(%eax)
-    185d:	e9 dc 01 66 e8       	jmp    e8661a3e <_end+0xe865e3da>
+    18f6:	67 66 81 7d fc fc 36 	cmpw   $0x36fc,-0x4(%di)
+    18fd:	00 00                	add    %al,(%eax)
+    18ff:	76 0f                	jbe    1910 <do_fork+0x4f>
+    1901:	66 a1 40 37 67 66    	mov    0x66673740,%ax
+    1907:	c7 00 ff ff ff ff    	movl   $0xffffffff,(%eax)
+    190d:	e9 dc 01 66 e8       	jmp    e8661aee <_end+0xe865e3aa>
     else{
         _Schedule_once();
-    1862:	5f                   	pop    %edi
-    1863:	eb ff                	jmp    1864 <do_fork+0x53>
-    1865:	ff 66 83             	jmp    *-0x7d(%esi)
+    1912:	af                   	scas   %es:(%edi),%eax
+    1913:	ea ff ff 66 83 ec 06 	ljmp   $0x6ec,$0x8366ffff
         __asm__("sub $6,%esp");
-    1868:	ec                   	in     (%dx),%al
-    1869:	06                   	push   %es
         pcb_copy(_CurrentProg,fork_prg);//copy PCB
-    186a:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    1870:	ff 75 fc             	pushl  -0x4(%ebp)
-    1873:	66 50                	push   %ax
-    1875:	66 e8 3f 02          	callw  1ab8 <counter+0x63>
-    1879:	00 00                	add    %al,(%eax)
-    187b:	66 83 c4 08          	add    $0x8,%sp
+    191a:	66 a1 40 37 67 66    	mov    0x66673740,%ax
+    1920:	ff 75 fc             	pushl  -0x4(%ebp)
+    1923:	66 50                	push   %ax
+    1925:	66 e8 3e 02          	callw  1b67 <counter+0x62>
+    1929:	00 00                	add    %al,(%eax)
+    192b:	66 83 c4 08          	add    $0x8,%sp
         __asm__("add $6,%esp");
-    187f:	66 83 c4 06          	add    $0x6,%sp
+    192f:	66 83 c4 06          	add    $0x6,%sp
         fork_prg -> id = (fork_prg - PCB_list);//id = 44,是否有问题？？？
-    1883:	67 66 8b 55 fc       	mov    -0x4(%di),%dx
-    1888:	66 b8 40 34          	mov    $0x3440,%ax
-    188c:	00 00                	add    %al,(%eax)
-    188e:	66 29 c2             	sub    %ax,%dx
-    1891:	66 89 d0             	mov    %dx,%ax
-    1894:	66 c1 f8 02          	sar    $0x2,%ax
-    1898:	66 89 c2             	mov    %ax,%dx
-    189b:	66 89 d0             	mov    %dx,%ax
-    189e:	66 01 c0             	add    %ax,%ax
-    18a1:	66 01 d0             	add    %dx,%ax
-    18a4:	67 66 8d 14          	lea    (%si),%dx
-    18a8:	85 00                	test   %eax,(%eax)
-    18aa:	00 00                	add    %al,(%eax)
-    18ac:	00 66 01             	add    %ah,0x1(%esi)
-    18af:	d0 66 89             	shlb   -0x77(%esi)
-    18b2:	c2 66 c1             	ret    $0xc166
-    18b5:	e2 08                	loop   18bf <do_fork+0xae>
-    18b7:	66 01 d0             	add    %dx,%ax
-    18ba:	66 89 c2             	mov    %ax,%dx
-    18bd:	66 c1 e2 10          	shl    $0x10,%dx
-    18c1:	66 01 d0             	add    %dx,%ax
-    18c4:	66 f7 d8             	neg    %ax
-    18c7:	66 89 c2             	mov    %ax,%dx
-    18ca:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
-    18cf:	67 66 89 50 3c       	mov    %dx,0x3c(%bx,%si)
+    1933:	67 66 8b 55 fc       	mov    -0x4(%di),%dx
+    1938:	66 b8 20 35          	mov    $0x3520,%ax
+    193c:	00 00                	add    %al,(%eax)
+    193e:	66 29 c2             	sub    %ax,%dx
+    1941:	66 89 d0             	mov    %dx,%ax
+    1944:	66 c1 f8 02          	sar    $0x2,%ax
+    1948:	66 89 c2             	mov    %ax,%dx
+    194b:	66 89 d0             	mov    %dx,%ax
+    194e:	66 01 c0             	add    %ax,%ax
+    1951:	66 01 d0             	add    %dx,%ax
+    1954:	67 66 8d 14          	lea    (%si),%dx
+    1958:	85 00                	test   %eax,(%eax)
+    195a:	00 00                	add    %al,(%eax)
+    195c:	00 66 01             	add    %ah,0x1(%esi)
+    195f:	d0 66 89             	shlb   -0x77(%esi)
+    1962:	c2 66 c1             	ret    $0xc166
+    1965:	e2 08                	loop   196f <do_fork+0xae>
+    1967:	66 01 d0             	add    %dx,%ax
+    196a:	66 89 c2             	mov    %ax,%dx
+    196d:	66 c1 e2 10          	shl    $0x10,%dx
+    1971:	66 01 d0             	add    %dx,%ax
+    1974:	66 f7 d8             	neg    %ax
+    1977:	66 89 c2             	mov    %ax,%dx
+    197a:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
+    197f:	67 66 89 50 3c       	mov    %dx,0x3c(%bx,%si)
         fork_prg -> fid = _CurrentProg - PCB_list;
-    18d4:	66 a1 60 36 66 89    	mov    0x89663660,%ax
-    18da:	c2 66 b8             	ret    $0xb866
-    18dd:	40                   	inc    %eax
-    18de:	34 00                	xor    $0x0,%al
-    18e0:	00 66 29             	add    %ah,0x29(%esi)
-    18e3:	c2 66 89             	ret    $0x8966
-    18e6:	d0 66 c1             	shlb   -0x3f(%esi)
-    18e9:	f8                   	clc    
-    18ea:	02 66 89             	add    -0x77(%esi),%ah
-    18ed:	c2 66 89             	ret    $0x8966
-    18f0:	d0 66 01             	shlb   0x1(%esi)
-    18f3:	c0 66 01 d0          	shlb   $0xd0,0x1(%esi)
-    18f7:	67 66 8d 14          	lea    (%si),%dx
-    18fb:	85 00                	test   %eax,(%eax)
-    18fd:	00 00                	add    %al,(%eax)
-    18ff:	00 66 01             	add    %ah,0x1(%esi)
-    1902:	d0 66 89             	shlb   -0x77(%esi)
-    1905:	c2 66 c1             	ret    $0xc166
-    1908:	e2 08                	loop   1912 <do_fork+0x101>
-    190a:	66 01 d0             	add    %dx,%ax
-    190d:	66 89 c2             	mov    %ax,%dx
-    1910:	66 c1 e2 10          	shl    $0x10,%dx
-    1914:	66 01 d0             	add    %dx,%ax
-    1917:	66 f7 d8             	neg    %ax
-    191a:	66 89 c2             	mov    %ax,%dx
-    191d:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
-    1922:	67 66 89 50 40       	mov    %dx,0x40(%bx,%si)
+    1984:	66 a1 40 37 66 89    	mov    0x89663740,%ax
+    198a:	c2 66 b8             	ret    $0xb866
+    198d:	20 35 00 00 66 29    	and    %dh,0x29660000
+    1993:	c2 66 89             	ret    $0x8966
+    1996:	d0 66 c1             	shlb   -0x3f(%esi)
+    1999:	f8                   	clc    
+    199a:	02 66 89             	add    -0x77(%esi),%ah
+    199d:	c2 66 89             	ret    $0x8966
+    19a0:	d0 66 01             	shlb   0x1(%esi)
+    19a3:	c0 66 01 d0          	shlb   $0xd0,0x1(%esi)
+    19a7:	67 66 8d 14          	lea    (%si),%dx
+    19ab:	85 00                	test   %eax,(%eax)
+    19ad:	00 00                	add    %al,(%eax)
+    19af:	00 66 01             	add    %ah,0x1(%esi)
+    19b2:	d0 66 89             	shlb   -0x77(%esi)
+    19b5:	c2 66 c1             	ret    $0xc166
+    19b8:	e2 08                	loop   19c2 <do_fork+0x101>
+    19ba:	66 01 d0             	add    %dx,%ax
+    19bd:	66 89 c2             	mov    %ax,%dx
+    19c0:	66 c1 e2 10          	shl    $0x10,%dx
+    19c4:	66 01 d0             	add    %dx,%ax
+    19c7:	66 f7 d8             	neg    %ax
+    19ca:	66 89 c2             	mov    %ax,%dx
+    19cd:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
+    19d2:	67 66 89 50 40       	mov    %dx,0x40(%bx,%si)
         fork_prg -> ds = _CurrentProg -> ds;
-    1927:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    192d:	8b 50 20             	mov    0x20(%eax),%edx
-    1930:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
-    1935:	67 66 89 50 20       	mov    %dx,0x20(%bx,%si)
+    19d7:	66 a1 40 37 67 66    	mov    0x66673740,%ax
+    19dd:	8b 50 20             	mov    0x20(%eax),%edx
+    19e0:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
+    19e5:	67 66 89 50 20       	mov    %dx,0x20(%bx,%si)
         fork_prg -> ss = 0x2000 + 0x1000 * (fork_prg - PCB_list);
-    193a:	67 66 8b 55 fc       	mov    -0x4(%di),%dx
-    193f:	66 b8 40 34          	mov    $0x3440,%ax
-    1943:	00 00                	add    %al,(%eax)
-    1945:	66 29 c2             	sub    %ax,%dx
-    1948:	66 89 d0             	mov    %dx,%ax
-    194b:	66 c1 f8 02          	sar    $0x2,%ax
-    194f:	66 89 c2             	mov    %ax,%dx
-    1952:	66 89 d0             	mov    %dx,%ax
-    1955:	66 01 c0             	add    %ax,%ax
-    1958:	66 01 d0             	add    %dx,%ax
-    195b:	67 66 8d 14          	lea    (%si),%dx
-    195f:	85 00                	test   %eax,(%eax)
-    1961:	00 00                	add    %al,(%eax)
-    1963:	00 66 01             	add    %ah,0x1(%esi)
-    1966:	d0 66 89             	shlb   -0x77(%esi)
-    1969:	c2 66 c1             	ret    $0xc166
-    196c:	e2 08                	loop   1976 <do_fork+0x165>
-    196e:	66 01 d0             	add    %dx,%ax
-    1971:	66 89 c2             	mov    %ax,%dx
-    1974:	66 c1 e2 10          	shl    $0x10,%dx
-    1978:	66 01 d0             	add    %dx,%ax
-    197b:	66 f7 d8             	neg    %ax
-    197e:	66 83 c0 02          	add    $0x2,%ax
-    1982:	66 c1 e0 0c          	shl    $0xc,%ax
-    1986:	66 89 c2             	mov    %ax,%dx
-    1989:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
-    198e:	67 66 89 50 24       	mov    %dx,0x24(%bx,%si)
+    19ea:	67 66 8b 55 fc       	mov    -0x4(%di),%dx
+    19ef:	66 b8 20 35          	mov    $0x3520,%ax
+    19f3:	00 00                	add    %al,(%eax)
+    19f5:	66 29 c2             	sub    %ax,%dx
+    19f8:	66 89 d0             	mov    %dx,%ax
+    19fb:	66 c1 f8 02          	sar    $0x2,%ax
+    19ff:	66 89 c2             	mov    %ax,%dx
+    1a02:	66 89 d0             	mov    %dx,%ax
+    1a05:	66 01 c0             	add    %ax,%ax
+    1a08:	66 01 d0             	add    %dx,%ax
+    1a0b:	67 66 8d 14          	lea    (%si),%dx
+    1a0f:	85 00                	test   %eax,(%eax)
+    1a11:	00 00                	add    %al,(%eax)
+    1a13:	00 66 01             	add    %ah,0x1(%esi)
+    1a16:	d0 66 89             	shlb   -0x77(%esi)
+    1a19:	c2 66 c1             	ret    $0xc166
+    1a1c:	e2 08                	loop   1a26 <do_fork+0x165>
+    1a1e:	66 01 d0             	add    %dx,%ax
+    1a21:	66 89 c2             	mov    %ax,%dx
+    1a24:	66 c1 e2 10          	shl    $0x10,%dx
+    1a28:	66 01 d0             	add    %dx,%ax
+    1a2b:	66 f7 d8             	neg    %ax
+    1a2e:	66 83 c0 02          	add    $0x2,%ax
+    1a32:	66 c1 e0 0c          	shl    $0xc,%ax
+    1a36:	66 89 c2             	mov    %ax,%dx
+    1a39:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
+    1a3e:	67 66 89 50 24       	mov    %dx,0x24(%bx,%si)
         fork_prg -> cs = _CurrentProg -> cs;
-    1993:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    1999:	8b 50 30             	mov    0x30(%eax),%edx
-    199c:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
-    19a1:	67 66 89 50 30       	mov    %dx,0x30(%bx,%si)
+    1a43:	66 a1 40 37 67 66    	mov    0x66673740,%ax
+    1a49:	8b 50 30             	mov    0x30(%eax),%edx
+    1a4c:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
+    1a51:	67 66 89 50 30       	mov    %dx,0x30(%bx,%si)
         fork_prg -> prg_status = READY;
-    19a6:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
-    19ab:	67 66 c7 40 38 03 00 	movw   $0x3,0x38(%bx,%si)
-    19b2:	00 00                	add    %al,(%eax)
+    1a56:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
+    1a5b:	67 66 c7 40 38 03 00 	movw   $0x3,0x38(%bx,%si)
+    1a62:	00 00                	add    %al,(%eax)
        // __asm__("enter $0,$0");
         _Schedule_once();
-    19b4:	66 e8 0b ea          	callw  3c3 <S+0x14>
-    19b8:	ff                   	(bad)  
-    19b9:	ff 66 83             	jmp    *-0x7d(%esi)
+    1a64:	66 e8 5b e9          	callw  3c3 <S+0x14>
+    1a68:	ff                   	(bad)  
+    1a69:	ff 66 83             	jmp    *-0x7d(%esi)
         __asm__("sub $6,%esp");
-    19bc:	ec                   	in     (%dx),%al
-    19bd:	06                   	push   %es
+    1a6c:	ec                   	in     (%dx),%al
+    1a6d:	06                   	push   %es
         _sys_stack_copy(_CurrentProg -> ss,_CurrentProg -> esp,fork_prg -> ss);
-    19be:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
-    19c3:	67 66 8b 48 24       	mov    0x24(%bx,%si),%cx
-    19c8:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    19ce:	8b 50 28             	mov    0x28(%eax),%edx
-    19d1:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    19d7:	8b 40 24             	mov    0x24(%eax),%eax
-    19da:	66 51                	push   %cx
-    19dc:	66 52                	push   %dx
-    19de:	66 50                	push   %ax
-    19e0:	66 e8 cf e8          	callw  2b3 <Message31+0x4>
-    19e4:	ff                   	(bad)  
-    19e5:	ff 66 83             	jmp    *-0x7d(%esi)
-    19e8:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    1a6e:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
+    1a73:	67 66 8b 48 24       	mov    0x24(%bx,%si),%cx
+    1a78:	66 a1 40 37 67 66    	mov    0x66673740,%ax
+    1a7e:	8b 50 28             	mov    0x28(%eax),%edx
+    1a81:	66 a1 40 37 67 66    	mov    0x66673740,%ax
+    1a87:	8b 40 24             	mov    0x24(%eax),%eax
+    1a8a:	66 51                	push   %cx
+    1a8c:	66 52                	push   %dx
+    1a8e:	66 50                	push   %ax
+    1a90:	66 e8 1f e8          	callw  2b3 <Message31+0x4>
+    1a94:	ff                   	(bad)  
+    1a95:	ff 66 83             	jmp    *-0x7d(%esi)
+    1a98:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
         __asm__("add $6,%esp");
-    19eb:	83 c4 06             	add    $0x6,%esp
+    1a9b:	83 c4 06             	add    $0x6,%esp
         fork_prg -> ip = _CurrentProg -> ip;
-    19ee:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    19f4:	8b 50 2c             	mov    0x2c(%eax),%edx
-    19f7:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
-    19fc:	67 66 89 50 2c       	mov    %dx,0x2c(%bx,%si)
+    1a9e:	66 a1 40 37 67 66    	mov    0x66673740,%ax
+    1aa4:	8b 50 2c             	mov    0x2c(%eax),%edx
+    1aa7:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
+    1aac:	67 66 89 50 2c       	mov    %dx,0x2c(%bx,%si)
         fork_prg -> eax = 0;
-    1a01:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
-    1a06:	67 66 c7 00 00 00    	movw   $0x0,(%bx,%si)
-    1a0c:	00 00                	add    %al,(%eax)
+    1ab1:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
+    1ab6:	67 66 c7 00 00 00    	movw   $0x0,(%bx,%si)
+    1abc:	00 00                	add    %al,(%eax)
         if(fork_prg == _CurrentProg){
-    1a0e:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    1a14:	39 45 fc             	cmp    %eax,-0x4(%ebp)
-    1a17:	75 08                	jne    1a21 <do_fork+0x210>
+    1abe:	66 a1 40 37 67 66    	mov    0x66673740,%ax
+    1ac4:	39 45 fc             	cmp    %eax,-0x4(%ebp)
+    1ac7:	75 08                	jne    1ad1 <do_fork+0x210>
             return 0;
-    1a19:	66 b8 00 00          	mov    $0x0,%ax
-    1a1d:	00 00                	add    %al,(%eax)
-    1a1f:	eb 1b                	jmp    1a3c <do_fork+0x22b>
+    1ac9:	66 b8 00 00          	mov    $0x0,%ax
+    1acd:	00 00                	add    %al,(%eax)
+    1acf:	eb 1b                	jmp    1aec <do_fork+0x22b>
         }
-        _CurrentProg -> eax = fork_prg -> id;
-    1a21:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    1a27:	8b 55 fc             	mov    -0x4(%ebp),%edx
-    1a2a:	67 66 8b 52 3c       	mov    0x3c(%bp,%si),%dx
-    1a2f:	67 66 89 10          	mov    %dx,(%bx,%si)
+        _CurrentProg -> eax = _CurrentProg -> id;
+    1ad1:	66 a1 40 37 66 8b    	mov    0x8b663740,%ax
+    1ad7:	16                   	push   %ss
+    1ad8:	40                   	inc    %eax
+    1ad9:	37                   	aaa    
+    1ada:	67 66 8b 52 3c       	mov    0x3c(%bp,%si),%dx
+    1adf:	67 66 89 10          	mov    %dx,(%bx,%si)
         return _CurrentProg -> eax;
-    1a33:	66 a1 60 36 67 66    	mov    0x66673660,%ax
-    1a39:	8b 00                	mov    (%eax),%eax
-    1a3b:	90                   	nop
+    1ae3:	66 a1 40 37 67 66    	mov    0x66673740,%ax
+    1ae9:	8b 00                	mov    (%eax),%eax
+    1aeb:	90                   	nop
     }
 }
-    1a3c:	66 c9                	leavew 
-    1a3e:	66 c3                	retw   
+    1aec:	66 c9                	leavew 
+    1aee:	66 c3                	retw   
 
-00001a40 <thread_join>:
+00001af0 <thread_join>:
 void thread_join(){
-    1a40:	66 55                	push   %bp
-    1a42:	66 89 e5             	mov    %sp,%bp
+    1af0:	66 55                	push   %bp
+    1af2:	66 89 e5             	mov    %sp,%bp
     while(counter()){
-    1a45:	90                   	nop
-    1a46:	66 e8 09 00          	callw  1a53 <thread_join+0x13>
-    1a4a:	00 00                	add    %al,(%eax)
-    1a4c:	66 85 c0             	test   %ax,%ax
-    1a4f:	75 f5                	jne    1a46 <thread_join+0x6>
+    1af5:	90                   	nop
+    1af6:	66 e8 09 00          	callw  1b03 <thread_join+0x13>
+    1afa:	00 00                	add    %al,(%eax)
+    1afc:	66 85 c0             	test   %ax,%ax
+    1aff:	75 f5                	jne    1af6 <thread_join+0x6>
     }
 }
-    1a51:	66 5d                	pop    %bp
-    1a53:	66 c3                	retw   
+    1b01:	66 5d                	pop    %bp
+    1b03:	66 c3                	retw   
 
-00001a55 <counter>:
+00001b05 <counter>:
 int counter(){
-    1a55:	66 55                	push   %bp
-    1a57:	66 89 e5             	mov    %sp,%bp
-    1a5a:	66 83 ec 08          	sub    $0x8,%sp
+    1b05:	66 55                	push   %bp
+    1b07:	66 89 e5             	mov    %sp,%bp
+    1b0a:	66 83 ec 08          	sub    $0x8,%sp
     int i = 0;
-    1a5e:	67 66 c7 45 fc 00 00 	movw   $0x0,-0x4(%di)
-    1a65:	00 00                	add    %al,(%eax)
+    1b0e:	67 66 c7 45 fc 00 00 	movw   $0x0,-0x4(%di)
+    1b15:	00 00                	add    %al,(%eax)
     int count = 0;
-    1a67:	67 66 c7 45 f8 00 00 	movw   $0x0,-0x8(%di)
-    1a6e:	00 00                	add    %al,(%eax)
-    for(i = 0;i < PCB_NUMMER - 1;i ++){
-    1a70:	67 66 c7 45 fc 00 00 	movw   $0x0,-0x4(%di)
-    1a77:	00 00                	add    %al,(%eax)
-    1a79:	eb 2e                	jmp    1aa9 <counter+0x54>
-        if(PCB_list[i].prg_status == 1){
-    1a7b:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
-    1a80:	66 c1 e0 02          	shl    $0x2,%ax
-    1a84:	66 89 c2             	mov    %ax,%dx
-    1a87:	66 c1 e2 04          	shl    $0x4,%dx
-    1a8b:	66 01 d0             	add    %dx,%ax
-    1a8e:	66 05 70 34          	add    $0x3470,%ax
-    1a92:	00 00                	add    %al,(%eax)
-    1a94:	67 66 8b 40 08       	mov    0x8(%bx,%si),%ax
-    1a99:	66 83 f8 01          	cmp    $0x1,%ax
-    1a9d:	75 05                	jne    1aa4 <counter+0x4f>
+    1b17:	67 66 c7 45 f8 00 00 	movw   $0x0,-0x8(%di)
+    1b1e:	00 00                	add    %al,(%eax)
+    for(i = 1;i < PCB_NUMMER;i ++){
+    1b20:	67 66 c7 45 fc 01 00 	movw   $0x1,-0x4(%di)
+    1b27:	00 00                	add    %al,(%eax)
+    1b29:	eb 2d                	jmp    1b58 <counter+0x53>
+        if(PCB_list[i].prg_status != EXIT){
+    1b2b:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
+    1b30:	66 c1 e0 02          	shl    $0x2,%ax
+    1b34:	66 89 c2             	mov    %ax,%dx
+    1b37:	66 c1 e2 04          	shl    $0x4,%dx
+    1b3b:	66 01 d0             	add    %dx,%ax
+    1b3e:	66 05 50 35          	add    $0x3550,%ax
+    1b42:	00 00                	add    %al,(%eax)
+    1b44:	67 66 8b 40 08       	mov    0x8(%bx,%si),%ax
+    1b49:	66 85 c0             	test   %ax,%ax
+    1b4c:	74 05                	je     1b53 <counter+0x4e>
             count ++;
-    1a9f:	67 66 ff 45 f8       	incw   -0x8(%di)
+    1b4e:	67 66 ff 45 f8       	incw   -0x8(%di)
     }
 }
 int counter(){
     int i = 0;
     int count = 0;
-    for(i = 0;i < PCB_NUMMER - 1;i ++){
-    1aa4:	67 66 ff 45 fc       	incw   -0x4(%di)
-    1aa9:	67 66 83 7d fc 06    	cmpw   $0x6,-0x4(%di)
-    1aaf:	7e ca                	jle    1a7b <counter+0x26>
-        if(PCB_list[i].prg_status == 1){
+    for(i = 1;i < PCB_NUMMER;i ++){
+    1b53:	67 66 ff 45 fc       	incw   -0x4(%di)
+    1b58:	67 66 83 7d fc 07    	cmpw   $0x7,-0x4(%di)
+    1b5e:	7e cb                	jle    1b2b <counter+0x26>
+        if(PCB_list[i].prg_status != EXIT){
             count ++;
         }
     }
     return count;
-    1ab1:	67 66 8b 45 f8       	mov    -0x8(%di),%ax
+    1b60:	67 66 8b 45 f8       	mov    -0x8(%di),%ax
 }
-    1ab6:	66 c9                	leavew 
-    1ab8:	66 c3                	retw   
+    1b65:	66 c9                	leavew 
+    1b67:	66 c3                	retw   
 
-00001aba <pcb_copy>:
+00001b69 <pcb_copy>:
 void pcb_copy(struct PCB* old,struct PCB* newone){
-    1aba:	66 55                	push   %bp
-    1abc:	66 89 e5             	mov    %sp,%bp
+    1b69:	66 55                	push   %bp
+    1b6b:	66 89 e5             	mov    %sp,%bp
     newone -> eax = old -> eax;
-    1abf:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1ac4:	67 66 8b 10          	mov    (%bx,%si),%dx
-    1ac8:	67 66 8b 45 0c       	mov    0xc(%di),%ax
-    1acd:	67 66 89 10          	mov    %dx,(%bx,%si)
+    1b6e:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1b73:	67 66 8b 10          	mov    (%bx,%si),%dx
+    1b77:	67 66 8b 45 0c       	mov    0xc(%di),%ax
+    1b7c:	67 66 89 10          	mov    %dx,(%bx,%si)
     newone -> ebx = old -> ebx;
-    1ad1:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1ad6:	67 66 8b 50 04       	mov    0x4(%bx,%si),%dx
-    1adb:	67 66 8b 45 0c       	mov    0xc(%di),%ax
-    1ae0:	67 66 89 50 04       	mov    %dx,0x4(%bx,%si)
+    1b80:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1b85:	67 66 8b 50 04       	mov    0x4(%bx,%si),%dx
+    1b8a:	67 66 8b 45 0c       	mov    0xc(%di),%ax
+    1b8f:	67 66 89 50 04       	mov    %dx,0x4(%bx,%si)
     newone -> ecx = old -> ecx;
-    1ae5:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1aea:	67 66 8b 50 08       	mov    0x8(%bx,%si),%dx
-    1aef:	67 66 8b 45 0c       	mov    0xc(%di),%ax
-    1af4:	67 66 89 50 08       	mov    %dx,0x8(%bx,%si)
+    1b94:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1b99:	67 66 8b 50 08       	mov    0x8(%bx,%si),%dx
+    1b9e:	67 66 8b 45 0c       	mov    0xc(%di),%ax
+    1ba3:	67 66 89 50 08       	mov    %dx,0x8(%bx,%si)
     newone -> edx = old -> edx;
-    1af9:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1afe:	67 66 8b 50 0c       	mov    0xc(%bx,%si),%dx
-    1b03:	67 66 8b 45 0c       	mov    0xc(%di),%ax
-    1b08:	67 66 89 50 0c       	mov    %dx,0xc(%bx,%si)
+    1ba8:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1bad:	67 66 8b 50 0c       	mov    0xc(%bx,%si),%dx
+    1bb2:	67 66 8b 45 0c       	mov    0xc(%di),%ax
+    1bb7:	67 66 89 50 0c       	mov    %dx,0xc(%bx,%si)
     newone -> ebp = old -> ebp;
-    1b0d:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1b12:	67 66 8b 50 18       	mov    0x18(%bx,%si),%dx
-    1b17:	67 66 8b 45 0c       	mov    0xc(%di),%ax
-    1b1c:	67 66 89 50 18       	mov    %dx,0x18(%bx,%si)
+    1bbc:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1bc1:	67 66 8b 50 18       	mov    0x18(%bx,%si),%dx
+    1bc6:	67 66 8b 45 0c       	mov    0xc(%di),%ax
+    1bcb:	67 66 89 50 18       	mov    %dx,0x18(%bx,%si)
     newone -> esp = old -> esp;
-    1b21:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1b26:	67 66 8b 50 28       	mov    0x28(%bx,%si),%dx
-    1b2b:	67 66 8b 45 0c       	mov    0xc(%di),%ax
-    1b30:	67 66 89 50 28       	mov    %dx,0x28(%bx,%si)
+    1bd0:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1bd5:	67 66 8b 50 28       	mov    0x28(%bx,%si),%dx
+    1bda:	67 66 8b 45 0c       	mov    0xc(%di),%ax
+    1bdf:	67 66 89 50 28       	mov    %dx,0x28(%bx,%si)
     newone -> esi = old -> esi;
-    1b35:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1b3a:	67 66 8b 50 10       	mov    0x10(%bx,%si),%dx
-    1b3f:	67 66 8b 45 0c       	mov    0xc(%di),%ax
-    1b44:	67 66 89 50 10       	mov    %dx,0x10(%bx,%si)
+    1be4:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1be9:	67 66 8b 50 10       	mov    0x10(%bx,%si),%dx
+    1bee:	67 66 8b 45 0c       	mov    0xc(%di),%ax
+    1bf3:	67 66 89 50 10       	mov    %dx,0x10(%bx,%si)
     newone -> edi = old -> edi;
-    1b49:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1b4e:	67 66 8b 50 14       	mov    0x14(%bx,%si),%dx
-    1b53:	67 66 8b 45 0c       	mov    0xc(%di),%ax
-    1b58:	67 66 89 50 14       	mov    %dx,0x14(%bx,%si)
+    1bf8:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1bfd:	67 66 8b 50 14       	mov    0x14(%bx,%si),%dx
+    1c02:	67 66 8b 45 0c       	mov    0xc(%di),%ax
+    1c07:	67 66 89 50 14       	mov    %dx,0x14(%bx,%si)
     newone -> es = old -> es;
-    1b5d:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1b62:	67 66 8b 50 1c       	mov    0x1c(%bx,%si),%dx
-    1b67:	67 66 8b 45 0c       	mov    0xc(%di),%ax
-    1b6c:	67 66 89 50 1c       	mov    %dx,0x1c(%bx,%si)
+    1c0c:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1c11:	67 66 8b 50 1c       	mov    0x1c(%bx,%si),%dx
+    1c16:	67 66 8b 45 0c       	mov    0xc(%di),%ax
+    1c1b:	67 66 89 50 1c       	mov    %dx,0x1c(%bx,%si)
     newone -> ds = old -> ds;
-    1b71:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1b76:	67 66 8b 50 20       	mov    0x20(%bx,%si),%dx
-    1b7b:	67 66 8b 45 0c       	mov    0xc(%di),%ax
-    1b80:	67 66 89 50 20       	mov    %dx,0x20(%bx,%si)
+    1c20:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1c25:	67 66 8b 50 20       	mov    0x20(%bx,%si),%dx
+    1c2a:	67 66 8b 45 0c       	mov    0xc(%di),%ax
+    1c2f:	67 66 89 50 20       	mov    %dx,0x20(%bx,%si)
     newone -> cs = old -> cs;
-    1b85:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1b8a:	67 66 8b 50 30       	mov    0x30(%bx,%si),%dx
-    1b8f:	67 66 8b 45 0c       	mov    0xc(%di),%ax
-    1b94:	67 66 89 50 30       	mov    %dx,0x30(%bx,%si)
+    1c34:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1c39:	67 66 8b 50 30       	mov    0x30(%bx,%si),%dx
+    1c3e:	67 66 8b 45 0c       	mov    0xc(%di),%ax
+    1c43:	67 66 89 50 30       	mov    %dx,0x30(%bx,%si)
     newone -> ip = old -> ip;
-    1b99:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1b9e:	67 66 8b 50 2c       	mov    0x2c(%bx,%si),%dx
-    1ba3:	67 66 8b 45 0c       	mov    0xc(%di),%ax
-    1ba8:	67 66 89 50 2c       	mov    %dx,0x2c(%bx,%si)
+    1c48:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1c4d:	67 66 8b 50 2c       	mov    0x2c(%bx,%si),%dx
+    1c52:	67 66 8b 45 0c       	mov    0xc(%di),%ax
+    1c57:	67 66 89 50 2c       	mov    %dx,0x2c(%bx,%si)
     newone -> eflags = old -> eflags;
-    1bad:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1bb2:	67 66 8b 50 34       	mov    0x34(%bx,%si),%dx
-    1bb7:	67 66 8b 45 0c       	mov    0xc(%di),%ax
-    1bbc:	67 66 89 50 34       	mov    %dx,0x34(%bx,%si)
+    1c5c:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1c61:	67 66 8b 50 34       	mov    0x34(%bx,%si),%dx
+    1c66:	67 66 8b 45 0c       	mov    0xc(%di),%ax
+    1c6b:	67 66 89 50 34       	mov    %dx,0x34(%bx,%si)
 }
-    1bc1:	66 5d                	pop    %bp
-    1bc3:	66 c3                	retw   
+    1c70:	66 5d                	pop    %bp
+    1c72:	66 c3                	retw   
 
-00001bc5 <stack_copy>:
+00001c74 <stack_copy>:
 void stack_copy(struct PCB* old,struct PCB* newone){
-    1bc5:	66 55                	push   %bp
-    1bc7:	66 89 e5             	mov    %sp,%bp
+    1c74:	66 55                	push   %bp
+    1c76:	66 89 e5             	mov    %sp,%bp
     _sys_stack_copy(old -> ss,old -> esp,newone -> ss);
-    1bca:	67 66 8b 45 0c       	mov    0xc(%di),%ax
-    1bcf:	67 66 8b 48 24       	mov    0x24(%bx,%si),%cx
-    1bd4:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1bd9:	67 66 8b 50 28       	mov    0x28(%bx,%si),%dx
-    1bde:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1be3:	67 66 8b 40 24       	mov    0x24(%bx,%si),%ax
-    1be8:	66 51                	push   %cx
-    1bea:	66 52                	push   %dx
-    1bec:	66 50                	push   %ax
-    1bee:	66 e8 c1 e6          	callw  2b3 <Message31+0x4>
-    1bf2:	ff                   	(bad)  
-    1bf3:	ff 66 83             	jmp    *-0x7d(%esi)
-    1bf6:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
+    1c79:	67 66 8b 45 0c       	mov    0xc(%di),%ax
+    1c7e:	67 66 8b 48 24       	mov    0x24(%bx,%si),%cx
+    1c83:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1c88:	67 66 8b 50 28       	mov    0x28(%bx,%si),%dx
+    1c8d:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1c92:	67 66 8b 40 24       	mov    0x24(%bx,%si),%ax
+    1c97:	66 51                	push   %cx
+    1c99:	66 52                	push   %dx
+    1c9b:	66 50                	push   %ax
+    1c9d:	66 e8 12 e6          	callw  2b3 <Message31+0x4>
+    1ca1:	ff                   	(bad)  
+    1ca2:	ff 66 83             	jmp    *-0x7d(%esi)
+    1ca5:	c4 0c 66             	les    (%esi,%eiz,2),%ecx
 }
-    1bf9:	c9                   	leave  
-    1bfa:	66 c3                	retw   
+    1ca8:	c9                   	leave  
+    1ca9:	66 c3                	retw   
 
-00001bfc <fork>:
+00001cab <fork>:
 #include "fork.h"
 #include "use.h"
 #include "schedule.h"
 int fork(){
-    1bfc:	66 55                	push   %bp
-    1bfe:	66 89 e5             	mov    %sp,%bp
-    1c01:	66 83 ec 04          	sub    $0x4,%sp
+    1cab:	66 55                	push   %bp
+    1cad:	66 89 e5             	mov    %sp,%bp
+    1cb0:	66 83 ec 04          	sub    $0x4,%sp
     int a = _fork_user();
-    1c05:	66 e8 c5 e7          	callw  3ce <_Schedule_once+0x9>
-    1c09:	ff                   	(bad)  
-    1c0a:	ff 67 66             	jmp    *0x66(%edi)
-    1c0d:	89 45 fc             	mov    %eax,-0x4(%ebp)
+    1cb4:	66 e8 16 e7          	callw  3ce <_Schedule_once+0x9>
+    1cb8:	ff                   	(bad)  
+    1cb9:	ff 67 66             	jmp    *0x66(%edi)
+    1cbc:	89 45 fc             	mov    %eax,-0x4(%ebp)
     return a;
-    1c10:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
+    1cbf:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
 }
-    1c15:	66 c9                	leavew 
-    1c17:	66 c3                	retw   
+    1cc4:	66 c9                	leavew 
+    1cc6:	66 c3                	retw   
 
-00001c19 <wait>:
+00001cc8 <wait>:
 char wait(){
-    1c19:	66 55                	push   %bp
-    1c1b:	66 89 e5             	mov    %sp,%bp
-    1c1e:	66 83 ec 08          	sub    $0x8,%sp
+    1cc8:	66 55                	push   %bp
+    1cca:	66 89 e5             	mov    %sp,%bp
+    1ccd:	66 83 ec 08          	sub    $0x8,%sp
     int temp_ch = _wait();
-    1c22:	66 e8 c0 e7          	callw  3e6 <_Schedule+0xb>
-    1c26:	ff                   	(bad)  
-    1c27:	ff 67 66             	jmp    *0x66(%edi)
-    1c2a:	89 45 fc             	mov    %eax,-0x4(%ebp)
+    1cd1:	66 e8 11 e7          	callw  3e6 <_Schedule+0xb>
+    1cd5:	ff                   	(bad)  
+    1cd6:	ff 67 66             	jmp    *0x66(%edi)
+    1cd9:	89 45 fc             	mov    %eax,-0x4(%ebp)
     char ch = '0' + temp_ch;
-    1c2d:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
-    1c32:	66 83 c0 30          	add    $0x30,%ax
-    1c36:	67 88 45 fb          	mov    %al,-0x5(%di)
+    1cdc:	67 66 8b 45 fc       	mov    -0x4(%di),%ax
+    1ce1:	66 83 c0 30          	add    $0x30,%ax
+    1ce5:	67 88 45 fb          	mov    %al,-0x5(%di)
     return ch;
-    1c3a:	67 8a 45 fb          	mov    -0x5(%di),%al
+    1ce9:	67 8a 45 fb          	mov    -0x5(%di),%al
     //_wait();
 }
-    1c3e:	66 c9                	leavew 
-    1c40:	66 c3                	retw   
+    1ced:	66 c9                	leavew 
+    1cef:	66 c3                	retw   
 
-00001c42 <exit>:
+00001cf1 <exit>:
 void exit(char ch){
-    1c42:	66 55                	push   %bp
-    1c44:	66 89 e5             	mov    %sp,%bp
-    1c47:	66 83 ec 04          	sub    $0x4,%sp
-    1c4b:	67 66 8b 45 08       	mov    0x8(%di),%ax
-    1c50:	67 88 45 fc          	mov    %al,-0x4(%di)
+    1cf1:	66 55                	push   %bp
+    1cf3:	66 89 e5             	mov    %sp,%bp
+    1cf6:	66 83 ec 04          	sub    $0x4,%sp
+    1cfa:	67 66 8b 45 08       	mov    0x8(%di),%ax
+    1cff:	67 88 45 fc          	mov    %al,-0x4(%di)
     _exit(ch);
-    1c54:	67 66 0f be 45 fc    	movsbw -0x4(%di),%ax
-    1c5a:	66 50                	push   %ax
-    1c5c:	66 e8 91 e7          	callw  3f1 <_wait+0x9>
-    1c60:	ff                   	(bad)  
-    1c61:	ff 66 83             	jmp    *-0x7d(%esi)
-    1c64:	c4 04 66             	les    (%esi,%eiz,2),%eax
-    1c67:	c9                   	leave  
-    1c68:	66 c3                	retw   
+    1d03:	67 66 0f be 45 fc    	movsbw -0x4(%di),%ax
+    1d09:	66 50                	push   %ax
+    1d0b:	66 e8 e2 e6          	callw  3f1 <_wait+0x9>
+    1d0f:	ff                   	(bad)  
+    1d10:	ff 66 83             	jmp    *-0x7d(%esi)
+    1d13:	c4 04 66             	les    (%esi,%eiz,2),%eax
+    1d16:	c9                   	leave  
+    1d17:	66 c3                	retw   

@@ -4,15 +4,15 @@
 #include "../syscall/time.h"
 void run(int queue[],int size);
 int terminal(){
+    char const *help = "help";
+    char const *quit = "quit";
+    char const *lst = "ls";
     char const *CMDHead = "hongyangchendeMacBook-Air:chenhyOS users$ ";
     char const *controlMsg1 = "The queue is full,waiting for the Enter Key.";
     char const *controlMsg2 = "The queue is empty!";
     char const *ByeByeMsg = "ByeBye";
     char const *filelist = "Program1 upleft   Program2 upright  \r\nProgram3 downleft  Program4 downright";
     char const *HelpMsg1 = "Enter 1,2,3,4 to run the program\n\rEnter quit,to quit\n\rEnter help to print this script again";
-    char const *help = "help";
-    char const *quit = "quit";
-    char const *lst = "ls";
     int Maxsize = 10;
     print_next_line(HelpMsg1);
     
@@ -120,7 +120,7 @@ int terminal(){
 void run(int queue[],int size){
     int j = 0;
     clearscreen();
-   /* for(j = 0;j < size;j ++){
+    for(j = 0;j < size;j ++){
         //_delay();
         //_load_userProgram(queue[j]);
         //_delay();
@@ -140,11 +140,15 @@ void run(int queue[],int size){
             //_loadP(10,55,0x4000);
             _RunProgress(0x4000);
         }
-    }*/
-    for(j = 0;j < size;j ++){
-        initial_PCB(queue[j]);
+        if(queue[j] == 6){
+            _RunProgress(0x7000);
+        }
     }
+    //for(j = 0;j < size;j ++){
+     //   _RunProgress(queue[j]);
+    //}
+    
    // clearscreen();;
-    thread_join();
+   // thread_join();
     //Initial_Int_08h();
 }

@@ -18,7 +18,7 @@ STD_IO = $(SYSCALL)/stdio.h
 #USER_PRO=$(UP)/user1.o $(UP)/user2.o $(UP)/user3.o $(UP)/user4.o
 all: kernel.bin kernel.elf kernel.txt
 
-kernel.bin: kernel.o  $(SYSCALL)/schedule.o $(SYSCALL)/use.o $(SYSCALL)/sysc.o  $(USER_OBJ)  $(SYSCALL)/stdio.o $(SYSCALL)/interuptf.o $(SYSCALL)/time.o $(SYSCALL)/fork.o #$(USER_PRO)
+kernel.bin: kernel.o   $(USER_OBJ) $(SYSCALL)/use.o $(SYSCALL)/sysc.o $(SYSCALL)/stdio.o $(SYSCALL)/interuptf.o $(SYSCALL)/time.o $(SYSCALL)/fork.o $(SYSCALL)/schedule.o#$(USER_PRO)
 	$(LD) $(LDFLAGS) -Ttext 0x7d00 --oformat binary -o $@ $^
 kernel.elf: kernel.o $(SYSCALL)/schedule.o $(SYSCALL)/use.o $(SYSCALL)/sysc.o  $(USER_OBJ) $(SYSCALL)/stdio.o $(SYSCALL)/interuptf.o  $(SYSCALL)/time.o $(SYSCALL)/fork.o
 	$(LD) $(OBJFLAGS) -Ttext 0x7d00 -o $@ $^

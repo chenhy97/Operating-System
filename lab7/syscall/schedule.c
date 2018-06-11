@@ -42,31 +42,45 @@ void sys_schedule(){
     }
     if(index != -1){
         _CurrentProg = PCB_list + index;
+        PCB_list[index].prg_status = RUN;
         return;
     }
     _CurrentProg = PCB_list ;
     return;
 }
 void sys_exit(){
+    __asm__("cli\n");
     _CurrentProg -> prg_status = EXIT;
+    __asm__("sti\n");
 }
+
 void sys_exit_fork(char ch){
-    _CurrentProg -> prg_status = EXIT;
-    PCB_list[_CurrentProg -> fid].prg_status = READY;
+    int index = _CurrentProg -> fid;
+    sys_wakeup(index);
     PCB_list[_CurrentProg -> fid].eax = ch;
+    _CurrentProg -> prg_status = EXIT;
     _Schedule();
 }
-void sys_bolocked(){
-    _CurrentProg -> prg_status = BLOCKED;
+int sys_wait(){
+    int index = _CurrentProg - PCB_list;
+    sys_bolocked(index);
+    _Schedule();
+    return _CurrentProg -> eax;
+}
+void sys_bolocked(int index){
+    __asm__("cli\n");
+    PCB_list[index].prg_status = BLOCKED;
+    __asm__("sti\n");
+}
+void sys_wakeup(int index){
+    __asm__("cli\n");
+    PCB_list[index].prg_status = READY;
+    __asm__("sti\n");
 }
 void sys_run(){
     _CurrentProg -> prg_status = RUN;
 }
-int sys_wait(){
-    _CurrentProg -> prg_status = BLOCKED;
-    _Schedule();
-    return _CurrentProg -> eax;
-}
+
 int do_fork(){
    struct PCB* fork_prg;
     fork_prg = PCB_list + 1;
@@ -93,7 +107,7 @@ int do_fork(){
         if(fork_prg == _CurrentProg){
             return 0;
         }
-        _CurrentProg -> eax = fork_prg -> id;
+        _CurrentProg -> eax = _CurrentProg -> id;
         return _CurrentProg -> eax;
     }
 }
@@ -104,8 +118,8 @@ void thread_join(){
 int counter(){
     int i = 0;
     int count = 0;
-    for(i = 0;i < PCB_NUMMER - 1;i ++){
-        if(PCB_list[i].prg_status == 1){
+    for(i = 1;i < PCB_NUMMER;i ++){
+        if(PCB_list[i].prg_status != EXIT){
             count ++;
         }
     }
