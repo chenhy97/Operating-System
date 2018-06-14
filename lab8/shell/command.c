@@ -124,31 +124,13 @@ void run(int queue[],int size){
         //_delay();
         //_load_userProgram(queue[j]);
         //_delay();
-        if(queue[j] == 1){
-           // _loadP(10,25,0x1000);
-             _RunProgress(0x1000);
-        }
-        if(queue[j] == 2){
-            //_loadP(10,35,0x2000);
-            _RunProgress(0x2000);
-        }
-        if(queue[j] == 3){
-           // _loadP(10,45,0x3000);
-            _RunProgress(0x3000);
-        }
-        if(queue[j] == 4){
-            //_loadP(10,55,0x4000);
-            _RunProgress(0x4000);
-        }
-        if(queue[j] == 6){
-            _RunProgress(0x7000);
-        }
+        initial_PCB(queue[j]);
     }
     //for(j = 0;j < size;j ++){
      //   _RunProgress(queue[j]);
     //}
     
    // clearscreen();;
-   // thread_join();
+   //thread_join();
     //Initial_Int_08h();
 }

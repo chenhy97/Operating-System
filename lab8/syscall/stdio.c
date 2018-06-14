@@ -16,12 +16,14 @@ void print(char const* Messeage,int row,int colume){//need the pos
 //====================================================
 //               显示字符串函数，紧跟着光标
 //====================================================
-void prints(char const *Messeage){//can follow the position of your input
+void prints(char const *Messeage){//can follow the position of your input	
+	__asm__("cli\n");
 	int index = 0;
 	while(Messeage[index]){
 		_showchar(Messeage[index]);
 		index++;
 	}
+	__asm__("sti\n");
 	return;
 }
 //====================================================

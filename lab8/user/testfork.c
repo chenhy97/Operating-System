@@ -1,7 +1,6 @@
 #include "../syscall/fork.h"
 #include "../syscall/stdio.h"
-#include "../syscall/schedule.h"
-
+int pid;
 int main(){
     __asm__("mov $0x7000, %eax\n");
     __asm__("mov %ax, %ds\n");
@@ -9,13 +8,13 @@ int main(){
     __asm__("mov %ax, %ss\n");
     __asm__("mov $0x100, %esp");
     char const* str = "I love 10";
-    int pid = fork();
+    pid = fork();
     printsint(pid);
     if(pid == -1){
         char const *messeage = "Error in fork\n\r";
         prints(messeage);
     }
-    if(pid){
+    else if(pid){
         char const*dad_talk = "I am daddy\n\r";
         prints(dad_talk);
         char ch = wait();
@@ -29,6 +28,7 @@ int main(){
         exit(num);
     }
 }
+int pid;
 int countLetterNum(char const* s1){
     int index = 0;
     int count = 0;

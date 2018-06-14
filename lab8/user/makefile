@@ -8,7 +8,7 @@ AS=nasm
 ASFLAGS=
 
 SYSCALL=../syscall
-all:	user1.bin user2.bin user3.bin user4.bin test.bin testfork.bin testfork.elf test.elf testfork.txt test.txt user1.elf user1.txt#infoP.bin
+all:	user1.bin user2.bin user3.bin user4.bin test.bin testfork.bin testfork.elf test.elf testfork.txt test.txt user1.elf user1.txt testsem.bin testsem.elf testsem.txt fruit.bin fruit.elf fruit.txt#infoP.bin
 
 user1.bin: user1.o  $(SYSCALL)/sysc.o  $(SYSCALL)/interuptf.o $(SYSCALL)/schedule.o $(SYSCALL)/fork.o 
 	$(LD) $(LDFLAGS) -Ttext 0x100 --oformat binary -o $@ $^
@@ -22,14 +22,26 @@ test.bin: test.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o $(SYSCALL)/schedule.o
 	$(LD) $(LDFLAGS) -Ttext 0x100 --oformat binary -o $@ $^
 testfork.bin:testfork.o $(SYSCALL)/sysc.o  $(SYSCALL)/interuptf.o $(SYSCALL)/stdio.o $(SYSCALL)/schedule.o $(SYSCALL)/fork.o 
 	$(LD) $(LDFLAGS) -Ttext 0x100 --oformat binary -o $@ $^
+testsem.bin:testsem.o $(SYSCALL)/sysc.o  $(SYSCALL)/interuptf.o $(SYSCALL)/stdio.o $(SYSCALL)/schedule.o $(SYSCALL)/fork.o 
+	$(LD) $(LDFLAGS) -Ttext 0x100 --oformat binary -o $@ $^
+fruit.bin:fruit.o $(SYSCALL)/sysc.o  $(SYSCALL)/interuptf.o $(SYSCALL)/stdio.o $(SYSCALL)/schedule.o $(SYSCALL)/fork.o 
+	$(LD) $(LDFLAGS) -Ttext 0x100 --oformat binary -o $@ $^
 
+testsem.elf:testsem.o  $(SYSCALL)/sysc.o  $(SYSCALL)/interuptf.o $(SYSCALL)/stdio.o $(SYSCALL)/schedule.o $(SYSCALL)/fork.o 
+	$(LD) $(OBJFLAGS) -Ttext 0x100 -o $@ $^
 testfork.elf:testfork.o  $(SYSCALL)/sysc.o  $(SYSCALL)/interuptf.o $(SYSCALL)/stdio.o $(SYSCALL)/schedule.o $(SYSCALL)/fork.o 
+	$(LD) $(OBJFLAGS) -Ttext 0x100 -o $@ $^
+fruit.elf:fruit.o  $(SYSCALL)/sysc.o  $(SYSCALL)/interuptf.o $(SYSCALL)/stdio.o $(SYSCALL)/schedule.o $(SYSCALL)/fork.o 
 	$(LD) $(OBJFLAGS) -Ttext 0x100 -o $@ $^
 test.elf: test.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o $(SYSCALL)/schedule.o $(SYSCALL)/fork.o 
 	$(LD) $(OBJFLAGS) -Ttext 0x100 -o $@ $^
 test.txt: test.elf
 	$(OBJDUMP) -S $^ > $@
 testfork.txt: testfork.elf
+	$(OBJDUMP) -S $^ > $@
+testsem.txt: testsem.elf
+	$(OBJDUMP) -S $^ > $@
+fruit.txt: fruit.elf
 	$(OBJDUMP) -S $^ > $@
 user1.elf: user1.o  $(SYSCALL)/sysc.o $(SYSCALL)/interuptf.o $(SYSCALL)/schedule.o $(SYSCALL)/fork.o 
 	$(LD) $(OBJFLAGS) -Ttext 0x100 -o $@ $^
@@ -54,7 +66,11 @@ user4.o: user4.asm
 test.o: test.asm
 	$(AS) $(ASFLAGS) -f elf32 $^ -o $@
 
-testfork.o:testfork.c testfork.h $(SYSCALL)/schedule.h $(SYSCALL)/fork.h 
+testfork.o:testfork.c testfork.h  $(SYSCALL)/fork.h 
+	$(CC) $(CCFLAGS) -c $^
+testsem.o:testsem.c testsem.h  $(SYSCALL)/fork.h 
+	$(CC) $(CCFLAGS) -c $^
+fruit.o:fruit.c  $(SYSCALL)/fork.h 
 	$(CC) $(CCFLAGS) -c $^
 clean:
 	rm *.bin -f 

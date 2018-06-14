@@ -19,7 +19,7 @@ fork.o : fork.c fork.h schedule.h use.h
 	$(CC) $(CCFLAGS) -c $^
 time.o : time.c time.h
 	$(CC) $(CCFLAGS) -c $^
-schedule.o : schedule.c schedule.h
+schedule.o : schedule.c schedule.h use.h
 	$(CC) $(CCFLAGS) -c $^
 stdio.o : stdio.c stdio.h
 	$(CC) $(CCFLAGS) -c $^

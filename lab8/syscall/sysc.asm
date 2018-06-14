@@ -26,6 +26,10 @@ global _Schedule_once
 global _Schedule
 global _wait
 global _exit
+global _P
+global _V
+global _GetSem
+global _FreeSem
 
 extern printcircle
 extern sys_showline
@@ -39,6 +43,11 @@ extern sys_exit
 extern sys_exit_fork
 extern ttime
 extern do_fork
+extern do_P
+extern do_SemGet;
+extern do_SemFree;
+extern do_V;
+
 delay equ 8
 count db delay
 alpha db '-'
@@ -263,7 +272,7 @@ _Schedule:
 _wait:
     enter 0,0
     ;push word 0
-    int 43h
+    int 3Bh
     leave 
     newret
 _exit:
@@ -271,7 +280,35 @@ _exit:
     mov eax,dword [ebp + 6]
     push eax
    ; push word 0
-    int 3Ah
+    int 2Ah
+    leave
+    newret
+_GetSem:
+    enter 0,0
+    mov eax,dword [ebp + 6]
+    push eax
+    int 3Ch
+    leave
+    newret
+_FreeSem:
+    enter 0,0
+    mov eax,dword [ebp + 6]
+    push eax
+    int 3Dh
+    leave
+    newret
+_P:
+    enter 0,0
+    mov eax,dword [ebp + 6]
+    push eax
+    int 3Eh
+    leave
+    newret
+_V:
+    enter 0,0
+    mov eax,dword [ebp + 6]
+    push eax
+    int 3Fh
     leave
     newret
 ;================================================================================================================
@@ -324,8 +361,9 @@ going_on:
 ;                   08h:时钟中断
 ;==================================================== 
 _SetINT08h_turn_around:
-    CLI
+  
     call _save
+    CLI
     push 0
     call sys_schedule
     call _restart
@@ -666,6 +704,7 @@ _SetINT38h:
     call sys_exit
     pop ds
     pop ax
+    STI
     iret
 _SetINT39h:
     CLI
@@ -679,6 +718,7 @@ _SetINT39h:
    ; pop ax
     pop ds
     leave
+    STI
     iret
 _SetINT41h:
     CLI
@@ -689,7 +729,24 @@ _SetINT41h:
     out 0A0H,al
     STI
     iret
-_SetINT43h:
+
+_SetINT2Ah:
+    CLI
+    enter 0,0
+    push ds
+    ;push ax
+    mov eax,[ebp + 8]
+    push eax
+    push 0
+    mov ax,cs
+    mov ds,ax
+    call sys_exit_fork
+    pop ax
+    pop ds
+    leave
+    STI
+    iret
+_SetINT3Bh:
     CLI
     enter 0,0
     push ds
@@ -701,8 +758,9 @@ _SetINT43h:
     ;pop ax
     pop ds
     leave
+    STI
     iret
-_SetINT3Ah:
+_SetINT3Ch:
     CLI
     enter 0,0
     push ds
@@ -712,10 +770,69 @@ _SetINT3Ah:
     push 0
     mov ax,cs
     mov ds,ax
-    call sys_exit_fork
+    call do_SemGet
     ;pop ax
+    add esp,4
     pop ds
     leave
+    STI
+    iret
+
+_SetINT3Dh:
+    CLI
+    enter 0,0
+    push ds
+    ;push ax
+    mov eax,[ebp + 8]
+    push eax
+    push 0
+    mov ax,cs
+    mov ds,ax
+    call do_SemFree
+    ;pop ax
+    add esp,4
+    pop ds
+    leave
+    STI
+    iret
+
+_SetINT3Eh:
+    CLI
+    enter 0,0
+    push ds
+    ;push ax
+    mov eax,[ebp + 8]
+    push eax
+    push 0
+    mov ax,cs
+    mov ds,ax
+    call do_P
+    ;pop ax
+    add esp,4
+    pop ds
+    leave
+    STI
+    iret
+
+_SetINT3Fh:
+    CLI
+    enter 0,0
+    push ds
+    ;push ss
+    ;push ax
+    mov eax,[ebp + 8]
+    push eax
+    push 0
+    mov ax,cs
+    mov ds,ax
+    ;mov ss,ax
+    call do_V
+    ;pop ax
+    add esp,4
+    pop ds
+    ;pop ss
+    leave
+    STI
     iret
 ;========================================================
 ;                   初始化中断向量程序区
@@ -732,10 +849,15 @@ _initialInt:
      SetInt 37h,_SetINT37h
      SetInt 38h,_SetINT38h
      SetInt 39h,_SetINT39h
-     SetInt 3Ah,_SetINT3Ah
+     SetInt 2Ah,_SetINT2Ah
      SetInt 41h,_SetINT41h
      SetInt 42h,_SetINT08h_turn_around
-     SetInt 43h,_SetINT43h
+     SetInt 3Bh,_SetINT3Bh
+
+     SetInt 3Ch,_SetINT3Ch
+     SetInt 3Dh,_SetINT3Dh
+     SetInt 3Eh,_SetINT3Eh
+     SetInt 3Fh,_SetINT3Fh
      leave
     newret;
 
@@ -834,6 +956,9 @@ _restart:
     out 0A0H,al
     pop ax
     iret
+;********
+;时间函数
+;**********
 RTC_Timer:
     enter 0,0
     push ds

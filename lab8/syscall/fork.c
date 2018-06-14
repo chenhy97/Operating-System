@@ -14,3 +14,16 @@ char wait(){
 void exit(char ch){
     _exit(ch);
 }
+int GetSem(int value){
+    int sema = _GetSem(value);
+    return sema;
+}
+void SemFree(int value){
+    _FreeSem(value);
+}
+void P(int s){   
+    _P(s);
+}
+void V(int s){
+    _V(s);
+}

@@ -16,17 +16,20 @@ int main(){
    // printTime();
     //Initial_Int_09h();
    // Set_PCB();
-    loadProg(15,95,0x2000);
-    loadProg(15,115,0x3000);
-    loadProg(15,135,0x4000);
-    loadProg(15,155,0x5000);
-    _loadP(15,175,0x6000);
-    _loadP(20,195,0x7000);
-    initial_PCB(6);
-   _CurrentProg = PCB_list + 6;
-   // _CurrentProg = PCB_list;//important! mov dword ptr ds:0x9e60, 0x00009d20,把PCB_list的地址9d20存到ds的9e60处，此后就直接用9e60来织带PCB_list
-    //Initial_Int_08h();
-    _RunProgress(0x7000);
+    loadProg(25,95,0x2000);
+    loadProg(25,125,0x3000);
+    loadProg(25,155,0x4000);
+    loadProg(25,185,0x5000);
+    _loadP(25,215,0x6000);
+    _loadP(25,235,0x7000);
+    _loadP(25,265,0x8000);
+    _loadP(25,295,0x9000);
+    //initial_PCB(7);
+   //_CurrentProg = PCB_list + 7;
+   _CurrentProg = PCB_list;//important! mov dword ptr ds:0x9e60, 0x00009d20,把PCB_list的地址9d20存到ds的9e60处，此后就直接用9e60来织带PCB_list
+    Initial_Int_08h();
+    //initial_PCB(6);
+    //_RunProgress(0x8000);
 
 
     char const *Messeage = "Built by Chen Hongyang on March 20, 2018";
