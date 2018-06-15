@@ -1,5 +1,6 @@
 #include "schedule.h"
 #include "use.h"
+
 void initial_PCB(int index){
     PCB_list[index ].cs = 0x2000+0x1000*(index - 1);//0代表内核，1代表用户程序
     PCB_list[index ].ds = 0x2000+0x1000*(index - 1);//0代表内核，1代表用户程序
@@ -137,7 +138,7 @@ void thread_join(){
     }
 }
 int counter(){
-    __asm__("cli\n");
+   // __asm__("cli\n");
     int i = 0;
     int count = 0;
     for(i = 1;i < PCB_NUMMER;i ++){
@@ -145,7 +146,7 @@ int counter(){
             count ++;
         }
     }
-    __asm__("sti\n");
+    //__asm__("sti\n");
     return count;
 
 }
@@ -176,7 +177,6 @@ int size(struct Queue *queue){
     return queue -> size ;
 }
 void enqueue(struct Queue *queue,int data){
-
     if(queue -> size >= MAX){
         return;
     }
@@ -197,13 +197,14 @@ void dequeue(struct Queue *queue,int * data){
 }
 void init_queue(struct Queue *queue){
     queue -> size = 0;
-    queue -> tail = -1;
+    queue -> tail = MAX - 1;
     queue -> head = 0;
 }
 int rm_tmp;
 int ii;
+int size_of_rmqueue;
 void rmele(struct Queue *queue,int data){
-    int size_of_rmqueue= size(queue);
+    size_of_rmqueue= size(queue);
     for(ii = 0;ii < size_of_rmqueue;ii ++){
         dequeue(queue,&rm_tmp);
         if(rm_tmp != data){
@@ -211,12 +212,9 @@ void rmele(struct Queue *queue,int data){
         }
     }
 }
-void init_Semlist(){
-    int i = 0;
-    for(i = 0;i < SemMax;i ++){
-        SEM_list[i].used = 0;
-        init_queue(&SEM_list[i].semaque);
-    }
+void init_Semlist(int index){
+    SEM_list[index].used = 0;
+    init_queue(&SEM_list[index].semaque);
 }
 int do_SemGet(int value){
     int i = 0;
@@ -224,6 +222,7 @@ int do_SemGet(int value){
         i ++;
     }
     if(i < SemMax){
+        init_Semlist(i);
         SEM_list[i].used = 1;
         SEM_list[i].count = value;
         return i;
@@ -234,25 +233,28 @@ int do_SemGet(int value){
 void do_SemFree(int s){
     SEM_list[s].used = 0;
 }
+int tempp;
 int sem_index;
+int t;
 void do_P(int s){
     __asm__("cli\n");
     SEM_list[s].count = SEM_list[s].count - 1;
     if(SEM_list[s].count < 0){
-        _CurrentProg->prg_status = BLOCKED;
         sem_index = _CurrentProg - PCB_list;
-        rmele(&readyqueue,sem_index);
-        enqueue(&(SEM_list[s].semaque),sem_index);
-        _Schedule_once();
+        rmele(&readyqueue,sem_index);//将进程从就绪队列中取出
+        _CurrentProg->prg_status = BLOCKED;
+        enqueue(&SEM_list[s].semaque,sem_index);
+        _Schedule_PV();
     }
     __asm("sti\n");
 }
 int v_res;
+int vtempp;
 void do_V(int s){
     __asm__("cli\n");
     SEM_list[s].count  = SEM_list[s].count + 1;
     if(SEM_list[s].count <= 0){
-        dequeue(&(SEM_list[s].semaque),&v_res);
+        dequeue(&SEM_list[s].semaque,&v_res);
         PCB_list[v_res].prg_status = READY;
         enqueue(&readyqueue,v_res);
     }

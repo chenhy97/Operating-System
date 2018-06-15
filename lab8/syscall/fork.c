@@ -22,8 +22,8 @@ void SemFree(int value){
     _FreeSem(value);
 }
 void P(int s){   
-    _P(s);
+    _Pr(s);
 }
 void V(int s){
-    _V(s);
+    _Vr(s);
 }

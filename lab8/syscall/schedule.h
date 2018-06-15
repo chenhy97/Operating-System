@@ -5,7 +5,7 @@
 #define BLOCKED 2
 #define READY 3
 #define PCB_NUMMER 20
-#define MAX 100
+#define MAX 30
 #define SemMax 30
 
 struct PCB{
@@ -51,7 +51,6 @@ void sys_schedule();
 void Set_PCB();
 void _save();
 int do_fork();
-
 
 int isempty(struct Queue *queue);
 int size(struct Queue *queue);

@@ -126,11 +126,4 @@ void run(int queue[],int size){
         //_delay();
         initial_PCB(queue[j]);
     }
-    //for(j = 0;j < size;j ++){
-     //   _RunProgress(queue[j]);
-    //}
-    
-   // clearscreen();;
-   //thread_join();
-    //Initial_Int_08h();
 }

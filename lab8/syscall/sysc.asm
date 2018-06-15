@@ -26,11 +26,11 @@ global _Schedule_once
 global _Schedule
 global _wait
 global _exit
-global _P
-global _V
+global _Pr
+global _Vr
 global _GetSem
 global _FreeSem
-
+global _Schedule_PV
 extern printcircle
 extern sys_showline
 extern sys_printname
@@ -170,6 +170,7 @@ _showchar:
     ;mov bh,0
     mov bl,0 ; Bl设为0
     int 10H ; 调用中断
+    cli
     pop bx
     pop ax
     leave
@@ -262,10 +263,11 @@ _fork_user:
     leave
     newret
 _Schedule:
+
     enter 0,0
     push ss
     ;push word 0
-    int 42h
+    int 23h
     pop ss
     leave
     newret
@@ -297,19 +299,28 @@ _FreeSem:
     int 3Dh
     leave
     newret
-_P:
+_Pr:
     enter 0,0
     mov eax,dword [ebp + 6]
     push eax
     int 3Eh
     leave
     newret
-_V:
+_Vr:
     enter 0,0
     mov eax,dword [ebp + 6]
     push eax
     int 3Fh
     leave
+    newret
+_Schedule_PV:
+    enter 0,0
+    
+    ;push word 0
+    int 23h
+    
+    leave
+
     newret
 ;================================================================================================================
 ;                                                                                                               ;
@@ -362,6 +373,7 @@ going_on:
 ;==================================================== 
 _SetINT08h_turn_around:
   
+    
     call _save
     CLI
     push 0
@@ -797,7 +809,7 @@ _SetINT3Dh:
     iret
 
 _SetINT3Eh:
-    CLI
+    
     enter 0,0
     push ds
     ;push ax
@@ -811,11 +823,11 @@ _SetINT3Eh:
     add esp,4
     pop ds
     leave
-    STI
+   
     iret
 
 _SetINT3Fh:
-    CLI
+   
     enter 0,0
     push ds
     ;push ss
@@ -832,7 +844,7 @@ _SetINT3Fh:
     pop ds
     ;pop ss
     leave
-    STI
+   
     iret
 ;========================================================
 ;                   初始化中断向量程序区
@@ -851,7 +863,7 @@ _initialInt:
      SetInt 39h,_SetINT39h
      SetInt 2Ah,_SetINT2Ah
      SetInt 41h,_SetINT41h
-     SetInt 42h,_SetINT08h_turn_around
+     SetInt 23h,_SetINT08h_turn_around
      SetInt 3Bh,_SetINT3Bh
 
      SetInt 3Ch,_SetINT3Ch

@@ -45,9 +45,8 @@ $(USER)/test.bin:
 build: $(LOADER)/loader.bin $(KERNEL)/kernel.bin
 	dd if=$(LOADER)/loader.bin of=S.img conv=notrunc;sync
 	dd if=$(KERNEL)/kernel.bin of=S.img bs=512 count=90 conv=notrunc seek=1;sync
-	dd if=$(USER)/user1.bin of=S.img bs=512 count=25 conv=notrunc seek=94;sync 
+	#dd if=$(USER)/user1.bin of=S.img bs=512 count=25 conv=notrunc seek=94;sync 
 	dd if=$(USER)/user2.bin of=S.img bs=512 count=25 conv=notrunc seek=124;sync
-	dd if=$(USER)/user3.bin of=S.img bs=512 count=25 conv=notrunc seek=154;sync
 	dd if=$(USER)/user4.bin of=S.img bs=512 count=25 conv=notrunc seek=184;sync
 	dd if=$(USER)/test.bin of=S.img bs=512 count=25 conv=notrunc seek=214;sync
 	dd if=$(USER)/testfork.bin of=S.img bs=512 count=30 conv=notrunc seek=234;sync
